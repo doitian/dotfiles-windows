@@ -1,0 +1,4 @@
+set guifont=JetBrains_Mono:h11
+set guioptions-=m
+set renderoptions=type:directx
+hi Cursor guibg=#005f87 guifg=#eeeeee

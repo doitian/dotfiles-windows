@@ -1,0 +1,66 @@
+// To view the default settings, hold "alt" while clicking on the "Settings" button.
+// For documentation on these settings, see: https://aka.ms/terminal-documentation
+{
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+    "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+    "profiles": [
+        {
+            "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+            "name": "Windows PowerShell",
+            "commandline": "powershell.exe -NoLogo",
+            "hidden": false,
+            "fontSize": 11,
+            "fontFace": "Cascadia Code",
+            "colorScheme": "papercolor-light",
+            "cursorColor": "#005f87",
+            "cursorShape": "vintage"
+        },
+        {
+            "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+            "name": "cmd",
+            "commandline": "cmd.exe",
+            "hidden": false,
+            "fontSize": 11,
+            "fontFace": "Cascadia Code",
+            "colorScheme": "papercolor-light",
+            "cursorColor": "#005f87",
+            "cursorShape": "vintage"
+        },
+        {
+            "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+            "hidden": false,
+            "name": "Azure Cloud Shell",
+            "source": "Windows.Terminal.Azure"
+        }
+    ],
+    // Add custom color schemes to this array
+    "schemes": [
+        {
+            "name": "papercolor-light",
+            "foreground": "#4c4c4b",
+            "background": "#eeeeed",
+            "black": "#4c4c4b",
+            "blue": "#4271ad",
+            "green": "#418c00",
+            "cyan": "#3e989f",
+            "red": "#d6225e",
+            "purple": "#8959a8",
+            "yellow": "#d75e00",
+            "white": "#eeeeed",
+            "brightBlack": "#4c4c4b",
+            "brightBlue": "#4271ad",
+            "brightGreen": "#718c00",
+            "brightCyan": "#3e989f",
+            "brightRed": "#d6225e",
+            "brightPurple": "#8959a8",
+            "brightYellow": "#d75e00",
+            "brightWhite": "#eeeeed",
+            "selectionBackground": "#4c4c4b"
+        }
+    ],
+    // Add any keybinding overrides to this array.
+    // To unbind a default keybinding, set the command to "unbound"
+    "keybindings": [
+      { "command": "unbound", "keys": ["ctrl+shift+6"] }
+    ]
+}

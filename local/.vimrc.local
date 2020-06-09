@@ -1,0 +1,7 @@
+set shell=powershell.exe
+set shellcmdflag=-NoLogo\ -NoProfile\ -NonInteractive\ -command
+
+let g:fzf_preview_window = ''
+let g:fzf_colors = {
+      \ 'fg':      ['bg', 'Normal'],
+      \ }
