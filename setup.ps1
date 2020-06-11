@@ -40,5 +40,7 @@ cp -Force ~/vimfiles/autoload/plug.vim ~/.vim/autoload/plug.vim
 $PSProfileDir = $(Split-Path -Parent $PROFILE)
 ls -Force "$PSProfileDir/local" | cp -Force -Destination ~/
 
+cp -Force settings.json 'C:\Users\me\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json'
+
 mkdir -Force ~/.ssh
 cp -Force "$PrivateRepoDir/default/.ssh/config" "~/.ssh/config"
