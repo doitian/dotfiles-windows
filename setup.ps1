@@ -31,7 +31,9 @@ ForEach ($f in ".ignore", ".editorconfig") {
 
 mkdir -Force ~/.vim/scripts, ~/.vim/projections, ~/.vim/backup, ~/.vim/swap, ~/.vim/undo, ~/.vim/autoload
 cp -Force -Recurse "$PublicRepoDir/default/.vim/scripts/*" "~/.vim/scripts"
+cp -Force -Recurse "$PrivateRepoDir/default/.vim/scripts/*" "~/.vim/scripts"
 cp -Force -Recurse "$PublicRepoDir/default/.vim/projections/*" "~/.vim/projections"
+New-Item -ItemType Junction -Path "$HOME\.vim\UltiSnips" -Value "$PrivateRepoDir\UltiSnips"
 
 mkdir -Force ~/vimfiles/autoload
 Invoke-WebRequest -UseBasicParsing -OutFile ~/vimfiles/autoload/plug.vim "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
