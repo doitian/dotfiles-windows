@@ -16,6 +16,18 @@
             "cursorShape": "vintage"
         },
         {
+            "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+            "hidden": false,
+            "name": "Ubuntu",
+            "commandline": "wsl ~",
+            "source": "Windows.Terminal.Wsl",
+            "fontSize": 11,
+            "fontFace": "Cascadia Code",
+            "colorScheme": "papercolor-light",
+            "cursorColor": "#005f87",
+            "cursorShape": "vintage"
+        },
+        {
             "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
             "name": "cmd",
             "commandline": "cmd.exe",
