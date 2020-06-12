@@ -1,6 +1,7 @@
 $PublicRepoDir = "$HOME/.dotfiles/repos/public"
 $PrivateRepoDir = "$HOME/.dotfiles/repos/private"
 
+git config --global core.autocrlf input
 ForEach ($repo in $PublicRepoDir, $PrivateRepoDir) {
   if (Test-Path -LiteralPath $repo) {
     git -C $repo pull
