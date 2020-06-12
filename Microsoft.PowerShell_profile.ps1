@@ -4,6 +4,8 @@ Set-PSReadLineOption -EditMode emacs -Colors @{
 }
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
 
+Import-Module z
+
 $PSProfileDir = $(Split-Path -Parent $PROFILE)
 $WindowsTerminalSettings = 'C:\Users\me\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json'
 $env:EDITOR = 'vim'

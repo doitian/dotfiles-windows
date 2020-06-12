@@ -34,7 +34,7 @@ iwr -useb get.scoop.sh | iex
 Install essential apps
 
 ```
-scoop install mingit gpg
+scoop install mingit gpg z
 ```
 
 ┌ 5. Run as admin
