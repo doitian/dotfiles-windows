@@ -37,14 +37,15 @@ Install essential apps
 scoop install mingit gpg z
 ```
 
-┌ 5. Run as admin
-
-```
-./admin-setup.ps1`
-```
-
-┌ 6. Run as user
+┌ 5. Run as user
 
 ```
 ./setup
 ```
+
+┌ 6. Run as admin
+
+```
+./admin-setup`
+```
+

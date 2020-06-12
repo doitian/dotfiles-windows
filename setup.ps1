@@ -24,26 +24,18 @@ git config --global core.autocrlf input
 git config --global --unset core.pager
 git config --global gpg.program (Get-Command -Name 'gpg.exe').Source
 
-cp -Force "$PublicRepoDir/default/.vimrc" "~/_vimrc"
-
-ForEach ($f in ".ignore", ".editorconfig") {
-  cp -Force "$PublicRepoDir/default/$f" "~/$f"
-}
-
 mkdir -Force ~/.vim/scripts, ~/.vim/projections, ~/.vim/backup, ~/.vim/swap, ~/.vim/undo, ~/.vim/autoload
-cp -Force -Recurse "$PublicRepoDir/default/.vim/scripts/*" "~/.vim/scripts"
-cp -Force -Recurse "$PrivateRepoDir/default/.vim/scripts/*" "~/.vim/scripts"
-cp -Force -Recurse "$PublicRepoDir/default/.vim/projections/*" "~/.vim/projections"
-New-Item -ItemType Junction -Path "$HOME\.vim\UltiSnips" -Value "$PrivateRepoDir\UltiSnips"
+
+Function ln ($value, $path) {
+  if (Test-Path -LiteralPath $path) {
+    [io.directory]::Delete($path)
+  }
+  New-Item -ItemType Junction -Force -Path $path -Value $value
+}
+ln "$PublicRepoDir\default\.vim\projections" "$HOME\.vim\projections"
+ln "$PrivateRepoDir\default\.vim\scripts" "$HOME\.vim\scripts"
+ln "$PrivateRepoDir\UltiSnips" "$HOME\.vim\UltiSnips"
 
 mkdir -Force ~/vimfiles/autoload
 Invoke-WebRequest -UseBasicParsing -OutFile ~/vimfiles/autoload/plug.vim "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 cp -Force ~/vimfiles/autoload/plug.vim ~/.vim/autoload/plug.vim
-
-$PSProfileDir = $(Split-Path -Parent $PROFILE)
-ls -Force "$PSProfileDir/local" | cp -Force -Destination ~/
-
-cp -Force settings.json 'C:\Users\me\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json'
-
-mkdir -Force ~/.ssh
-cp -Force "$PrivateRepoDir/default/.ssh/config" "~/.ssh/config"
