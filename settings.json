@@ -2,18 +2,20 @@
 // For documentation on these settings, see: https://aka.ms/terminal-documentation
 {
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+    "defaultProfile": "{9331bf84-03f4-4019-bf20-654dafccf1e0}",
     "profiles": [
         {
-            "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-            "name": "Windows PowerShell",
-            "commandline": "powershell.exe -NoLogo",
+            "guid": "{9331bf84-03f4-4019-bf20-654dafccf1e0}",
+            "name": "Windows PowerShell 7",
+            "commandline": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+            "icon": "C:\\Program Files\\PowerShell\\7\\assets\\Powershell_av_colors.ico",
             "hidden": false,
             "fontSize": 11,
             "fontFace": "Cascadia Code",
             "colorScheme": "papercolor-light",
             "cursorColor": "#005f87",
-            "cursorShape": "vintage"
+            "cursorShape": "vintage",
+            "startingDirectory": "%USERPROFILE"
         },
         {
             "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
@@ -21,6 +23,17 @@
             "name": "Ubuntu",
             "commandline": "wsl ~",
             "source": "Windows.Terminal.Wsl",
+            "fontSize": 11,
+            "fontFace": "Cascadia Code",
+            "colorScheme": "papercolor-light",
+            "cursorColor": "#005f87",
+            "cursorShape": "vintage"
+        },
+        {
+            "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+            "name": "Windows PowerShell",
+            "commandline": "powershell.exe -NoLogo",
+            "hidden": false,
             "fontSize": 11,
             "fontFace": "Cascadia Code",
             "colorScheme": "papercolor-light",
@@ -43,6 +56,12 @@
             "hidden": false,
             "name": "Azure Cloud Shell",
             "source": "Windows.Terminal.Azure"
+        },
+        {
+            "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+            "hidden": false,
+            "name": "PowerShell",
+            "source": "Windows.Terminal.PowershellCore"
         }
     ],
     // Add custom color schemes to this array
