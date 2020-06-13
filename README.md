@@ -35,6 +35,7 @@ Install essential apps
 
 ```
 scoop install mingit gpg z
+Install-Module -Name PSFzf -Scope CurrentUser
 ```
 
 ┌ 5. Run as user

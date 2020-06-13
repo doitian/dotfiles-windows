@@ -4,8 +4,6 @@
 }
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
 
-Import-Module z
-
 $PSProfileDir = $(Split-Path -Parent $PROFILE)
 $WindowsTerminalSettings = 'C:\Users\me\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json'
 $env:EDITOR = 'vim'
@@ -49,3 +47,12 @@ function prompt {
     "$ "
   })
 }
+
+if (Get-Module -ListAvailable -Name z) {
+  Import-Module z
+}
+if (Get-Module -ListAvailable -Name PSFzf) {
+  Import-Module PSFzf
+  Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
+}
+
