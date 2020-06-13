@@ -13,6 +13,11 @@ ForEach ($repo in $PublicRepoDir, $PrivateRepoDir) {
 $SSHPath = (Get-Command -Name 'ssh.exe').Source
 [Environment]::SetEnvironmentVariable('GIT_SSH', $SSHPath, 'User')
 
+$UserBinDir = "$(Split-Path -Parent $PROFILE)\bin"
+if (-Not ($env:Path).Split(";").Contains($UserBinDir)) {
+  [Environment]::SetEnvironmentVariable('Path', "$env:Path;$UserBinDir", 'User')
+}
+
 $GitconfigTmpl = $(Get-Content "$PublicRepoDir/gitconfig.tmpl")
 $GitconfigTmpl = $GitconfigTmpl -Replace "__NAME__", "ian"
 $GitconfigTmpl = $GitconfigTmpl -Replace "__EMAIL__", "me@iany.me"
