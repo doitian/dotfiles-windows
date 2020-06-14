@@ -3,7 +3,7 @@
   "Number" = "$([char]0x1b)[37m"
 }
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
-
+#
 $PSProfileDir = $(Split-Path -Parent $PROFILE)
 $WindowsTerminalSettings = 'C:\Users\me\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json'
 $env:EDITOR = 'vim'
@@ -32,11 +32,9 @@ function fpass {
   gopass @Args $selected
 }
 
-function prompt {
-  $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
-  $principal = [Security.Principal.WindowsPrincipal] $identity
-  $adminRole = [Security.Principal.WindowsBuiltInRole]::Administrator
+$global:PromptString = $null
 
+function prompt {
   $cwd = (Get-Location).Path
   $parts = $cwd.Split([IO.Path]::DirectorySeparatorChar)
   if ($parts.Count -gt 4) {
@@ -44,13 +42,14 @@ function prompt {
   }
   Write-Host $cwd -NoNewline -ForegroundColor Blue
 
-  $(if (Test-Path variable:/PSDebugContext) {
-    "? "
-  } elseif ($principal.IsInRole($adminRole)) {
-    "# "
-  } else {
-    "$ "
-  })
+  if ($global:PromptString -eq $null) {
+    $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+    $principal = [Security.Principal.WindowsPrincipal] $identity
+    $adminRole = [Security.Principal.WindowsBuiltInRole]::Administrator
+    $global:PromptString = $principal.IsInRole($adminRole) ? "#> " : "> "
+  }
+
+  $global:PromptString
 }
 
 if (Get-Module -ListAvailable -Name z) {
@@ -60,4 +59,3 @@ if (Get-Module -ListAvailable -Name PSFzf) {
   Import-Module PSFzf
   Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
 }
-

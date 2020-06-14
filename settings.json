@@ -20,7 +20,7 @@
         {
             "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
             "hidden": false,
-            "name": "Ubuntu",
+            "name": "WSL",
             "commandline": "wsl ~",
             "source": "Windows.Terminal.Wsl",
             "fontSize": 11,
@@ -62,6 +62,12 @@
             "hidden": false,
             "name": "PowerShell",
             "source": "Windows.Terminal.PowershellCore"
+        },
+        {
+            "guid": "{1777cdf0-b2c4-5a63-a204-eb60f349ea7c}",
+            "hidden": false,
+            "name": "Alpine",
+            "source": "Windows.Terminal.Wsl"
         }
     ],
     // Add custom color schemes to this array
