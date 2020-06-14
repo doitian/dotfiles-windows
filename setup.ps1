@@ -1,5 +1,6 @@
 $PublicRepoDir = "$HOME/.dotfiles/repos/public"
 $PrivateRepoDir = "$HOME/.dotfiles/repos/private"
+$DocumentsDir = Split-Path -Parent (Split-Path -Parent $PROFILE)
 
 git config --global core.autocrlf input
 ForEach ($repo in $PublicRepoDir, $PrivateRepoDir) {
@@ -37,6 +38,8 @@ Function ln ($value, $path) {
   }
   New-Item -ItemType Junction -Force -Path $path -Value $value
 }
+
+ln "$DocumentsDir\PowerShell" "$DocumentsDir\WindowsPowerShell"
 ln "$PublicRepoDir\default\.vim\projections" "$HOME\.vim\projections"
 ln "$PrivateRepoDir\default\.vim\scripts" "$HOME\.vim\scripts"
 ln "$PrivateRepoDir\UltiSnips" "$HOME\.vim\UltiSnips"
