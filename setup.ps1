@@ -34,12 +34,14 @@ mkdir -Force ~/.vim/scripts, ~/.vim/projections, ~/.vim/backup, ~/.vim/swap, ~/.
 
 Function ln ($value, $path) {
   if (Test-Path -LiteralPath $path) {
-    [io.directory]::Delete($path)
+    rm -Re -Fo $path
   }
   New-Item -ItemType Junction -Force -Path $path -Value $value
 }
 
-ln "$DocumentsDir\PowerShell" "$DocumentsDir\WindowsPowerShell"
+if (Test-Path -LiteralPath "$DocumentsDir\PowerShell") {
+  ln "$DocumentsDir\PowerShell" "$DocumentsDir\WindowsPowerShell"
+}
 ln "$PublicRepoDir\default\.vim\projections" "$HOME\.vim\projections"
 ln "$PrivateRepoDir\default\.vim\scripts" "$HOME\.vim\scripts"
 ln "$PrivateRepoDir\UltiSnips" "$HOME\.vim\UltiSnips"

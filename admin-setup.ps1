@@ -21,5 +21,3 @@ New-Item -ItemType SymbolicLink -Force -Value "$(pwd)\settings.json" -Path 'C:\U
 
 mkdir -Force ~/.ssh
 New-Item -ItemType SymbolicLink -Force -Value "$PrivateRepoDir/default/.ssh/config" -Path "~/.ssh/config"
-
-#start Win10-Initial-Setup-Script-master\Default.cmd
