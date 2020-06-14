@@ -3,6 +3,9 @@ $PrivateRepoDir = "$HOME/.dotfiles/repos/private"
 $DocumentsDir = Split-Path -Parent (Split-Path -Parent $PROFILE)
 
 git config --global core.autocrlf input
+$SSHPath = (Get-Command -Name 'plink.exe').Source
+[Environment]::SetEnvironmentVariable('GIT_SSH', $SSHPath, 'User')
+
 ForEach ($repo in $PublicRepoDir, $PrivateRepoDir) {
   if (Test-Path -LiteralPath $repo) {
     git -C $repo pull
@@ -10,9 +13,6 @@ ForEach ($repo in $PublicRepoDir, $PrivateRepoDir) {
     git clone --depth 1 "git@github.com:doitian/dotfiles-$(Split-Path -Leaf $repo).git" $repo
   }
 }
-
-$SSHPath = (Get-Command -Name 'plink.exe').Source
-[Environment]::SetEnvironmentVariable('GIT_SSH', $SSHPath, 'User')
 
 $UserBinDir = "$(Split-Path -Parent $PROFILE)\bin"
 if (-Not ($env:Path).Split(";").Contains($UserBinDir)) {
@@ -29,6 +29,7 @@ Get-Content "$PublicRepoDir/gitconfig.common" | Add-Content "~/.gitconfig"
 git config --global core.autocrlf input
 git config --global --unset core.pager
 git config --global gpg.program (Get-Command -Name 'gpg.exe').Source
+git config --global http.proxy http://127.0.0.1:7890
 
 mkdir -Force ~/.vim/scripts, ~/.vim/projections, ~/.vim/backup, ~/.vim/swap, ~/.vim/undo, ~/.vim/autoload
 
