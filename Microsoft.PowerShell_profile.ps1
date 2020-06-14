@@ -44,7 +44,11 @@ function prompt {
     $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
     $principal = [Security.Principal.WindowsPrincipal] $identity
     $adminRole = [Security.Principal.WindowsBuiltInRole]::Administrator
-    $global:PromptString = $principal.IsInRole($adminRole) ? "#> " : "> "
+    if ($principal.IsInRole($adminRole)) {
+      $global:PromptString =  "#> "
+    } else {
+      $global:PromptString =  "> "
+    }
   }
 
   $global:PromptString
