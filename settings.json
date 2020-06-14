@@ -2,32 +2,43 @@
 // For documentation on these settings, see: https://aka.ms/terminal-documentation
 {
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "defaultProfile": "{9331bf84-03f4-4019-bf20-654dafccf1e0}",
+    "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
     "profiles": [
         {
-            "guid": "{9331bf84-03f4-4019-bf20-654dafccf1e0}",
-            "name": "Windows PowerShell 7",
-            "commandline": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
-            "icon": "C:\\Program Files\\PowerShell\\7\\assets\\Powershell_av_colors.ico",
+            "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
             "hidden": false,
-            "fontSize": 11,
-            "fontFace": "Cascadia Code",
-            "colorScheme": "papercolor-light",
-            "cursorColor": "#005f87",
-            "cursorShape": "vintage",
-            "startingDirectory": "%USERPROFILE"
-        },
-        {
-            "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+            "name": "PowerShell",
+            "source": "Windows.Terminal.PowershellCore",
             "hidden": false,
-            "name": "WSL",
-            "commandline": "wsl ~",
-            "source": "Windows.Terminal.Wsl",
             "fontSize": 11,
             "fontFace": "Cascadia Code",
             "colorScheme": "papercolor-light",
             "cursorColor": "#005f87",
             "cursorShape": "vintage"
+        },
+        {
+            "guid": "{aa8efdb5-3cbe-50b2-a332-9203dc1ee217}",
+            "hidden": false,
+            "name": "Fedora",
+            "source": "Windows.Terminal.Wsl",
+            "fontSize": 11,
+            "fontFace": "Cascadia Code",
+            "colorScheme": "papercolor-light",
+            "cursorColor": "#005f87",
+            "cursorShape": "vintage",
+            "startingDirectory": "//wsl$/Fedora/home/ian"
+        },
+        {
+            "guid": "{1777cdf0-b2c4-5a63-a204-eb60f349ea7c}",
+            "hidden": false,
+            "name": "Alpine",
+            "source": "Windows.Terminal.Wsl",
+            "fontSize": 11,
+            "fontFace": "Cascadia Code",
+            "colorScheme": "papercolor-light",
+            "cursorColor": "#005f87",
+            "cursorShape": "vintage",
+            "startingDirectory": "//wsl$/Alpine/root"
         },
         {
             "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
@@ -56,18 +67,6 @@
             "hidden": false,
             "name": "Azure Cloud Shell",
             "source": "Windows.Terminal.Azure"
-        },
-        {
-            "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
-            "hidden": false,
-            "name": "PowerShell",
-            "source": "Windows.Terminal.PowershellCore"
-        },
-        {
-            "guid": "{1777cdf0-b2c4-5a63-a204-eb60f349ea7c}",
-            "hidden": false,
-            "name": "Alpine",
-            "source": "Windows.Terminal.Wsl"
         }
     ],
     // Add custom color schemes to this array
