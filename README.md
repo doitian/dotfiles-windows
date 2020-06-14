@@ -34,7 +34,8 @@ iwr -useb get.scoop.sh | iex
 Install essential apps
 
 ```
-scoop install mingit gpg z
+scoop bucket add extras
+scoop install mingit gpg z putty
 Install-Module -Name PSFzf -Scope CurrentUser
 ```
 

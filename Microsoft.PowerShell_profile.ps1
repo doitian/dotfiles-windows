@@ -13,6 +13,11 @@ Set-Alias -Name g -Value git
 Set-Alias -Name j -Value z
 Set-Alias -Name grep -Value rg
 Set-Alias -Name which -Value Get-Command
+if (Get-Command -Name 'plink.exe' -ErrorAction SilentlyContinue) {
+  function ssh {
+    plink -batch @Args
+  }
+}
 
 $cb = "$HOME/codebase"
 $dcs = "$HOME/Documents"
