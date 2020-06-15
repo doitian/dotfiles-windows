@@ -1,5 +1,9 @@
-$PublicRepoDir = "$HOME/.dotfiles/repos/public"
-$PrivateRepoDir = "$HOME/.dotfiles/repos/private"
+$ReposDir = Get-Item "$HOME\.dotfiles\repos"
+if ($ReposDir.Target -ne $null) {
+  $ReposDir = $ReposDir.Target
+}
+$PublicRepoDir = "$ReposDir\public"
+$PrivateRepoDir = "$ReposDir\private"
 $DocumentsDir = Split-Path -Parent (Split-Path -Parent $PROFILE)
 
 git config --global core.autocrlf input
@@ -15,7 +19,7 @@ ForEach ($repo in $PublicRepoDir, $PrivateRepoDir) {
 }
 
 $UserBinDir = "$(Split-Path -Parent $PROFILE)\bin"
-if (-Not ($env:Path).Split(";").Contains($UserBinDir)) {
+if (-Not ([Environment]::GetEnvironmentVariable("Path", "User")).Split(";").Contains($UserBinDir)) {
   [Environment]::SetEnvironmentVariable('Path', "$env:Path;$UserBinDir", 'User')
 }
 

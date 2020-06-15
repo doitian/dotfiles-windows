@@ -1,5 +1,9 @@
-$PublicRepoDir = "$HOME/.dotfiles/repos/public"
-$PrivateRepoDir = "$HOME/.dotfiles/repos/private"
+$ReposDir = Get-Item "$HOME\.dotfiles\repos"
+if ($ReposDir.Target -ne $null) {
+  $ReposDir = $ReposDir.Target
+}
+$PublicRepoDir = "$ReposDir\public"
+$PrivateRepoDir = "$ReposDir\private"
 
 $hexified = "00,00,00,00,00,00,00,00,02,00,00,00,1d,00,3a,00,00,00,00,00".Split(',') | % { "0x$_"};
 

@@ -8,10 +8,11 @@
 
 ```
 cd ~
-New-Item -ItemType Junction -Path Documents -Value "$env:OneDrive\Documents"
-New-Item -ItemType Junction -Path Desktop -Value "$env:OneDrive\桌面"
-New-Item -ItemType Junction -Path .dotfiles -Value D:\dotfiles\dotfiles
-New-Item -ItemType Junction -Path .vim -Value D:\dotfiles\vim
+New-Item -ItemType Junction -Path Documents -Value "D:\Documents"
+New-Item -ItemType Junction -Path Desktop -Value "D:\Desktop"
+mkdir -Fo .dotfiles
+New-Item -ItemType Junction -Path .dotfiles\repos -Value D:\codebase\my\dotfiles\repos
+New-Item -ItemType Junction -Path .vim -Value D:\codebase\my\dotfiles\vim
 New-Item -ItemType Junction -Path Downloads -Value D:\Downloads
 New-Item -ItemType Junction -Path codebase -Value D:\codebase
 ```
