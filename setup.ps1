@@ -34,6 +34,8 @@ git config --global core.autocrlf input
 git config --global --unset core.pager
 git config --global gpg.program (Get-Command -Name 'gpg.exe').Source
 git config --global http.proxy http://127.0.0.1:7890
+git config --global alias.dotfiles '!powershell.exe -NoProfile -Command git-dotfiles'
+git config --global alias.codebase '!powershell.exe -NoProfile -Command git-codebase'
 
 mkdir -Force ~/.vim/scripts, ~/.vim/projections, ~/.vim/backup, ~/.vim/swap, ~/.vim/undo, ~/.vim/autoload
 
