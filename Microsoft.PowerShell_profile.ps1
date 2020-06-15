@@ -1,9 +1,10 @@
 ﻿Set-PSReadLineOption -EditMode emacs -Colors @{
-  "Member" = "$([char]0x1b)[37m"
-  "Number" = "$([char]0x1b)[37m"
+  "Command" = "Magenta"
+  "Member" = "DarkGray"
+  "Number" = "DarkYellow"
 }
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
-#
+
 $PSProfileDir = $(Split-Path -Parent $PROFILE)
 $WindowsTerminalSettings = 'C:\Users\me\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json'
 $env:EDITOR = 'vim'

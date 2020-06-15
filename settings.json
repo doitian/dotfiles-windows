@@ -13,7 +13,6 @@
             "fontSize": 11,
             "fontFace": "Cascadia Code",
             "colorScheme": "papercolor-light",
-            "cursorColor": "#005f87",
             "cursorShape": "vintage"
         },
         {
@@ -24,7 +23,6 @@
             "fontSize": 11,
             "fontFace": "Cascadia Code",
             "colorScheme": "papercolor-light",
-            "cursorColor": "#005f87",
             "cursorShape": "vintage",
             "startingDirectory": "//wsl$/Fedora/home/ian"
         },
@@ -35,8 +33,7 @@
             "source": "Windows.Terminal.Wsl",
             "fontSize": 11,
             "fontFace": "Cascadia Code",
-            "colorScheme": "papercolor-light",
-            "cursorColor": "#005f87",
+            "colorScheme": "One Half Dark",
             "cursorShape": "vintage",
             "startingDirectory": "//wsl$/Alpine/root"
         },
@@ -47,8 +44,7 @@
             "hidden": false,
             "fontSize": 11,
             "fontFace": "Cascadia Code",
-            "colorScheme": "papercolor-light",
-            "cursorColor": "#005f87",
+            "colorScheme": "One Half Dark",
             "cursorShape": "vintage"
         },
         {
@@ -58,40 +54,44 @@
             "hidden": false,
             "fontSize": 11,
             "fontFace": "Cascadia Code",
-            "colorScheme": "papercolor-light",
-            "cursorColor": "#005f87",
+            "colorScheme": "One Half Dark",
             "cursorShape": "vintage"
         },
         {
             "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
             "hidden": false,
             "name": "Azure Cloud Shell",
-            "source": "Windows.Terminal.Azure"
+            "source": "Windows.Terminal.Azure",
+            "fontSize": 11,
+            "fontFace": "Cascadia Code",
+            "colorScheme": "One Half Dark",
+            "cursorShape": "vintage"
         }
     ],
     // Add custom color schemes to this array
     "schemes": [
         {
-            "name": "papercolor-light",
-            "foreground": "#4c4c4b",
-            "background": "#eeeeed",
-            "black": "#4c4c4b",
-            "blue": "#4271ad",
-            "green": "#418c00",
-            "cyan": "#3e989f",
-            "red": "#d6225e",
-            "purple": "#8959a8",
-            "yellow": "#d75e00",
-            "white": "#eeeeed",
-            "brightBlack": "#4c4c4b",
-            "brightBlue": "#4271ad",
-            "brightGreen": "#718c00",
-            "brightCyan": "#3e989f",
-            "brightRed": "#d6225e",
-            "brightPurple": "#8959a8",
-            "brightYellow": "#d75e00",
-            "brightWhite": "#eeeeed",
-            "selectionBackground": "#4c4c4b"
+            "name":                "papercolor-light",
+            "foreground":          "#4c4c4b",
+            "background":          "#eeeeed",
+            "black":               "#4c4c4b",
+            "blue":                "#4271ad",
+            "green":               "#418c00",
+            "cyan":                "#3e989f",
+            "red":                 "#d6225e",
+            "purple":              "#8959a8",
+            "yellow":              "#d75e00",
+            "white":               "#eeeeed",
+            "brightBlack":         "#4c4c4b",
+            "brightBlue":          "#4271ad",
+            "brightGreen":         "#718c00",
+            "brightCyan":          "#3e989f",
+            "brightRed":           "#d6225e",
+            "brightPurple":        "#8959a8",
+            "brightYellow":        "#d75e00",
+            "brightWhite":         "#eeeeed",
+            "selectionBackground": "#4c4c4b",
+            "cursorColor":         "#005f87"
         }
     ],
     // Add any keybinding overrides to this array.
