@@ -2,9 +2,7 @@
 
 ┌ 1. Use English as Windows Display Language
 
-┌ 2. Install OneDrive
-
-┌ 3. Create Junctions
+┌ 2. Create Junctions if Using D:\ as data disk
 
 ```
 cd ~
@@ -17,7 +15,7 @@ New-Item -ItemType Junction -Path Downloads -Value D:\Downloads
 New-Item -ItemType Junction -Path codebase -Value D:\codebase
 ```
 
-┌ 4. Install scoop
+┌ 3. Install scoop
 
 Customize location
 
@@ -40,15 +38,18 @@ scoop install mingit gpg z putty
 Install-Module -Name PSFzf -Scope CurrentUser
 ```
 
-┌ 5. Run as user
+┌ 4. Run as user
 
 ```
 ./setup
 ```
 
-┌ 6. Run as admin
+┌ 5. Run as admin
 
 ```
-./admin-setup`
+./admin-setup
+Win10-Initial-Setup-Script-master/Default.cmd
 ```
+
+Restart
 
