@@ -36,10 +36,10 @@ Windows Registry Editor Version 5.00
 "PortNumber"=dword:00000016
 "CloseOnExit"=dword:00000001
 "WarnOnClose"=dword:00000001
-"PingInterval"=dword:00000000
+"PingInterval"=dword:00000004
 "PingIntervalSecs"=dword:00000000
 "TCPNoDelay"=dword:00000001
-"TCPKeepalives"=dword:00000000
+"TCPKeepalives"=dword:00000001
 "TerminalType"="xterm"
 "TerminalSpeed"="38400,38400"
 "TerminalModes"="CS7=A,CS8=A,DISCARD=A,DSUSP=A,ECHO=A,ECHOCTL=A,ECHOE=A,ECHOK=A,ECHOKE=A,ECHONL=A,EOF=A,EOL=A,EOL2=A,ERASE=A,FLUSH=A,ICANON=A,ICRNL=A,IEXTEN=A,IGNCR=A,IGNPAR=A,IMAXBEL=A,INLCR=A,INPCK=A,INTR=A,ISIG=A,ISTRIP=A,IUCLC=A,IUTF8=A,IXANY=A,IXOFF=A,IXON=A,KILL=A,LNEXT=A,NOFLSH=A,OCRNL=A,OLCUC=A,ONLCR=A,ONLRET=A,ONOCR=A,OPOST=A,PARENB=A,PARMRK=A,PARODD=A,PENDIN=A,QUIT=A,REPRINT=A,START=A,STATUS=A,STOP=A,SUSP=A,SWTCH=A,TOSTOP=A,WERASE=A,XCASE=A"
@@ -117,8 +117,8 @@ Windows Registry Editor Version 5.00
 "HideMousePtr"=dword:00000000
 "SunkenEdge"=dword:00000000
 "WindowBorder"=dword:00000005
-"CurType"=dword:00000001
-"BlinkCur"=dword:00000000
+"CurType"=dword:00000000
+"BlinkCur"=dword:00000001
 "Beep"=dword:00000001
 "BeepInd"=dword:00000000
 "BellWaveFile"=""
