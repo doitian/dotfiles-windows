@@ -9,7 +9,9 @@ $PSProfileDir = $(Split-Path -Parent $PROFILE)
 $WindowsTerminalSettings = 'C:\Users\me\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json'
 $env:EDITOR = 'vim'
 $env:FZF_DEFAULT_OPTS = '--color=light --color=fg:0'
+$env:BAT_THEME = 'ansi-light'
 
+Set-Alias -Name ls -Value git
 Set-Alias -Name g -Value git
 Set-Alias -Name j -Value z
 Set-Alias -Name grep -Value rg
