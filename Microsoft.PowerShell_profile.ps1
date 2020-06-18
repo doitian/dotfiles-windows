@@ -1,4 +1,4 @@
-[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+﻿[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
 Set-PSReadLineOption -EditMode emacs -Colors @{
   "Command" = "Magenta"
