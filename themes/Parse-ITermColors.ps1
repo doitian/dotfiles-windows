@@ -23,8 +23,8 @@ $PuttyColors = @{
   "Colour17" = "Ansi 13 Color"
   "Colour18" = "Ansi 6 Color"
   "Colour19" = "Ansi 14 Color"
-  "Colour20" = "Ansi 7 Color"
-  "Colour21" = "Ansi 15 Color"
+  "Colour20" = "Ansi 15 Color"
+  "Colour21" = "Ansi 17 Color"
 }
 
 $WindowsTerminalColors = @{
@@ -39,7 +39,7 @@ $WindowsTerminalColors = @{
   "blue" = "Ansi 4 Color"
   "purple" = "Ansi 5 Color"
   "cyan" = "Ansi 6 Color"
-  "white" = "Ansi 7 Color"
+  "white" = "Ansi 15 Color"
   "brightBlack" = "Ansi 8 Color"
   "brightRed" = "Ansi 9 Color"
   "brightGreen" = "Ansi 10 Color"
@@ -47,7 +47,7 @@ $WindowsTerminalColors = @{
   "brightBlue" = "Ansi 12 Color"
   "brightPurple" = "Ansi 13 Color"
   "brightCyan" = "Ansi 14 Color"
-  "brightWhite" = "Ansi 15 Color"
+  "brightWhite" = "Ansi 7 Color"
 }
 
 $colors = @{}

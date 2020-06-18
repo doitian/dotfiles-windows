@@ -21,8 +21,8 @@ Windows Registry Editor Version 5.00
 "Colour17"="169,77,187"
 "Colour18"="14,112,124"
 "Colour19"="38,186,209"
-"Colour20"="238,238,238"
-"Colour21"="216,216,216"
+"Colour20"="216,216,216"
+"Colour21"="238,238,238"
 "Present"=dword:00000001
 "HostName"=""
 "LogFileName"="putty.log"
