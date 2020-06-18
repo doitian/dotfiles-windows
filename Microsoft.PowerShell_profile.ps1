@@ -56,12 +56,12 @@ function prompt {
   }
 
   $promptColor = if ($lastSuccess) {
-    if ($global:PromptChar -eq "#") { "`e[33m" } else { "`e[0m" }
+    if ($global:PromptChar -eq "#") { "$([char]27)[33m" } else { "$([char]27)[0m" }
   } else {
-    "`e[31m"
+    "$([char]27)[31m"
   }
 
-  @("`e[34;1m", $cwd, $promptColor, $global:PromptChar, "`e[0m") -join ""
+  @("$([char]27)[34;1m", $cwd, $promptColor, $global:PromptChar, "$([char]27)[0m") -join ""
 }
 
 if (Get-Module -ListAvailable -Name z) {
