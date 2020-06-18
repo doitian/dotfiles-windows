@@ -1,4 +1,6 @@
-﻿Set-PSReadLineOption -EditMode emacs -Colors @{
+﻿[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+
+Set-PSReadLineOption -EditMode emacs -Colors @{
   "Command" = "Magenta"
   "Member" = "DarkGray"
   "Number" = "DarkYellow"
@@ -32,28 +34,34 @@ function fpass {
   gopass @Args $selected
 }
 
-$global:PromptString = $null
+$global:PromptChar = $null
 
 function prompt {
+  $lastSuccess = $?
   $cwd = (Get-Location).Path
   $parts = $cwd.Split([IO.Path]::DirectorySeparatorChar)
   if ($parts.Count -gt 4) {
     $cwd = $parts[0..1] + @("…") + $parts[-2..-1] -join '\'
   }
-  Write-Host $cwd -NoNewline -ForegroundColor Blue
 
-  if ($global:PromptString -eq $null) {
+  if ($global:PromptChar -eq $null) {
     $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
     $principal = [Security.Principal.WindowsPrincipal] $identity
     $adminRole = [Security.Principal.WindowsBuiltInRole]::Administrator
     if ($principal.IsInRole($adminRole)) {
-      $global:PromptString =  "#> "
+      $global:PromptChar = "# "
     } else {
-      $global:PromptString =  "> "
+      $global:PromptChar = "❯ "
     }
   }
 
-  $global:PromptString
+  $promptColor = if ($lastSuccess) {
+    if ($global:PromptChar -eq "#") { "`e[33m" } else { "`e[0m" }
+  } else {
+    "`e[31m"
+  }
+
+  @("`e[34;1m", $cwd, $promptColor, $global:PromptChar, "`e[0m") -join ""
 }
 
 if (Get-Module -ListAvailable -Name z) {
