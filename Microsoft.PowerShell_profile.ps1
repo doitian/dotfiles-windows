@@ -1,4 +1,4 @@
-﻿[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
 Set-PSReadLineOption -EditMode emacs -Colors @{
   "Command" = "Magenta"
@@ -37,7 +37,6 @@ function fpass {
 $global:PromptChar = $null
 
 function prompt {
-  $lastSuccess = $?
   $cwd = (Get-Location).Path
   $parts = $cwd.Split([IO.Path]::DirectorySeparatorChar)
   if ($parts.Count -gt 4) {
@@ -55,13 +54,7 @@ function prompt {
     }
   }
 
-  $promptColor = if ($lastSuccess) {
-    if ($global:PromptChar -eq "#") { "$([char]27)[33m" } else { "$([char]27)[0m" }
-  } else {
-    "$([char]27)[31m"
-  }
-
-  @("$([char]27)[34;1m", $cwd, $promptColor, $global:PromptChar, "$([char]27)[0m") -join ""
+  @("$([char]27)[34;1m", $cwd, $promptColor, "$([char]27)[0m", $global:PromptChar) -join ""
 }
 
 if (Get-Module -ListAvailable -Name z) {
