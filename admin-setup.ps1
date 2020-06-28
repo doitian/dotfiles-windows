@@ -14,7 +14,7 @@ New-ItemProperty -Force -Path $kbLayout -Name "Scancode Map" -PropertyType Binar
 New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/default/.vimrc" -Path "~/_vimrc"
 New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/default/.vimrc" -Path "~/.vimrc"
 
-ForEach ($f in ".ignore", ".editorconfig") {
+ForEach ($f in ".ignore", ".editorconfig", ".ctags") {
   New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/default/$f" -Path "~/$f"
 }
 
