@@ -25,6 +25,7 @@ if (-Not ([Environment]::GetEnvironmentVariable("Path", "User")).Split(";").Cont
 [Environment]::SetEnvironmentVariable('EDITOR', 'vim', 'User')
 [Environment]::SetEnvironmentVariable('FZF_DEFAULT_OPTS', '--color light,fg:#3c3b3a', 'User')
 [Environment]::SetEnvironmentVariable('FZF_DEFAULT_COMMAND', 'rg --no-messages --hidden -g "!.git" --color never --files', 'User')
+[Environment]::SetEnvironmentVariable('FZF_CTRL_T_COMMAND', 'rg --no-messages --hidden -g "!.git" --color never --files', 'User')
 [Environment]::SetEnvironmentVariable('BAT_THEME', 'ansi-light', 'User')
 
 $GitconfigTmpl = $(Get-Content "$PublicRepoDir/gitconfig.tmpl")
