@@ -22,6 +22,10 @@ $UserBinDir = "$(Split-Path -Parent $PROFILE)\bin"
 if (-Not ([Environment]::GetEnvironmentVariable("Path", "User")).Split(";").Contains($UserBinDir)) {
   [Environment]::SetEnvironmentVariable('Path', "$env:Path;$UserBinDir", 'User')
 }
+[Environment]::SetEnvironmentVariable('EDITOR', 'vim', 'User')
+[Environment]::SetEnvironmentVariable('FZF_DEFAULT_OPTS', '--color light,fg:#3c3b3a', 'User')
+[Environment]::SetEnvironmentVariable('FZF_DEFAULT_COMMAND', 'rg --no-messages --hidden -g "!.git" --color never --files', 'User')
+[Environment]::SetEnvironmentVariable('BAT_THEME', 'ansi-light', 'User')
 
 $GitconfigTmpl = $(Get-Content "$PublicRepoDir/gitconfig.tmpl")
 $GitconfigTmpl = $GitconfigTmpl -Replace "__NAME__", "ian"
