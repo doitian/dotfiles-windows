@@ -1,4 +1,9 @@
 $ReposDir = Get-Item "$HOME\.dotfiles\repos"
+if ($ReposDir -eq $null) {
+  echo "$HOME\.dotfiles\repos does not exist"
+  return
+}
+
 if ($ReposDir.Target -ne $null) {
   $ReposDir = $ReposDir.Target
 }

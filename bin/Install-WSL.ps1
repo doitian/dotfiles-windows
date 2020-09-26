@@ -10,7 +10,7 @@ param (
   $RootFsTar,
 
   [String]
-  $Name
+  $Name,
 
   [String]
   $Target
@@ -23,7 +23,7 @@ $ExtractDir = "."
 if ($RootFsTar.Name.StartsWith('alpine-')) {
   $DefaultName = 'Alpine'
 } elseif ($RootFsTar.Name.StartsWith('fedora-')) {
-  $DefaultName = 'Alpine'
+  $DefaultName = 'Fedora'
 }
 
 if ($Name.Length -eq 0) {
@@ -38,7 +38,7 @@ if ($Target.Length -eq 0) {
   $Target = "$(Get-Location)\$Name"
 }
 
-lxrunoffline.exe i -n $Name -f $RootFsTar -d "$WSLRoot\$Name" -v 2 -r "$ExtractDir"
+lxrunoffline.exe i -n $Name -f $RootFsTar -d "$Target" -v 2 -r "$ExtractDir"
 
 if (-Not (Test-Path -LiteralPath "$Target\ext4.vhdx")) {
   wsl --set-version $Name 2

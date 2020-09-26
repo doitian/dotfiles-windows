@@ -1,4 +1,9 @@
 $ReposDir = Get-Item "$HOME\.dotfiles\repos"
+if ($ReposDir -eq $null) {
+  echo "$HOME\.dotfiles\repos does not exist"
+  return
+}
+
 if ($ReposDir.Target -ne $null) {
   $ReposDir = $ReposDir.Target
 }
@@ -21,7 +26,7 @@ ForEach ($f in ".ignore", ".editorconfig", ".ctags") {
 $PSProfileDir = $(Split-Path -Parent $PROFILE)
 ls -Force "$PSProfileDir/local" | % { New-Item -ItemType SymbolicLink -Force -Value ($_.FullName) -Path "~/$($_.Name)" }
 
-New-Item -ItemType SymbolicLink -Force -Value "$(pwd)\settings.json" -Path 'C:\Users\me\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json'
+New-Item -ItemType SymbolicLink -Force -Value "$(pwd)\settings.json" -Path "$HOME\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 
 mkdir -Force ~/.ssh
 New-Item -ItemType SymbolicLink -Force -Value "$PrivateRepoDir/default/.ssh/config" -Path "~/.ssh/config"

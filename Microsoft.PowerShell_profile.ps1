@@ -8,7 +8,7 @@ Set-PSReadLineOption -EditMode emacs -Colors @{
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
 
 $PSProfileDir = $(Split-Path -Parent $PROFILE)
-$WindowsTerminalSettings = 'C:\Users\me\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json'
+$WindowsTerminalSettings = "$HOME\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 
 Set-Alias -Name g -Value git
 Set-Alias -Name j -Value z
