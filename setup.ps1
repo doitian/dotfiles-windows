@@ -64,7 +64,7 @@ ln "$PrivateRepoDir\default\.vim\scripts" "$HOME\.vim\scripts"
 ln "$PrivateRepoDir\UltiSnips" "$HOME\.vim\UltiSnips"
 
 mkdir -Force ~/vimfiles/autoload
-Invoke-WebRequest -UseBasicParsing -OutFile ~/vimfiles/autoload/plug.vim "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+Invoke-WebRequest -Proxy 'http://127.0.0.1:7890' -UseBasicParsing -OutFile ~/vimfiles/autoload/plug.vim "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 cp -Force ~/vimfiles/autoload/plug.vim ~/.vim/autoload/plug.vim
 
 cp -Force "$PublicRepoDir\default\.gnupg\gpg.conf" "$(scoop prefix gpg)\home\"
