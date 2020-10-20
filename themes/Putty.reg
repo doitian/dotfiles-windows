@@ -49,7 +49,7 @@ Windows Registry Editor Version 5.00
 "ProxyLocalhost"=dword:00000000
 "ProxyMethod"=dword:00000002
 "ProxyHost"="127.0.0.1"
-"ProxyPort"=dword:00001ed3
+"ProxyPort"=dword:00001ed2
 "ProxyUsername"=""
 "ProxyPassword"=""
 "ProxyTelnetCommand"="connect %host %port\\n"
