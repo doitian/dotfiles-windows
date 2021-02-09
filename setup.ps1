@@ -12,8 +12,6 @@ $PrivateRepoDir = "$ReposDir\private"
 $DocumentsDir = Split-Path -Parent (Split-Path -Parent $PROFILE)
 
 git config --global core.autocrlf input
-$SSHPath = (Get-Command -Name 'plink.exe').Source
-[Environment]::SetEnvironmentVariable('GIT_SSH', $SSHPath, 'User')
 
 ForEach ($repo in $PublicRepoDir, $PrivateRepoDir) {
   if (Test-Path -LiteralPath $repo) {
@@ -70,8 +68,3 @@ Invoke-WebRequest -Proxy 'http://127.0.0.1:7890' -UseBasicParsing -OutFile ~/vim
 cp -Force ~/vimfiles/autoload/plug.vim ~/.vim/autoload/plug.vim
 
 cp -Force "$PublicRepoDir\default\.gnupg\gpg.conf" "$(scoop prefix gpg)\home\"
-@(
-  "default-cache-ttl 600"
-  "max-cache-ttl 7200"
-  "enable-putty-support"
-) | Set-Content -Path "$(scoop prefix gpg)\home\gpg-agent.conf"

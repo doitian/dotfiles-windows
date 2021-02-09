@@ -41,6 +41,12 @@ Install-Module -Name PSFzf -Scope CurrentUser
 ┌ 4. Run as user
 
 ```
+./pre-setup
+```
+
+Restart the terminal app and continue.
+
+```
 ./setup
 ```
 

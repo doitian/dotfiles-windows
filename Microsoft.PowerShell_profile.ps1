@@ -1,4 +1,4 @@
-﻿[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
 Set-PSReadLineOption -EditMode emacs -Colors @{
   "Command" = "Magenta"
@@ -14,9 +14,6 @@ Set-Alias -Name g -Value git
 Set-Alias -Name j -Value z
 Set-Alias -Name grep -Value rg
 Set-Alias -Name which -Value Get-Command
-if (Get-Command -Name 'plink.exe' -ErrorAction SilentlyContinue) {
-  Set-Alias -Name ssh -Value plink
-}
 
 $cb = "$HOME/codebase"
 $dcs = "$HOME/Documents"
