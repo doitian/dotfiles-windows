@@ -29,4 +29,3 @@ ls -Force "$PSProfileDir/local" | % { New-Item -ItemType SymbolicLink -Force -Va
 New-Item -ItemType SymbolicLink -Force -Value "$(pwd)\settings.json" -Path "$HOME\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 
 mkdir -Force ~/.ssh
-New-Item -ItemType SymbolicLink -Force -Value "$PrivateRepoDir/default/.ssh/config" -Path "~/.ssh/config"
