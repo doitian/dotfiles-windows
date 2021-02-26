@@ -59,12 +59,14 @@ Function ln ($value, $path) {
 if (Test-Path -LiteralPath "$DocumentsDir\PowerShell") {
   ln "$DocumentsDir\PowerShell" "$DocumentsDir\WindowsPowerShell"
 }
-ln "$PublicRepoDir\default\.vim\projections" "$HOME\.vim\projections"
-ln "$PrivateRepoDir\default\.vim\scripts" "$HOME\.vim\scripts"
 ln "$PrivateRepoDir\UltiSnips" "$HOME\.vim\UltiSnips"
 
 mkdir -Force ~/vimfiles/autoload
 Invoke-WebRequest -Proxy 'http://127.0.0.1:7890' -UseBasicParsing -OutFile ~/vimfiles/autoload/plug.vim "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 cp -Force ~/vimfiles/autoload/plug.vim ~/.vim/autoload/plug.vim
+
+ls -Force "$PublicRepoDir\default\.vim\projections" | % { cp -Force $_ "$HOME\.vim\projections\" }
+ls -Force "$PublicRepoDir\default\.vim\scripts" | % { cp -Force $_ "$HOME\.vim\scripts\" }
+ls -Force "$PrivateRepoDir\default\.vim\scripts" | % { cp -Force $_ "$HOME\.vim\scripts\" }
 
 cp -Force "$PublicRepoDir\default\.gnupg\gpg.conf" "$(scoop prefix gpg)\home\"
