@@ -27,9 +27,10 @@ if (-Not ([Environment]::GetEnvironmentVariable("Path", "User")).Split(";").Cont
 }
 [Environment]::SetEnvironmentVariable('EDITOR', 'vim', 'User')
 [Environment]::SetEnvironmentVariable('FZF_DEFAULT_OPTS', '--color light,fg:#3c3b3a', 'User')
-[Environment]::SetEnvironmentVariable('FZF_DEFAULT_COMMAND', 'rg --no-messages --hidden -g "!.git" --color never --files', 'User')
-[Environment]::SetEnvironmentVariable('FZF_CTRL_T_COMMAND', 'rg --no-messages --hidden -g "!.git" --color never --files', 'User')
-[Environment]::SetEnvironmentVariable('BAT_THEME', 'ansi-light', 'User')
+[Environment]::SetEnvironmentVariable('FZF_DEFAULT_COMMAND', 'fd --type f --hidden --follow --exclude ".git"', 'User')
+[Environment]::SetEnvironmentVariable('FZF_CTRL_T_COMMAND', 'fd --type f --hidden --follow --exclude ".git"', 'User')
+[Environment]::SetEnvironmentVariable('FZF_ALT_C_COMMAND', 'fd --type d --no-ignore --hidden --follow --exclude ".git"', 'User')
+[Environment]::SetEnvironmentVariable('BAT_THEME', 'Coldark-Cold', 'User')
 
 $GitconfigTmpl = $(Get-Content "$PublicRepoDir/gitconfig.tmpl")
 $GitconfigTmpl = $GitconfigTmpl -Replace "__NAME__", "ian"
@@ -47,7 +48,7 @@ git config --global alias.codebase '!powershell.exe -NoProfile -Command git-code
 git config --global alias.cryptape '!powershell.exe -NoProfile -Command git-cryptape'
 git config --global alias.nervos '!powershell.exe -NoProfile -Command git-nervos'
 
-mkdir -Force ~/.vim/scripts, ~/.vim/projections, ~/.vim/backup, ~/.vim/swap, ~/.vim/undo, ~/.vim/autoload
+mkdir -Force ~/.vim/scripts, ~/.vim/projections, ~/.vim/backup, ~/.vim/swap, ~/.vim/undo, ~/.vim/nvim-undo, ~/.vim/autoload
 
 Function ln ($value, $path) {
   if (Test-Path -LiteralPath $path) {
