@@ -22,8 +22,7 @@ $dl = "$HOME/Downloads"
 $kb = "$HOME/codebase/my/knowledge-base"
 
 function fpass {
-  pushd "~/.password-store"
-  $selected = (fzf) -Replace '\.gpg$', ''
+  $selected = (gopass list -f | fzf)
   popd
   gopass @Args $selected
 }
