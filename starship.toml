@@ -1,0 +1,9 @@
+format = "[$all](italic)"
+
+[git_branch]
+symbol = "±"
+style = "purple bold italic"
+
+[status]
+disabled = false
+

@@ -29,5 +29,7 @@ $PSProfileDir = $(Split-Path -Parent $PROFILE)
 ls -Force "$PSProfileDir/local" | % { New-Item -ItemType SymbolicLink -Force -Value ($_.FullName) -Path "~/$($_.Name)" }
 
 New-Item -ItemType SymbolicLink -Force -Value "$(pwd)\settings.json" -Path "$HOME\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+mkdir -Force "$HOME/.config"
+New-Item -ItemType SymbolicLink -Force -Value "$(pwd)\starship.toml" -Path "$HOME\.config\starship.toml"
 
 mkdir -Force ~/.ssh
