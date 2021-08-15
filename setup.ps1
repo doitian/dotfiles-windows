@@ -49,6 +49,13 @@ git config --global alias.dotfiles '!powershell.exe -NoProfile -Command git-dotf
 git config --global alias.codebase '!powershell.exe -NoProfile -Command git-codebase'
 git config --global alias.cryptape '!powershell.exe -NoProfile -Command git-cryptape'
 git config --global alias.nervos '!powershell.exe -NoProfile -Command git-nervos'
+if (Get-Command -ErrorAction SilentlyContinue delta) {
+  git config --global pager.diff delta
+  git config --global pager.show delta
+  git config --global pager.log delta
+  git config --global pager.reflog delta
+  git config --global interactive.diffFilter 'delta --color-only --features=interactive'
+}
 
 mkdir -Force ~/.vim/scripts, ~/.vim/projections, ~/.vim/files/backup, ~/.vim/files/swap, ~/.vim/files/undo, ~/.vim/files/nvim-undo, ~/.vim/autoload
 

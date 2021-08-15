@@ -61,3 +61,6 @@ if (Get-Module -ListAvailable -Name PSFzf) {
   Import-Module PSFzf
   Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
 }
+if (Get-Module -ListAvailable -Name posh-git) {
+  Import-Module posh-git
+}
