@@ -19,7 +19,6 @@ $cb = "$HOME/codebase"
 $dcs = "$HOME/Documents"
 $dsk = [Environment]::GetFolderPath("Desktop")
 $dl = "$HOME/Downloads"
-$kb = "$HOME/codebase/my/knowledge-base"
 
 function fpass {
   $selected = (gopass list -f | fzf)
