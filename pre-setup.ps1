@@ -7,6 +7,7 @@
 $SSHPath = (Get-Command -Name 'ssh.exe').Source
 [Environment]::SetEnvironmentVariable('GIT_SSH', $SSHPath, 'User')
 
+$UserBinDir = "$(Split-Path -Parent $PROFILE)\bin"
 $SSHAgentLocation = "$UserBinDir\winssh-agent.cmd"
 $SSHAgentShortcut = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\SSH Agent.lnk"
 
