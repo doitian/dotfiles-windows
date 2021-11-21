@@ -35,13 +35,19 @@ scoop install mingit gpg z posh-git starship delta
 Install-Module -Name PSFzf -Scope CurrentUser
 ```
 
+Fix the gpg bug by creating a link
+
+```
+New-Item -ItemType Junction -Path D:\scoop\persist\gpg\gnupg -Value D:\scoop\persist\gpg\home\
+```
+
 ┌ 4. Run as user
 
 ```
 ./pre-setup
 ```
 
-Restart the terminal app and continue.
+Restart the terminal app and continue. The script requires [PowerShell 7](https://github.com/PowerShell/PowerShell/releases).
 
 ```
 ./setup
@@ -56,3 +62,11 @@ Win10-Initial-Setup-Script-master/Default.cmd
 
 Restart
 
+## Proxy
+
+Start proxy first. Then configure proxy in system settings and:
+
+```
+scoop config proxy 127.0.0.1:7890
+git config --global http.proxy http://127.0.0.1:7890
+```
