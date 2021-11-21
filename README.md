@@ -57,7 +57,6 @@ Restart the terminal app and continue. The script requires [PowerShell 7](https:
 
 ```
 ./admin-setup
-Win10-Initial-Setup-Script-master/Default.cmd
 ```
 
 Restart
