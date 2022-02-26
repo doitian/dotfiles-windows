@@ -10,12 +10,6 @@ if ($ReposDir.Target -ne $null) {
 $PublicRepoDir = "$ReposDir\public"
 $PrivateRepoDir = "$ReposDir\private"
 
-$hexified = "00,00,00,00,00,00,00,00,02,00,00,00,1d,00,3a,00,00,00,00,00".Split(',') | % { "0x$_"};
-
-$kbLayout = 'HKLM:\System\CurrentControlSet\Control\Keyboard Layout';
-
-New-ItemProperty -Force -Path $kbLayout -Name "Scancode Map" -PropertyType Binary -Value ([byte[]]$hexified);
-
 New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/default/.vimrc" -Path "~/_vimrc"
 New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/default/.vimrc" -Path "~/.vimrc"
 mkdir -Force "$HOME/AppData/Local/nvim"
