@@ -11,7 +11,6 @@ $PublicRepoDir = "$ReposDir\public"
 $PrivateRepoDir = "$ReposDir\private"
 
 New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/default/.vimrc" -Path "~/_vimrc"
-New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/default/.vimrc" -Path "~/.vimrc"
 mkdir -Force "$HOME/AppData/Local/nvim"
 New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/default/.config/nvim/init.vim" -Path "$HOME/AppData/Local/nvim/init.vim"
 
