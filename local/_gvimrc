@@ -1,4 +1,4 @@
 set guifont=Cascadia_Code:h11
-set guioptions-=m
+set guioptions-=mT
 set renderoptions=type:directx
 hi Cursor guibg=#005f87 guifg=#eeeeee
