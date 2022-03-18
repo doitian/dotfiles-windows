@@ -69,3 +69,11 @@ Start proxy first. Then configure proxy in system settings and:
 scoop config proxy 127.0.0.1:7890
 git config --global http.proxy http://127.0.0.1:7890
 ```
+
+## Edge Redrect
+
+```
+scoop install MSEdgeRedirect
+```
+
+Start it and install the patch as prompted.
