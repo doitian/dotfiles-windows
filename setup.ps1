@@ -57,7 +57,7 @@ if (Get-Command -ErrorAction SilentlyContinue delta) {
   git config --global interactive.diffFilter 'delta --color-only --features=interactive'
 }
 
-mkdir -Force ~/.vim/scripts, ~/.vim/projections, ~/.vim/files/backup, ~/.vim/files/swap, ~/.vim/files/undo, ~/.vim/files/nvim-undo, ~/.vim/autoload
+mkdir -Force ~/.vim/scripts, ~/.vim/files/backup, ~/.vim/files/swap, ~/.vim/files/undo, ~/.vim/files/nvim-undo, ~/.vim/autoload
 
 Function ln ($value, $path) {
   if (Test-Path -LiteralPath $path) {
@@ -75,7 +75,6 @@ mkdir -Force ~/vimfiles/autoload
 Invoke-WebRequest -Proxy 'http://127.0.0.1:7890' -UseBasicParsing -OutFile ~/vimfiles/autoload/plug.vim "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 cp -Force ~/vimfiles/autoload/plug.vim ~/.vim/autoload/plug.vim
 
-ls -Force "$PublicRepoDir\default\.vim\projections" | % { cp -Force $_ "$HOME\.vim\projections\" }
 ls -Force "$PublicRepoDir\default\.vim\scripts" | % { cp -Force $_ "$HOME\.vim\scripts\" }
 ls -Force "$PrivateRepoDir\default\.vim\scripts" | % { cp -Force $_ "$HOME\.vim\scripts\" }
 
