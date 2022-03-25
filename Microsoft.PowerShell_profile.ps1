@@ -27,15 +27,20 @@ function fpass {
 }
 
 if (Get-Command -ErrorAction SilentlyContinue starship) {
+  function Invoke-Starship-PreCommand {
+    $cwd = $($executionContext.SessionState.Path.CurrentLocation)
+    $host.ui.Write("$([char]27)]9;9;`"$cwd`"$([char]27)\")
+  }
   Invoke-Expression (&starship init powershell)
 } else {
   $global:PromptChar = $null
 
   function prompt {
-    $cwd = (Get-Location).Path
-    $parts = $cwd.Split([IO.Path]::DirectorySeparatorChar)
+    $cwd = $($executionContext.SessionState.Path.CurrentLocation)
+    $cwdDisplay = $cwd.ToString()
+    $parts = $cwdDisplay.Split([IO.Path]::DirectorySeparatorChar)
     if ($parts.Count -gt 4) {
-      $cwd = $parts[0..1] + @("…") + $parts[-2..-1] -join '\'
+      $cwdDisplay = $parts[0..1] + @("…") + $parts[-2..-1] -join '\'
     }
 
     if ($global:PromptChar -eq $null) {
@@ -49,7 +54,7 @@ if (Get-Command -ErrorAction SilentlyContinue starship) {
       }
     }
 
-    @("$([char]27)[34;1m", $cwd, $promptColor, "$([char]27)[0m", $global:PromptChar) -join ""
+    @("$([char]27)[34;1m", $cwdDisplay, $promptColor, "$([char]27)[0m", $global:PromptChar, "$([char]27)]9;9;`"$cwd`"$([char]27)\") -join ""
   }
 }
 
