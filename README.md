@@ -31,7 +31,7 @@ Install essential apps
 
 ```
 scoop bucket add extras
-scoop install mingit gpg z posh-git starship delta
+scoop install mingit gpg z posh-git starship delta less
 Install-Module -Name PSFzf -Scope CurrentUser
 ```
 
