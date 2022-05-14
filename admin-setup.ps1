@@ -12,8 +12,6 @@ $PrivateRepoDir = "$ReposDir\private"
 
 New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/default/.vimrc" -Path "~/_vimrc"
 New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/default/.ideavimrc" -Path "~/.ideavimrc"
-mkdir -Force "$HOME/AppData/Local/nvim"
-New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/default/.config/nvim/init.vim" -Path "$HOME/AppData/Local/nvim/init.vim"
 
 ForEach ($f in ".ignore", ".editorconfig", ".ctags") {
   New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/default/$f" -Path "~/$f"

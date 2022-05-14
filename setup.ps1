@@ -58,7 +58,7 @@ if (Get-Command -ErrorAction SilentlyContinue delta) {
   git config --global interactive.diffFilter 'delta --color-only --features=interactive'
 }
 
-mkdir -Force ~/.vim/scripts, ~/.vim/files/backup, ~/.vim/files/swap, ~/.vim/files/undo, ~/.vim/files/nvim-undo, ~/.vim/autoload
+mkdir -Force ~/.vim/scripts, ~/.vim/files/backup, ~/.vim/files/swap, ~/.vim/files/undo, ~/.vim/autoload
 
 Function ln ($value, $path) {
   if (Test-Path -LiteralPath $path) {
