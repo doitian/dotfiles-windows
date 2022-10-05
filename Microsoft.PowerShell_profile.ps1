@@ -1,9 +1,12 @@
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
 Set-PSReadLineOption -EditMode emacs -Colors @{
-  "Command" = "Magenta"
-  "Member" = "DarkGray"
-  "Number" = "DarkYellow"
+  "Command"            = "Magenta"
+  "Member"             = "DarkGray"
+  "Number"             = "DarkYellow"
+  "ContinuationPrompt" = "#878787"
+  "Default"            = "#878787"
+  "Type"               = "#878787"
 }
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
 
