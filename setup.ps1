@@ -1,3 +1,7 @@
+$GfwProxy = "127.0.0.1:7890"
+if (Test-Path env:GFW_PROXY) {
+  $GfwProxy = $env:GFW_PROXY
+}
 $ReposDir = Get-Item "$HOME\.dotfiles\repos"
 if ($ReposDir -eq $null) {
   echo "$HOME\.dotfiles\repos does not exist"
@@ -45,7 +49,7 @@ $GitconfigTmpl | Set-Content "~/.gitconfig"
 git config --global core.autocrlf input
 git config --global --unset core.pager
 git config --global gpg.program (Get-Command -Name 'gpg.exe').Source
-git config --global http.proxy http://127.0.0.1:7890
+git config --global http.proxy "http://$GfwProxy"
 git config --global alias.dotfiles '!powershell.exe -NoProfile -Command git-dotfiles'
 git config --global alias.codebase '!powershell.exe -NoProfile -Command git-codebase'
 git config --global alias.cryptape '!powershell.exe -NoProfile -Command git-cryptape'
@@ -73,7 +77,7 @@ if (Test-Path -LiteralPath "$DocumentsDir\PowerShell") {
 ln "$PrivateRepoDir\UltiSnips" "$HOME\.vim\UltiSnips"
 
 mkdir -Force ~/vimfiles/autoload
-Invoke-WebRequest -Proxy 'http://127.0.0.1:7890' -UseBasicParsing -OutFile ~/vimfiles/autoload/plug.vim "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+Invoke-WebRequest -Proxy "http://$GfwProxy" -UseBasicParsing -OutFile ~/vimfiles/autoload/plug.vim "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 cp -Force ~/vimfiles/autoload/plug.vim ~/.vim/autoload/plug.vim
 
 ls -Force "$PublicRepoDir\default\.vim\scripts" | % { cp -Force $_ "$HOME\.vim\scripts\" }
