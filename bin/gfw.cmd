@@ -1,11 +1,11 @@
+@ECHO OFF
 if defined GFW_PROXY (
-  SET HTTP_PROXY=http://127.0.0.1:7890
-  SET HTTPS_PROXY=http://127.0.0.1:7890
-  SET ALL_PROXY=http://127.0.0.1:7890
-) else (
   SET HTTP_PROXY=http://%GFW_PROXY%
   SET HTTPS_PROXY=http://%GFW_PROXY%
   SET ALL_PROXY=http://%GFW_PROXY%
+) else (
+  SET HTTP_PROXY=http://127.0.0.1:7890
+  SET HTTPS_PROXY=http://127.0.0.1:7890
+  SET ALL_PROXY=http://127.0.0.1:7890
 )
-@ECHO OFF
 %*
