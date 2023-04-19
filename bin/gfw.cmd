@@ -1,4 +1,5 @@
 @ECHO OFF
+SET NO_PROXY=localhost, 127.0.0.1, ::1
 if defined GFW_PROXY (
   SET HTTP_PROXY=http://%GFW_PROXY%
   SET HTTPS_PROXY=http://%GFW_PROXY%

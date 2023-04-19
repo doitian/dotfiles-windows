@@ -5,6 +5,7 @@ if (Test-Path env:GFW_PROXY) {
 }
 $env:https_proxy = $env:http_proxy
 $env:all_proxy = $env:http_proxy
+$env:no_proxy = 'localhost, 127.0.0.1, ::1'
 
 if ($args.Count -gt 0) {
   $RemainingArgs = $args[1..($args.Count-1)]
