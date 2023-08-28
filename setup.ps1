@@ -30,7 +30,7 @@ if (-Not ([Environment]::GetEnvironmentVariable("Path", "User")).Split(";").Cont
   [Environment]::SetEnvironmentVariable('Path', "$env:Path;$UserBinDir", 'User')
 }
 [Environment]::SetEnvironmentVariable('EDITOR', 'vim', 'User')
-[Environment]::SetEnvironmentVariable('FZF_DEFAULT_OPTS', '--color light,fg:#3c3b3a', 'User')
+[Environment]::SetEnvironmentVariable('FZF_DEFAULT_OPTS', '--prompt="❯ " --color light', 'User')
 [Environment]::SetEnvironmentVariable('FZF_DEFAULT_COMMAND', 'fd --type f --hidden --follow --exclude ".git"', 'User')
 [Environment]::SetEnvironmentVariable('FZF_CTRL_T_COMMAND', 'fd --type f --hidden --follow --exclude ".git"', 'User')
 [Environment]::SetEnvironmentVariable('FZF_ALT_C_COMMAND', 'fd --type d --no-ignore --hidden --follow --exclude ".git"', 'User')
@@ -55,14 +55,11 @@ git config --global alias.codebase '!powershell.exe -NoProfile -Command git-code
 git config --global alias.cryptape '!powershell.exe -NoProfile -Command git-cryptape'
 git config --global alias.nervos '!powershell.exe -NoProfile -Command git-nervos'
 if (Get-Command -ErrorAction SilentlyContinue delta) {
-  git config --global pager.diff delta
-  git config --global pager.show delta
-  git config --global pager.log delta
-  git config --global pager.reflog delta
-  git config --global interactive.diffFilter 'delta --color-only --features=interactive'
+  git config --global core.pager delta
+  git config --global interactive.diffFilter 'delta --color-only'
 }
 
-mkdir -Force ~/.vim/scripts, ~/.vim/files/backup, ~/.vim/files/swap, ~/.vim/files/undo, ~/.vim/files/nvim-undo, ~/.vim/autoload
+mkdir -Force ~/.local/state/vim/backup, ~/.local/state/vim/swap, ~/.local/state/vim/undo, ~/.vim, ~/.config
 
 Function ln ($value, $path) {
   if (Test-Path -LiteralPath $path) {
@@ -74,13 +71,5 @@ Function ln ($value, $path) {
 if (Test-Path -LiteralPath "$DocumentsDir\PowerShell") {
   ln "$DocumentsDir\PowerShell" "$DocumentsDir\WindowsPowerShell"
 }
-ln "$PrivateRepoDir\UltiSnips" "$HOME\.vim\UltiSnips"
-
-mkdir -Force ~/vimfiles/autoload
-Invoke-WebRequest -Proxy "http://$GfwProxy" -UseBasicParsing -OutFile ~/vimfiles/autoload/plug.vim "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-cp -Force ~/vimfiles/autoload/plug.vim ~/.vim/autoload/plug.vim
-
-ls -Force "$PublicRepoDir\default\.vim\scripts" | % { cp -Force $_ "$HOME\.vim\scripts\" }
-ls -Force "$PrivateRepoDir\default\.vim\scripts" | % { cp -Force $_ "$HOME\.vim\scripts\" }
 
 cp -Force "$PublicRepoDir\default\.gnupg\gpg.conf" "$(scoop prefix gpg)\home\"
