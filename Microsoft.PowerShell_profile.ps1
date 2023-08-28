@@ -1,20 +1,13 @@
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-Set-PSReadLineOption -EditMode emacs -Colors @{
-  "Command"            = "Magenta"
-  "Member"             = "DarkGray"
-  "Number"             = "DarkYellow"
-  "ContinuationPrompt" = "#878787"
-  "Default"            = "#878787"
-  "Type"               = "#878787"
-}
+Set-PSReadLineOption -EditMode emacs
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
 
 $PSProfileDir = $(Split-Path -Parent $PROFILE)
 $WindowsTerminalSettings = "$HOME\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 
 Set-Alias -Name g -Value git
-Set-Alias -Name j -Value z
+Set-Alias -Name lg -Value lazygit
 Set-Alias -Name grep -Value rg
 Set-Alias -Name which -Value Get-Command
 
@@ -28,6 +21,22 @@ function fpass {
   popd
   gopass @Args $selected
 }
+function .. { cd .. }
+function ... { cd ../.. }
+function .... { cd ../../.. }
+
+if (Get-Module -ListAvailable -Name PSFzf) {
+  Import-Module PSFzf
+  Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
+}
+if (Get-Module -ListAvailable -Name posh-git) {
+  Import-Module posh-git
+}
+
+if ($env:WT_SESSION) {
+  $env:LAZY = 1
+}
+$env:TERM_BACKGROUND = 'light'
 
 if (Get-Command -ErrorAction SilentlyContinue starship) {
   function Invoke-Starship-PreCommand {
@@ -61,18 +70,7 @@ if (Get-Command -ErrorAction SilentlyContinue starship) {
   }
 }
 
-if (Get-Module -ListAvailable -Name z) {
-  Import-Module z
+# Ensure init zoxide after prompt
+if (Get-Command -ErrorAction SilentlyContinue zoxide) {
+  Invoke-Expression (& { (zoxide init powershell --cmd j | Out-String) })
 }
-if (Get-Module -ListAvailable -Name PSFzf) {
-  Import-Module PSFzf
-  Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
-}
-if (Get-Module -ListAvailable -Name posh-git) {
-  Import-Module posh-git
-}
-
-if ($env:WT_SESSION) {
-  $env:LAZY = 1
-}
-$env:TERM_BACKGROUND = 'light'
