@@ -1,25 +1,5 @@
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-Set-PSReadLineOption -EditMode emacs -Colors @{
-  Command          = $PSStyle.Foreground.Blue
-  Default          = $PSStyle.Foreground.Black
-  InlinePrediction = $PSStyle.Foreground.BrightWhite
-  Member           = $PSStyle.Foreground.Black
-  Number           = $PSStyle.Foreground.FromRGB(0xFE6406)
-  Operator         = $PSStyle.Foreground.FromRGB(0x04A5E5)
-  Parameter        = $PSStyle.Foreground.Cyan
-  Type             = $PSStyle.Foreground.Black
-  Variable         = $PSStyle.Foreground.FromRGB(0xDD7878)
-  String           = $PSStyle.Foreground.Green
-  Keyword          = $PSStyle.Foreground.FromRGB(0x8839EF)
-  Selection        = $PSStyle.Foreground.Black + $PSStyle.Background.BrightWhite
-}
-Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
-
-$PSStyle.FileInfo.Directory    = "`e[36m"
-$PSStyle.FileInfo.SymbolicLink = "`e[35m"
-$PSStyle.FileInfo.Executable   = "`e[31m"
-
 $PSProfileDir = $(Split-Path -Parent $PROFILE)
 $WindowsTerminalSettings = "$HOME\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 
@@ -44,6 +24,15 @@ function .. { cd .. }
 function ... { cd ../.. }
 function .... { cd ../../.. }
 
+if ($env:WT_SESSION) {
+  $env:LAZY = 1
+}
+$env:TERM_BACKGROUND = 'light'
+
+if (-not [Environment]::Is64BitProcess) {
+  return
+}
+
 if (Get-Module -ListAvailable -Name PSFzf) {
   Import-Module PSFzf
   Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
@@ -51,11 +40,6 @@ if (Get-Module -ListAvailable -Name PSFzf) {
 if (Get-Module -ListAvailable -Name posh-git) {
   Import-Module posh-git
 }
-
-if ($env:WT_SESSION) {
-  $env:LAZY = 1
-}
-$env:TERM_BACKGROUND = 'light'
 
 if (Get-Command -ErrorAction SilentlyContinue starship) {
   $POWERSHELL_THEME_NEW_LINE_BEFORE_PROMPT = 0
@@ -99,3 +83,29 @@ if (Get-Command -ErrorAction SilentlyContinue starship) {
 if (Get-Command -ErrorAction SilentlyContinue zoxide) {
   Invoke-Expression (& { (zoxide init powershell --cmd j | Out-String) })
 }
+
+Set-PSReadLineOption -EditMode emacs
+Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
+
+if ($PSVersionTable.PSVersion.Major -lt 7) {
+  return
+}
+
+Set-PSReadLineOption -Colors @{
+  Command          = $PSStyle.Foreground.Blue
+  Default          = $PSStyle.Foreground.Black
+  InlinePrediction = $PSStyle.Foreground.BrightWhite
+  Member           = $PSStyle.Foreground.Black
+  Number           = $PSStyle.Foreground.FromRGB(0xFE6406)
+  Operator         = $PSStyle.Foreground.FromRGB(0x04A5E5)
+  Parameter        = $PSStyle.Foreground.Cyan
+  Type             = $PSStyle.Foreground.Black
+  Variable         = $PSStyle.Foreground.FromRGB(0xDD7878)
+  String           = $PSStyle.Foreground.Green
+  Keyword          = $PSStyle.Foreground.FromRGB(0x8839EF)
+  Selection        = $PSStyle.Foreground.Black + $PSStyle.Background.BrightWhite
+}
+
+$PSStyle.FileInfo.Directory    = "`e[36m"
+$PSStyle.FileInfo.SymbolicLink = "`e[35m"
+$PSStyle.FileInfo.Executable   = "`e[31m"
