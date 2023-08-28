@@ -40,18 +40,12 @@
             "colorScheme": "Catppuccin Latte",
             "font": 
             {
-                "face": "Cartograph CF"
+                "face": "Cascadia Code"
             }
         },
         "list": 
         [
             {
-                "cursorShape": "vintage",
-                "font": 
-                {
-                    "face": "Cartograph CF",
-                    "size": 11.0
-                },
                 "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
                 "hidden": false,
                 "name": "PowerShell",
@@ -59,21 +53,9 @@
             },
             {
                 "colorScheme": "Catppuccin Mocha",
-                "cursorShape": "vintage",
-                "font": 
-                {
-                    "face": "Cartograph CF",
-                    "size": 11.0
-                },
                 "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
                 "hidden": false,
                 "name": "cmd"
-            },
-            {
-                "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
-                "hidden": false,
-                "name": "Azure Cloud Shell",
-                "source": "Windows.Terminal.Azure"
             },
             {
                 "guid": "{7de21e0c-3c74-5a43-b6d3-00c237ad306a}",

@@ -71,3 +71,8 @@ if (Get-Module -ListAvailable -Name PSFzf) {
 if (Get-Module -ListAvailable -Name posh-git) {
   Import-Module posh-git
 }
+
+if ($env:WT_SESSION) {
+  $env:LAZY = 1
+}
+$env:TERM_BACKGROUND = 'light'
