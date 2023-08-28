@@ -1,7 +1,24 @@
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-Set-PSReadLineOption -EditMode emacs
+Set-PSReadLineOption -EditMode emacs -Colors @{
+  Command          = $PSStyle.Foreground.Blue
+  Default          = $PSStyle.Foreground.Black
+  InlinePrediction = $PSStyle.Foreground.BrightWhite
+  Member           = $PSStyle.Foreground.Black
+  Number           = $PSStyle.Foreground.FromRGB(0xFE6406)
+  Operator         = $PSStyle.Foreground.FromRGB(0x04A5E5)
+  Parameter        = $PSStyle.Foreground.Cyan
+  Type             = $PSStyle.Foreground.Black
+  Variable         = $PSStyle.Foreground.FromRGB(0xDD7878)
+  String           = $PSStyle.Foreground.Green
+  Keyword          = $PSStyle.Foreground.FromRGB(0x8839EF)
+  Selection        = $PSStyle.Foreground.Black + $PSStyle.Background.BrightWhite
+}
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
+
+$PSStyle.FileInfo.Directory    = "`e[36m"
+$PSStyle.FileInfo.SymbolicLink = "`e[35m"
+$PSStyle.FileInfo.Executable   = "`e[31m"
 
 $PSProfileDir = $(Split-Path -Parent $PROFILE)
 $WindowsTerminalSettings = "$HOME\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
@@ -10,6 +27,8 @@ Set-Alias -Name g -Value git
 Set-Alias -Name lg -Value lazygit
 Set-Alias -Name grep -Value rg
 Set-Alias -Name which -Value Get-Command
+Set-Alias -Name l -Value Get-ChildItem
+Set-Alias -Name ll -Value Get-ChildItem
 
 $cb = "$HOME/codebase"
 $dcs = "$HOME/Documents"
