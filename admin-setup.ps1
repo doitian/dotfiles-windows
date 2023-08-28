@@ -23,6 +23,6 @@ New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/nvim" -Path "$HOME
 New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/nvim" -Path "$HOME/.config/nvim"
 
 New-Item -ItemType SymbolicLink -Force -Value "$(pwd)\settings.json" -Path "$HOME\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-New-Item -ItemType SymbolicLink -Force -Value "$(pwd)\starship.toml" -Path "$HOME\.config\starship.toml"
+New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/default/.config/starship.toml" -Path "$HOME\.config\starship.toml"
 
 ls -Force "$PSProfileDir/local" | % { New-Item -ItemType SymbolicLink -Force -Value ($_.FullName) -Path "~/$($_.Name)" }
