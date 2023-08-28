@@ -39,9 +39,15 @@ if ($env:WT_SESSION) {
 $env:TERM_BACKGROUND = 'light'
 
 if (Get-Command -ErrorAction SilentlyContinue starship) {
+  $POWERSHELL_THEME_NEW_LINE_BEFORE_PROMPT = 0
   function Invoke-Starship-PreCommand {
     $cwd = $($executionContext.SessionState.Path.CurrentLocation)
     $host.ui.Write("$([char]27)]9;9;`"$cwd`"$([char]27)\")
+    if ($POWERSHELL_THEME_NEW_LINE_BEFORE_PROMPT) {
+      $host.ui.Write("`n")
+    } else {
+      $global:POWERSHELL_THEME_NEW_LINE_BEFORE_PROMPT = 1
+    }
   }
   Invoke-Expression (&starship init powershell)
 } else {
