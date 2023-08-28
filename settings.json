@@ -38,9 +38,10 @@
         "defaults": 
         {
             "colorScheme": "Catppuccin Latte",
+            "cursorShape": "vintage",
             "font": 
             {
-                "face": "Cascadia Code"
+                "face": "CartographCF Nerd Font"
             }
         },
         "list": 
@@ -68,12 +69,6 @@
                 "hidden": false,
                 "name": "Developer PowerShell for VS 2019",
                 "source": "Windows.Terminal.VisualStudio"
-            },
-            {
-                "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
-                "hidden": false,
-                "name": "Ubuntu",
-                "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc"
             },
             {
                 "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
