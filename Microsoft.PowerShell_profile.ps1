@@ -23,6 +23,7 @@ function fpass {
 function .. { cd .. }
 function ... { cd ../.. }
 function .... { cd ../../.. }
+function dotfiles { cd $PSProfileDir }
 
 if ($env:WT_SESSION) {
   $env:LAZY = 1
