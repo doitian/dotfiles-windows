@@ -34,7 +34,7 @@ if (-Not ([Environment]::GetEnvironmentVariable("Path", "User")).Split(";").Cont
 [Environment]::SetEnvironmentVariable('FZF_DEFAULT_COMMAND', 'fd --type f --hidden --follow --exclude ".git"', 'User')
 [Environment]::SetEnvironmentVariable('FZF_CTRL_T_COMMAND', 'fd --type f --hidden --follow --exclude ".git"', 'User')
 [Environment]::SetEnvironmentVariable('FZF_ALT_C_COMMAND', 'fd --type d --no-ignore --hidden --follow --exclude ".git"', 'User')
-[Environment]::SetEnvironmentVariable('BAT_THEME', 'Coldark-Cold', 'User')
+[Environment]::SetEnvironmentVariable('BAT_THEME', 'OneHalfLight', 'User')
 [Environment]::SetEnvironmentVariable('PAGER', 'less -R', 'User')
 [Environment]::SetEnvironmentVariable('LSCOLORS', 'Gxfxcxdxbxegedabagacad', 'User')
 [Environment]::SetEnvironmentVariable('LS_COLORS', 'di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43', 'User')
