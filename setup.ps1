@@ -44,7 +44,7 @@ $GitconfigTmpl = $GitconfigTmpl -Replace "__NAME__", "ian"
 $GitconfigTmpl = $GitconfigTmpl -Replace "__EMAIL__", "me@iany.me"
 $GitconfigTmpl = $GitconfigTmpl -Replace "__HOME__", ("$HOME" -Replace "\\", "/")
 
-$GitconfigTmpl | Set-Content "~/.gitconfig"
+$GitconfigTmpl -join "`n" | Set-Content -NoNewLine "~/.gitconfig"
 git config --global core.autocrlf input
 git config --global --unset core.pager
 git config --global gpg.program (Get-Command -Name 'gpg.exe').Source
