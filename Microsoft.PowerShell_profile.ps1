@@ -34,14 +34,6 @@ if (-not [Environment]::Is64BitProcess) {
   return
 }
 
-if (Get-Module -ListAvailable -Name PSFzf) {
-  Import-Module PSFzf
-  Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
-}
-if (Get-Module -ListAvailable -Name posh-git) {
-  Import-Module posh-git
-}
-
 if (Get-Command -ErrorAction SilentlyContinue starship) {
   $POWERSHELL_THEME_NEW_LINE_BEFORE_PROMPT = 0
   function Invoke-Starship-PreCommand {
@@ -87,24 +79,30 @@ if (Get-Command -ErrorAction SilentlyContinue zoxide) {
 
 Set-PSReadLineOption -EditMode emacs
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
+if (Get-Module -ListAvailable -Name PSFzf) {
+  Import-Module PSFzf
+  Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
+}
 
 if ($PSVersionTable.PSVersion.Major -lt 7) {
   return
 }
 
 Set-PSReadLineOption -Colors @{
-  Command          = $PSStyle.Foreground.Blue
-  Default          = $PSStyle.Foreground.Black
-  InlinePrediction = $PSStyle.Foreground.BrightWhite
-  Member           = $PSStyle.Foreground.Black
-  Number           = $PSStyle.Foreground.FromRGB(0xFE6406)
-  Operator         = $PSStyle.Foreground.FromRGB(0x04A5E5)
-  Parameter        = $PSStyle.Foreground.Cyan
-  Type             = $PSStyle.Foreground.Black
-  Variable         = $PSStyle.Foreground.FromRGB(0xDD7878)
-  String           = $PSStyle.Foreground.Green
-  Keyword          = $PSStyle.Foreground.FromRGB(0x8839EF)
-  Selection        = $PSStyle.Foreground.Black + $PSStyle.Background.BrightWhite
+  Command                = $PSStyle.Foreground.Blue
+  Comment                = $PSStyle.Foreground.BrightWhite
+  Default                = $PSStyle.Foreground.Black
+  InlinePrediction       = $PSStyle.Foreground.BrightWhite
+  Keyword                = $PSStyle.Foreground.FromRGB(0x8839EF)
+  ListPredictionSelected = $PSStyle.Background.BrightWhite
+  Member                 = $PSStyle.Foreground.Black
+  Number                 = $PSStyle.Foreground.FromRGB(0xFE6406)
+  Operator               = $PSStyle.Foreground.FromRGB(0x04A5E5)
+  Parameter              = $PSStyle.Foreground.Cyan
+  Selection              = $PSStyle.Background.BrightWhite
+  String                 = $PSStyle.Foreground.Green
+  Type                   = $PSStyle.Foreground.Black
+  Variable               = $PSStyle.Foreground.FromRGB(0xDD7878)
 }
 
 $PSStyle.FileInfo.Directory    = "`e[36m"
