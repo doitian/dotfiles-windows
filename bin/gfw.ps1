@@ -1,5 +1,17 @@
+function testport($hostname, $port=7890, $timeout=100) {
+  $requestCallback = $state = $null
+  $client = New-Object System.Net.Sockets.TcpClient
+  $beginConnect = $client.BeginConnect($hostname,$port,$requestCallback,$state)
+  Start-Sleep -milli $timeOut
+  if ($client.Connected) { $open = $true } else { $open = $false }
+  $client.Close()
+  [pscustomobject]@{hostname=$hostname; port=$port; open=$open}
+}
+
 if (Test-Path env:GFW_PROXY) {
   $env:HTTP_PROXY = $env:GFW_PROXY
+} elseif ((testport 192.168.2.6).open) {
+  $env:HTTP_PROXY = 'http://192.168.2.6:7890'
 } else {
   $env:HTTP_PROXY = 'http://127.0.0.1:7890'
 }
