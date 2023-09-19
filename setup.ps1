@@ -1,7 +1,3 @@
-$GfwProxy = "127.0.0.1:7890"
-if (Test-Path env:GFW_PROXY) {
-  $GfwProxy = $env:GFW_PROXY
-}
 $ReposDir = Get-Item "$HOME\.dotfiles\repos"
 if ($ReposDir -eq $null) {
   echo "$HOME\.dotfiles\repos does not exist"
@@ -48,7 +44,6 @@ $GitconfigTmpl -join "`n" | Set-Content -NoNewLine "~/.gitconfig"
 git config --global core.autocrlf input
 git config --global --unset core.pager
 git config --global gpg.program (Get-Command -Name 'gpg.exe').Source
-git config --global http.proxy "http://$GfwProxy"
 git config --global alias.dotfiles '!powershell.exe -NoProfile -Command git-dotfiles'
 git config --global alias.codebase '!powershell.exe -NoProfile -Command git-codebase'
 git config --global alias.cryptape '!powershell.exe -NoProfile -Command git-cryptape'
