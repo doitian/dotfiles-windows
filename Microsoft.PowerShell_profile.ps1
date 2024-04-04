@@ -9,6 +9,8 @@ Set-Alias -Name grep -Value rg
 Set-Alias -Name which -Value Get-Command
 Set-Alias -Name l -Value Get-ChildItem
 Set-Alias -Name ll -Value Get-ChildItem
+Set-Alias -Name vi -Value nvim
+Set-Alias -Name vim -Value nvim
 
 $cb = "$HOME/codebase"
 $dcs = "$HOME/Documents"
