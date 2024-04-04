@@ -15,6 +15,7 @@ mkdir -Force "$HOME/.config"
 mkdir -Force ~/.ssh
 
 New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/default/.vimrc" -Path "~/_vimrc"
+New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/default/.vimrc" -Path "~/.vimrc"
 New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/default/.ideavimrc" -Path "~/.ideavimrc"
 ForEach ($f in ".ignore", ".editorconfig", ".ctags") {
   New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/default/$f" -Path "~/$f"
