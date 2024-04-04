@@ -4,6 +4,10 @@
     "actions": 
     [
         {
+            "command": "unbound",
+            "keys": "ctrl+shift+6"
+        },
+        {
             "command": 
             {
                 "action": "splitPane",
@@ -11,10 +15,6 @@
                 "splitMode": "duplicate"
             },
             "keys": "alt+shift+plus"
-        },
-        {
-            "command": "unbound",
-            "keys": "ctrl+shift+6"
         },
         {
             "command": 
@@ -51,14 +51,6 @@
                 "startingDirectory": "%USERPROFILE%"
             },
             {
-                "commandline": "%SCOOP%\\apps\\pwsh\\current\\pwsh.exe",
-                "guid": "{349efa5a-4423-4cd6-8699-5eb7099f8c3c}",
-                "hidden": false,
-                "icon": "ms-appx:///ProfileIcons/pwsh.png",
-                "name": "PowerShell (Admin)",
-                "startingDirectory": "%USERPROFILE%"
-            },
-            {
                 "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
                 "hidden": false,
                 "name": "cmd"
@@ -69,10 +61,16 @@
                 "name": "Windows PowerShell"
             },
             {
-                "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+                "guid": "{c8284682-7c9c-5335-aea0-c483935c2b52}",
                 "hidden": false,
-                "name": "PowerShell",
-                "source": "Windows.Terminal.PowershellCore"
+                "name": "Developer Command Prompt for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{85718e99-3025-5f11-af6b-4bb0c7f8f006}",
+                "hidden": false,
+                "name": "Developer PowerShell for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
             }
         ]
     },
