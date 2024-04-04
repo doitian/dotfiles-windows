@@ -72,7 +72,7 @@ scoop config proxy 127.0.0.1:7890
 git config --global http.proxy http://127.0.0.1:7890
 ```
 
-## Edge Redrect
+## Edge Redirect
 
 ```
 scoop install MSEdgeRedirect
