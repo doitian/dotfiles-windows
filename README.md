@@ -33,7 +33,7 @@ Install essential apps
 
 ```
 scoop bucket add extras
-scoop install mingit gpg z posh-git starship delta less wsl-ssh-pageant
+scoop install mingit gpg zoxide posh-git starship delta less wsl-ssh-pageant
 Install-Module -Name PSFzf -Scope CurrentUser
 ```
 
