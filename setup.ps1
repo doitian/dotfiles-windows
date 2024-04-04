@@ -25,6 +25,10 @@ $UserBinDir = "$(Split-Path -Parent $PROFILE)\bin"
 if (-Not ([Environment]::GetEnvironmentVariable("Path", "User")).Split(";").Contains($UserBinDir)) {
   [Environment]::SetEnvironmentVariable('Path', "$env:Path;$UserBinDir", 'User')
 }
+$MasonBinDir = "$HOME\AppData\Local\nvim-data\mason\bin"
+if (-Not ([Environment]::GetEnvironmentVariable("Path", "User")).Split(";").Contains($UserBinDir)) {
+  [Environment]::SetEnvironmentVariable('Path', "$env:Path;$MasonBinDir", 'User')
+}
 [Environment]::SetEnvironmentVariable('EDITOR', 'nvim', 'User')
 [Environment]::SetEnvironmentVariable('FZF_DEFAULT_OPTS', '--prompt="❯ " --color light', 'User')
 [Environment]::SetEnvironmentVariable('FZF_DEFAULT_COMMAND', 'fd --type f --hidden --follow --exclude ".git"', 'User')
