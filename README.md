@@ -1,5 +1,7 @@
 # Windows Dotfiles
 
+Save this repo as Documents\PowerShell
+
 ┌ 1. Use English as Windows Display Language
 
 ┌ 2. Create Junctions if Using D:\ as data disk
@@ -31,7 +33,7 @@ Install essential apps
 
 ```
 scoop bucket add extras
-scoop install mingit gpg z posh-git starship delta less
+scoop install mingit gpg z posh-git starship delta less wsl-ssh-pageant
 Install-Module -Name PSFzf -Scope CurrentUser
 ```
 
