@@ -1,3 +1,6 @@
+using namespace System;
+using namespace System.Management.Automation;
+
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
 $PSProfileDir = $(Split-Path -Parent $PROFILE)
@@ -81,10 +84,54 @@ if (Get-Command -ErrorAction SilentlyContinue zoxide) {
 
 Set-PSReadLineOption -EditMode emacs
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
+Set-PSReadlineKeyHandler -Chord 'Ctrl+w' -Function BackwardKillWord
+
 if (Get-Module -ListAvailable -Name PSFzf) {
   Import-Module PSFzf
   Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
 }
+
+function Find-NearestEnvrc {
+  param (
+    [Parameter(Mandatory=$true)]
+    [string]$StartDir
+  )
+
+  $currentDir = Resolve-Path $StartDir
+  while ($currentDir -ne "") {
+      $envrcPath = Join-Path $currentDir ".envrc.ps1"
+      if (Test-Path $envrcPath) {
+          return $envrcPath
+      }
+      $currentDir = Split-Path $currentDir -Parent
+  }
+
+  return ""
+}
+
+$hook = [EventHandler[LocationChangedEventArgs]] {
+  param([object] $source, [LocationChangedEventArgs] $eventArgs)
+  end {
+    $oldEnvrc = Find-NearestEnvrc $eventArgs.OldPath
+    $newEnvrc = Find-NearestEnvrc $eventArgs.NewPath
+    if ($oldEnvrc -ne $newEnvrc) {
+      Get-Command down -ErrorAction SilentlyContinu
+      if (Get-Command down -ErrorAction SilentlyContinu) {
+        down
+        Remove-Item Function:down
+      }
+      if ($newEnvrc -ne "") {
+        . $newEnvrc
+      }
+    }
+  }
+};
+$currentAction = $ExecutionContext.SessionState.InvokeCommand.LocationChangedAction;
+if ($currentAction) {
+  $ExecutionContext.SessionState.InvokeCommand.LocationChangedAction = [Delegate]::Combine($currentAction, $hook);
+} else {
+  $ExecutionContext.SessionState.InvokeCommand.LocationChangedAction = $hook;
+};
 
 if ($PSVersionTable.PSVersion.Major -lt 7) {
   return
