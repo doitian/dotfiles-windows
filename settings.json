@@ -28,6 +28,12 @@
     ],
     "copyOnSelect": true,
     "defaultProfile": "{92409fbf-7ae8-4517-a7ab-845615e25da1}",
+    "newTabMenu": 
+    [
+        {
+            "type": "remainingProfiles"
+        }
+    ],
     "profiles": 
     {
         "defaults": 
@@ -43,7 +49,7 @@
         "list": 
         [
             {
-                "commandline": "%SCOOP%\\apps\\pwsh\\current\\pwsh.exe",
+                "commandline": "%SCOOP%\\apps\\pwsh\\current\\pwsh.exe -nologo",
                 "guid": "{92409fbf-7ae8-4517-a7ab-845615e25da1}",
                 "hidden": false,
                 "icon": "ms-appx:///ProfileIcons/pwsh.png",
@@ -366,5 +372,6 @@
         }
     ],
     "theme": "light",
+    "themes": [],
     "useAcrylicInTabRow": true
 }
