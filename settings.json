@@ -49,20 +49,10 @@
         "startingDirectory": "%USERPROFILE%"
       },
       {
-        "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
-        "hidden": true,
-        "name": "cmd"
-      },
-      {
-        "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-        "hidden": true,
-        "name": "Windows PowerShell"
-      },
-      {
-        "guid": "{c8284682-7c9c-5335-aea0-c483935c2b52}",
-        "hidden": true,
-        "name": "Developer Command Prompt for VS 2022",
-        "source": "Windows.Terminal.VisualStudio"
+        "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
+        "hidden": false,
+        "name": "Ubuntu",
+        "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc"
       },
       {
         "guid": "{85718e99-3025-5f11-af6b-4bb0c7f8f006}",
@@ -71,21 +61,14 @@
         "source": "Windows.Terminal.VisualStudio"
       },
       {
-        "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
+        "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
         "hidden": false,
-        "name": "Ubuntu",
-        "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc"
-      },
-      {
-        "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
-        "hidden": true,
-        "name": "Ubuntu",
-        "source": "Windows.Terminal.Wsl"
+        "name": "Command Prompt"
       },
       {
         "commandline": "%SCOOP%\\apps\\pwsh\\current\\pwsh.exe -nologo",
         "elevate": true,
-        "guid": "{141b16aa-db57-4c15-9417-e7557d5a29be}",
+        "guid": "{a245a143-a5d0-451b-abc9-47a6cd148254}",
         "hidden": false,
         "icon": "ms-appx:///ProfileIcons/pwsh.png",
         "name": "PowerShell (Admin)",
