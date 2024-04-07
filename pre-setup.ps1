@@ -1,6 +1,6 @@
 @(
-  "default-cache-ttl 600"
-  "max-cache-ttl 7200"
+  "default-cache-ttl 3600"
+  "max-cache-ttl 14400"
   "enable-putty-support"
 ) | Set-Content -Path "$(scoop prefix gpg)\home\gpg-agent.conf"
 
