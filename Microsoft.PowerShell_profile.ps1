@@ -20,11 +20,6 @@ $dcs = "$HOME/Documents"
 $dsk = [Environment]::GetFolderPath("Desktop")
 $dl = "$HOME/Downloads"
 
-function fpass {
-  $selected = (gopass list -f | fzf)
-  popd
-  gopass @Args $selected
-}
 function .. { cd .. }
 function ... { cd ../.. }
 function .... { cd ../../.. }
