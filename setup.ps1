@@ -31,9 +31,9 @@ if (-Not ([Environment]::GetEnvironmentVariable("Path", "User")).Split(";").Cont
 }
 [Environment]::SetEnvironmentVariable('EDITOR', 'nvim', 'User')
 [Environment]::SetEnvironmentVariable('FZF_DEFAULT_OPTS', '--prompt="❯ " --color light', 'User')
-[Environment]::SetEnvironmentVariable('FZF_DEFAULT_COMMAND', 'fd --type f --hidden --follow --exclude ".git"', 'User')
-[Environment]::SetEnvironmentVariable('FZF_CTRL_T_COMMAND', 'fd --type f --hidden --follow --exclude ".git"', 'User')
-[Environment]::SetEnvironmentVariable('FZF_ALT_C_COMMAND', 'fd --type d --no-ignore --hidden --follow --exclude ".git"', 'User')
+[Environment]::SetEnvironmentVariable('FZF_DEFAULT_COMMAND', 'fd --type f --hidden --follow --exclude ".git" --path-separator /', 'User')
+[Environment]::SetEnvironmentVariable('FZF_CTRL_T_COMMAND', 'fd --type f --hidden --follow --exclude ".git" --path-separator /', 'User')
+[Environment]::SetEnvironmentVariable('FZF_ALT_C_COMMAND', 'fd --type d --no-ignore --hidden --follow --exclude ".git" --path-separator /', 'User')
 [Environment]::SetEnvironmentVariable('BAT_THEME', 'OneHalfLight', 'User')
 [Environment]::SetEnvironmentVariable('PAGER', 'less -R', 'User')
 [Environment]::SetEnvironmentVariable('LSCOLORS', 'Gxfxcxdxbxegedabagacad', 'User')

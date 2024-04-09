@@ -84,6 +84,7 @@ Set-PSReadlineKeyHandler -Chord 'Ctrl+w' -Function BackwardKillWord
 if (Get-Module -ListAvailable -Name PSFzf) {
   Import-Module PSFzf
   Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
+  Set-Alias -Name fcd -Value Invoke-FuzzySetLocation
 }
 
 function Find-NearestEnvrc {
@@ -92,13 +93,13 @@ function Find-NearestEnvrc {
     [string]$StartDir
   )
 
-  $currentDir = Get-Item $StartDir
-  while ($currentDir.FullName.StartsWith($HOME)) {
+  $currentDir = (Resolve-Path $StartDir).ToString()
+  while ($currentDir.StartsWith($HOME)) {
       $envrcPath = Join-Path $currentDir ".envrc.ps1"
       if (Test-Path $envrcPath) {
           return $envrcPath
       }
-      $currentDir = $currentDir.Parent
+      $currentDir = Split-Path -Parent $currentDir
   }
 
   return ""
