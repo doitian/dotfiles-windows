@@ -92,16 +92,20 @@ function Find-NearestEnvrc {
     [string]$StartDir
   )
 
-  $currentDir = Resolve-Path $StartDir
-  while ($currentDir -ne "") {
+  $currentDir = Get-Item $StartDir
+  while ($currentDir.FullName.StartsWith($HOME)) {
       $envrcPath = Join-Path $currentDir ".envrc.ps1"
       if (Test-Path $envrcPath) {
           return $envrcPath
       }
-      $currentDir = Split-Path $currentDir -Parent
+      $currentDir = $currentDir.Parent
   }
 
   return ""
+}
+$thisEnvrc = Find-NearestEnvrc .
+if ($thisEnvrc -ne "") {
+  . $thisEnvrc
 }
 
 $hook = [EventHandler[LocationChangedEventArgs]] {
