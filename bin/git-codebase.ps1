@@ -1,7 +1,5 @@
-$repos = cat "$HOME\.cdHistory" | sort -Desc | % {
-  $_.SubString(25)
-} | ? {
+$repos = zoxide query -l | ? {
   Test-Path -LiteralPath "$_/.git"
-}
+} | Select-Object -First 25
 
 git-multistatus @repos

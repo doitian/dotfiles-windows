@@ -1,8 +1,8 @@
-ForEach ($repo in $args) {
-  if (Test-Path -LiteralPath "$repo") {
-    Write-Host -NoNewline "$repo"
-    pushd "$repo" | out-null
-    git status --short --branch
-    popd | out-null
+$repos = resolve-path $args
+
+ForEach ($repo in $repos) {
+  if (git -C "$repo" rev-parse --is-inside-work-tree) {
+    Write-Host -NoNewline "$(Split-Path -Leaf $repo.Path) "
+    git -C "$repo" status --short --branch
   }
 }
