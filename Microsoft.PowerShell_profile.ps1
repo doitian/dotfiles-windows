@@ -15,10 +15,10 @@ Set-Alias -Name ll -Value Get-ChildItem
 Set-Alias -Name vi -Value nvim
 Set-Alias -Name vim -Value nvim
 
-$cb = "$HOME/codebase"
-$dcs = "$HOME/Documents"
+$cb = "$HOME\codebase"
+$dcs = "$HOME\Documents"
 $dsk = [Environment]::GetFolderPath("Desktop")
-$dl = "$HOME/Downloads"
+$dl = "$HOME\Downloads"
 
 function .. { cd .. }
 function ... { cd ../.. }
@@ -104,6 +104,7 @@ function Find-NearestEnvrc {
 
   return ""
 }
+
 $thisEnvrc = Find-NearestEnvrc .
 if ($thisEnvrc -ne "") {
   . $thisEnvrc
