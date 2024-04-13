@@ -49,12 +49,6 @@
         "startingDirectory": "%USERPROFILE%"
       },
       {
-        "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
-        "hidden": false,
-        "name": "Ubuntu",
-        "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc"
-      },
-      {
         "guid": "{85718e99-3025-5f11-af6b-4bb0c7f8f006}",
         "hidden": false,
         "name": "Developer PowerShell for VS 2022",
@@ -73,6 +67,18 @@
         "icon": "ms-appx:///ProfileIcons/pwsh.png",
         "name": "PowerShell (Admin)",
         "startingDirectory": "%USERPROFILE%"
+      },
+      {
+        "guid": "{96933987-e7b7-55a2-a499-f9d06dcf0997}",
+        "hidden": false,
+        "name": "alpine",
+        "source": "Windows.Terminal.Wsl"
+      },
+      {
+        "guid": "{7b88aef9-98b1-51df-9c39-6b24a0deaf45}",
+        "hidden": false,
+        "name": "tmux",
+        "source": "Windows.Terminal.Wsl"
       }
     ]
   },
