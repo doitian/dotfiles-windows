@@ -8,12 +8,13 @@ $SSHPath = (Get-Command -Name 'ssh.exe').Source
 [Environment]::SetEnvironmentVariable('GIT_SSH', $SSHPath, 'User')
 
 $UserBinDir = "$(Split-Path -Parent $PROFILE)\bin"
-$SSHAgentLocation = "$UserBinDir\winssh-agent.cmd"
+$SSHAgentLocation = "$(scoop prefix wsl-ssh-pageant)\wsl-ssh-pageant-gui.exe"
 $SSHAgentShortcut = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\SSH Agent.lnk"
 
 $WScriptShell = New-Object -ComObject WScript.Shell
 $Shortcut = $WScriptShell.CreateShortcut($SSHAgentShortcut)
 $Shortcut.TargetPath = $SSHAgentLocation
+$Shortcut.Arguments = "--systray --winssh ssh-pageant"
 $Shortcut.WindowStyle = 7
 $Shortcut.Save()
 mkdir -Fo "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\SSH Agent"
