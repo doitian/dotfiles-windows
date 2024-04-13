@@ -90,6 +90,10 @@ if (Get-Module -ListAvailable -Name PSFzf) {
   Set-Alias -Name fcd -Value Invoke-FuzzySetLocation
 }
 
+if ($PSVersionTable.PSVersion.Major -lt 7) {
+  return
+}
+
 function Find-NearestEnvrc {
   param (
     [Parameter(Mandatory=$true)]
@@ -136,10 +140,6 @@ if ($currentAction) {
 } else {
   $ExecutionContext.SessionState.InvokeCommand.LocationChangedAction = $hook;
 };
-
-if ($PSVersionTable.PSVersion.Major -lt 7) {
-  return
-}
 
 Set-PSReadLineOption -Colors @{
   Command                = $PSStyle.Foreground.Blue
