@@ -15,7 +15,7 @@ $WScriptShell = New-Object -ComObject WScript.Shell
 $Shortcut = $WScriptShell.CreateShortcut($SSHAgentShortcut)
 $Shortcut.TargetPath = $SSHAgentLocation
 $Shortcut.Arguments = "--systray --winssh ssh-pageant"
-$Shortcut.WindowStyle = 7
+$Shortcut.WindowStyle = 4
 $Shortcut.Save()
 mkdir -Fo "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\SSH Agent"
 cp -Fo "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\SSH Agent.lnk" "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\SSH Agent\SSH Agent.lnk"
