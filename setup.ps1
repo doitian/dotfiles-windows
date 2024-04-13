@@ -22,12 +22,16 @@ ForEach ($repo in $PublicRepoDir, $PrivateRepoDir) {
 }
 
 $UserBinDir = "$(Split-Path -Parent $PROFILE)\bin"
-if (-Not ([Environment]::GetEnvironmentVariable("Path", "User")).Split(";").Contains($UserBinDir)) {
-  [Environment]::SetEnvironmentVariable('Path', "$env:Path;$UserBinDir", 'User')
+$UserPath = [Environment]::GetEnvironmentVariable('Path', 'User')
+$UserPathList = $UserPath.Split(";")
+if (-Not $UserPathList.Contains($UserBinDir)) {
+  $UserPath = "$UserPath;$UserBinDir"
+  [Environment]::SetEnvironmentVariable('Path', "$UserPath", 'User')
 }
 $MasonBinDir = "$HOME\AppData\Local\nvim-data\mason\bin"
-if (-Not ([Environment]::GetEnvironmentVariable("Path", "User")).Split(";").Contains($UserBinDir)) {
-  [Environment]::SetEnvironmentVariable('Path', "$env:Path;$MasonBinDir", 'User')
+if (-Not $UserPathList.Contains($MasonBinDir)) {
+  $UserPath = "$UserPath;$MasonBinDir"
+  [Environment]::SetEnvironmentVariable('Path', "$UserPath", 'User')
 }
 [Environment]::SetEnvironmentVariable('EDITOR', 'nvim', 'User')
 [Environment]::SetEnvironmentVariable('FZF_DEFAULT_OPTS', '--prompt="❯ " --color light', 'User')
