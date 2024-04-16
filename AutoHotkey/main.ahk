@@ -13,8 +13,46 @@ CapsLock::Ctrl
 
 #^t::WinSetAlwaysOnTop -1, "A"
 
-+F12::Run "wt -w _quake nt --title fpass fpass.cmd"
 #F12::Reload
+
+XButton2::StartPan()
+XButton2 Up::StopPan()
+panCenterX := 0
+panCenterY := 0
+StartPan() {
+  global panCenterX, panCenterY
+  MouseGetPos &panCenterX, &panCenterY
+  SetTimer DoPan, 200
+  DoPan()
+}
+StopPan() {
+  SetTimer DoPan, 0
+}
+DoPan() {
+  global panCenterX, panCenterY
+  MouseGetPos &x, &y
+  xInterval := 400
+  yInterval := 400
+  if (x + 100 < panCenterX) {
+    xInterval := Floor(40000 / (panCenterX - x))
+    Send "{WheelLeft}"
+  } else if (x > panCenterX + 100) {
+    xInterval := Floor(40000 / (x - panCenterX))
+    Send "{WheelRight}"
+  }
+  if (y + 100 < panCenterY) {
+    yInterval := Floor(40000 / (panCenterY - y))
+    Send "{WheelUp}"
+  } else if (y > panCenterY + 144) {
+    yInterval := Floor(40000 / (y - panCenterY))
+    Send "{WheelDown}"
+  }
+  if (xInterval < yInterval) {
+    SetTimer DoPan, xInterval
+  } else {
+    SetTimer DoPan, yInterval
+  }
+}
 
 ;; App Specific
 PasteFromClipman := true
