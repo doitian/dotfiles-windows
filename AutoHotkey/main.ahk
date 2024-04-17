@@ -15,61 +15,25 @@ CapsLock::Ctrl
 
 #F12::Reload
 
-XButton2::StartPan()
-XButton2 Up::StopPan()
-panCenterX := 0
-panCenterY := 0
-StartPan() {
-  global panCenterX, panCenterY
-  MouseGetPos &panCenterX, &panCenterY
-  SetTimer DoPan, 200
-  DoPan()
-}
-StopPan() {
-  SetTimer DoPan, 0
-}
-DoPan() {
-  global panCenterX, panCenterY
-  MouseGetPos &x, &y
-  xInterval := 400
-  yInterval := 400
-  if (x + 100 < panCenterX) {
-    xInterval := Floor(40000 / (panCenterX - x))
-    Send "{WheelLeft}"
-  } else if (x > panCenterX + 100) {
-    xInterval := Floor(40000 / (x - panCenterX))
-    Send "{WheelRight}"
-  }
-  if (y + 100 < panCenterY) {
-    yInterval := Floor(40000 / (panCenterY - y))
-    Send "{WheelUp}"
-  } else if (y > panCenterY + 144) {
-    yInterval := Floor(40000 / (y - panCenterY))
-    Send "{WheelDown}"
-  }
-  if (xInterval < yInterval) {
-    SetTimer DoPan, xInterval
-  } else {
-    SetTimer DoPan, yInterval
-  }
-}
+XButton2::Send "{XButton2}"
+XButton2 & e::WheelUp
+XButton2 & d::WheelDown
+XButton2 & s::WheelLeft
+XButton2 & f::WheelRight
+XButton1::Send "{XButton1}"
+XButton1 & e::Send "{WheelUp 3}"
+XButton1 & d::Send "{WheelDown 3}"
+XButton1 & s::Send "{WheelLeft 3}"
+XButton1 & f::Send "{WheelRight 3}"
 
 ;; App Specific
-PasteFromClipman := true
+PasteFromClipman := false
 #HotIf WinActive("ahk_exe WindowsTerminal.exe") || WinActive("ahk_exe nvim-qt.exe")
-#v::{
-  global
-  PasteFromClipman := true
-  Send "#v"
-}
+~#v::global PasteFromClipman := true
+#HotIf PasteFromClipman
 ^v::{
-  global
-  if (PasteFromClipman) {
-    PasteFromClipman := false
-    Send "^+v"
-  } else {
-    Send "^v"
-  }
+  Send "^+v"
+  global PasteFromClipman := false
 }
 #HotIf
 
