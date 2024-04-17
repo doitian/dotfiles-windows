@@ -89,6 +89,10 @@ if (Get-Module -ListAvailable -Name PSFzf) {
   Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
   Set-Alias -Name fcd -Value Invoke-FuzzySetLocation
 }
+if (Get-Module -ListAvailable -Name cd-extras) {
+  Import-Module cd-extras
+  setocd CDABLE_VARS
+}
 
 if ($PSVersionTable.PSVersion.Major -lt 7) {
   return

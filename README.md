@@ -38,6 +38,7 @@ Install essential apps
 scoop bucket add extras
 scoop install mingit gpg zoxide starship delta less wsl-ssh-pageant
 Install-Module -Name PSFzf -Scope CurrentUser
+Install-Module -Name cd-extras -Scope CurrentUser
 ```
 
 Fix the gpg bug by creating a link
