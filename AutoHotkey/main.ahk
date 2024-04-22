@@ -11,20 +11,25 @@ CapsLock::Ctrl
 >!i::Up
 >!k::Down
 
+>#[::Send "“"
++>#[::Send "”"
+>#]::Send "‘"
++>#]::Send "’"
+>#'::Send "′"
++>#'::Send "″"
+>#-::Send "–"
++>#-::Send "—"
+
 #^t::WinSetAlwaysOnTop -1, "A"
 
 #F12::Reload
 
-XButton2::Send "{XButton2}"
-XButton2 & e::WheelUp
-XButton2 & d::WheelDown
-XButton2 & s::WheelLeft
-XButton2 & f::WheelRight
 XButton1::Send "{XButton1}"
-XButton1 & e::Send "{WheelUp 3}"
-XButton1 & d::Send "{WheelDown 3}"
-XButton1 & s::Send "{WheelLeft 3}"
-XButton1 & f::Send "{WheelRight 3}"
+XButton2::Send "{XButton2}"
+~XButton1 & WheelUp::Send "{WheelUp 3}"
+~XButton1 & WheelDown::Send "{WheelDown 3}"
+~XButton2 & WheelUp::Send "{WheelLeft}"
+~XButton2 & WheelDown::Send "{WheelRight}"
 
 ;; App Specific
 PasteFromClipman := false
