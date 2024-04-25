@@ -24,12 +24,9 @@ CapsLock::Ctrl
 
 #F12::Reload
 
-XButton1::Send "{XButton1}"
 XButton2::Send "{XButton2}"
-~XButton1 & WheelUp::Send "{WheelUp 3}"
-~XButton1 & WheelDown::Send "{WheelDown 3}"
-~XButton2 & WheelUp::Send "{WheelLeft}"
-~XButton2 & WheelDown::Send "{WheelRight}"
+XButton2 & WheelUp::Send "{WheelLeft}"
+XButton2 & WheelDown::Send "{WheelRight}"
 
 ;; App Specific
 PasteFromClipman := false
