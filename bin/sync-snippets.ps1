@@ -16,6 +16,5 @@ if (Test-Path $vsSnippetsDir) {
 
 $privateSnippetsDir = "$reposDir\private\nvim\snippets"
 if (Test-Path $privateSnippetsDir) {
-  $privateSnippetFiles = (Get-ChildItem $privateSnippetsDir)
-  jq -s 'reduce .[] as $item ({}; . * $item)' @privateSnippetFiles | Set-Content -Path "$reposDir\public\nvim\snippets\private-snippets.code-snippets"
+  Get-ChildItem $privateSnippetsDir | Get-Content | jq -s 'reduce .[] as $item ({}; . * $item)' | Set-Content -Encoding utf-8 -Path "$reposDir\public\nvim\snippets\private-snippets.code-snippets"
 }
