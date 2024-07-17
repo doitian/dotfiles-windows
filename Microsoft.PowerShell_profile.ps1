@@ -32,6 +32,7 @@ if ($env:WT_SESSION) {
   $env:LAZY = 1
 }
 $env:TERM_BACKGROUND = 'light'
+$env:LANG = 'en_US.UTF-8'
 
 if (-not [Environment]::Is64BitProcess) {
   return
@@ -105,7 +106,7 @@ function Find-NearestEnvrc {
   )
 
   $currentDir = (Resolve-Path $StartDir).ToString()
-  while ($currentDir.StartsWith($HOME)) {
+  while ($currentDir -ne "") {
       $envrcPath = Join-Path $currentDir ".envrc.ps1"
       if (Test-Path $envrcPath) {
           return $envrcPath
