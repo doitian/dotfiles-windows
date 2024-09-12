@@ -36,7 +36,7 @@ Install essential apps
 
 ```powershell
 scoop bucket add extras
-scoop install mingit gpg zoxide starship delta less wsl-ssh-pageant
+scoop install mingit gpg zoxide starship less wsl-ssh-pageant
 Install-Module -Name PSFzf -Scope CurrentUser
 Install-Module -Name cd-extras -Scope CurrentUser
 ```
