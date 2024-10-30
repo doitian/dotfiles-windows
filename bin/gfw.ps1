@@ -10,8 +10,8 @@ function testport($hostname, $port=7890, $timeout=100) {
 
 if (Test-Path env:GFW_PROXY) {
   $env:HTTP_PROXY = $env:GFW_PROXY
-} elseif ((testport 192.168.2.6).open) {
-  $env:HTTP_PROXY = 'http://192.168.2.6:7890'
+} elseif ((testport 10.31.0.6).open) {
+  $env:HTTP_PROXY = 'http://10.31.0.6:7890'
 } else {
   $env:HTTP_PROXY = 'http://127.0.0.1:7890'
 }
