@@ -71,3 +71,6 @@ if (Test-Path -LiteralPath "$DocumentsDir\PowerShell") {
 }
 
 cp -Force "$PublicRepoDir\default\.gnupg\gpg.conf" "$(scoop prefix gpg)\home\"
+
+mkdir -Force "$HOME\AppData\Roaming\yazi\config"
+ls -Force "$PublicRepoDir\Windows\AppData\Roaming\yazi\config" | % { cp -Force -Path ($_.FullName) -Destination "$HOME\AppData\Roaming\yazi\config\$($_.Name)" }
