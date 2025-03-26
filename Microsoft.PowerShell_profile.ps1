@@ -55,10 +55,14 @@ if (Get-Command -ErrorAction SilentlyContinue starship) {
 
   function prompt {
     $cwd = $($executionContext.SessionState.Path.CurrentLocation)
-    $cwdDisplay = $cwd.ToString()
+    $cwdProtocolParts = $cwd.ToString().Split("::\\")
+    $cwdDisplay = $cwdProtocolParts[-1]
     $parts = $cwdDisplay.Split([IO.Path]::DirectorySeparatorChar)
     if ($parts.Count -gt 4) {
       $cwdDisplay = $parts[0..1] + @("…") + $parts[-2..-1] -join '\'
+    }
+    if ($cwdProtocolParts.Count -gt 1) {
+      $cwdDisplay = "\\" + $cwdDisplay
     }
 
     if ($global:PromptChar -eq $null) {
@@ -85,16 +89,6 @@ Set-PSReadLineOption -EditMode emacs
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
 Set-PSReadlineKeyHandler -Chord 'Ctrl+w' -Function BackwardKillWord
 
-if (Get-Module -ListAvailable -Name PSFzf) {
-  Import-Module PSFzf
-  Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
-  Set-Alias -Name fcd -Value Invoke-FuzzySetLocation
-}
-if (Get-Module -ListAvailable -Name cd-extras) {
-  Import-Module cd-extras
-  setocd CDABLE_VARS
-}
-
 if ($PSVersionTable.PSVersion.Major -lt 7) {
   return
 }
@@ -106,7 +100,10 @@ function Find-NearestEnvrc {
   )
 
   $currentDir = (Resolve-Path $StartDir).ToString()
-  while ($currentDir -ne "") {
+  if ($currentDir -contains "::") {
+      return ""
+  }
+  while ($currentDir -ne "" -and $currentDir -ne "$HOME") {
       $envrcPath = Join-Path $currentDir ".envrc.ps1"
       if (Test-Path $envrcPath) {
           return $envrcPath
