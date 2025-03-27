@@ -6,6 +6,7 @@ if (-not $scoopDir) {
 $vsSnippetsDir = "$scoopDir\persist\vscode\data\user-data\User\snippets"
 $reposDir = Get-Item "$HOME\.dotfiles\repos"
 
+cp -fo "$reposDir\public\nvim\snippets\global.code-snippets" "$reposDir\public\nvim\snippets\all.json"
 if (Test-Path $vsSnippetsDir) {
   $linkType = (Get-Item -Path $vsSnippetsDir -Force).LinkType
   if ($linkType -ne "Junction") {
