@@ -38,7 +38,7 @@ if (-not [Environment]::Is64BitProcess) {
   return
 }
 
-if (Get-Command -ErrorAction SilentlyContinue starship) {
+if (Get-Command -ErrorAction Ignore starship) {
   $POWERSHELL_THEME_NEW_LINE_BEFORE_PROMPT = 0
   function Invoke-Starship-PreCommand {
     $cwd = $($executionContext.SessionState.Path.CurrentLocation)
@@ -81,7 +81,7 @@ if (Get-Command -ErrorAction SilentlyContinue starship) {
 }
 
 # Ensure init zoxide after prompt
-if (Get-Command -ErrorAction SilentlyContinue zoxide) {
+if (Get-Command -ErrorAction Ignore zoxide) {
   Invoke-Expression (& { (zoxide init powershell --cmd j | Out-String) })
 }
 
@@ -125,12 +125,13 @@ $hook = [EventHandler[LocationChangedEventArgs]] {
     $oldEnvrc = Find-NearestEnvrc $eventArgs.OldPath
     $newEnvrc = Find-NearestEnvrc $eventArgs.NewPath
     if ($oldEnvrc -ne $newEnvrc) {
-      Get-Command down -ErrorAction SilentlyContinu
-      if (Get-Command down -ErrorAction SilentlyContinu) {
+      if (Get-Command down -ErrorAction Ignore) {
+        Write-Host ".= leave $oldEnvrc"
         down
         Remove-Item Function:down
       }
       if ($newEnvrc -ne "") {
+        Write-Host ".= enter $newEnvrc"
         . $newEnvrc
       }
     }
