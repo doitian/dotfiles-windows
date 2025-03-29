@@ -4,18 +4,13 @@
     "actions": 
     [
         {
-            "command": "unbound",
-            "keys": "ctrl+shift+6"
-        },
-        {
             "command": 
             {
                 "action": "splitPane",
                 "split": "right",
                 "splitMode": "duplicate"
             },
-            "id": "User.splitPane.FEF0D40B",
-            "keys": "alt+shift+plus"
+            "id": "User.splitPane.FEF0D40B"
         },
         {
             "command": 
@@ -24,12 +19,26 @@
                 "split": "down",
                 "splitMode": "duplicate"
             },
-            "id": "User.splitPane.10B260D2",
-            "keys": "alt+shift+minus"
+            "id": "User.splitPane.10B260D2"
         }
     ],
     "copyOnSelect": true,
     "defaultProfile": "{92409fbf-7ae8-4517-a7ab-845615e25da1}",
+    "keybindings": 
+    [
+        {
+            "id": null,
+            "keys": "ctrl+shift+6"
+        },
+        {
+            "id": "User.splitPane.FEF0D40B",
+            "keys": "alt+shift+plus"
+        },
+        {
+            "id": "User.splitPane.10B260D2",
+            "keys": "alt+shift+minus"
+        }
+    ],
     "newTabMenu": 
     [
         {
