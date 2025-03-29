@@ -38,46 +38,32 @@ if (-not [Environment]::Is64BitProcess) {
   return
 }
 
-if (Get-Command -ErrorAction Ignore starship) {
-  $POWERSHELL_THEME_NEW_LINE_BEFORE_PROMPT = 0
-  function Invoke-Starship-PreCommand {
-    $cwd = $($executionContext.SessionState.Path.CurrentLocation)
-    $host.ui.Write("$([char]27)]9;9;`"$cwd`"$([char]27)\")
-    if ($POWERSHELL_THEME_NEW_LINE_BEFORE_PROMPT) {
-      $host.ui.Write("`n")
+$global:PromptChar = $null
+
+function prompt {
+  $cwd = $($executionContext.SessionState.Path.CurrentLocation)
+  $cwdProtocolParts = $cwd.ToString().Split("::\\")
+  $cwdDisplay = $cwdProtocolParts[-1]
+  $parts = $cwdDisplay.Split([IO.Path]::DirectorySeparatorChar)
+  if ($parts.Count -gt 4) {
+    $cwdDisplay = $parts[0..1] + @("…") + $parts[-2..-1] -join '\'
+  }
+  if ($cwdProtocolParts.Count -gt 1) {
+    $cwdDisplay = "\\" + $cwdDisplay
+  }
+
+  if ($global:PromptChar -eq $null) {
+    $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+    $principal = [Security.Principal.WindowsPrincipal] $identity
+    $adminRole = [Security.Principal.WindowsBuiltInRole]::Administrator
+    if ($principal.IsInRole($adminRole)) {
+      $global:PromptChar = "# "
     } else {
-      $global:POWERSHELL_THEME_NEW_LINE_BEFORE_PROMPT = 1
+      $global:PromptChar = "❯ "
     }
   }
-  Invoke-Expression (&starship init powershell)
-} else {
-  $global:PromptChar = $null
 
-  function prompt {
-    $cwd = $($executionContext.SessionState.Path.CurrentLocation)
-    $cwdProtocolParts = $cwd.ToString().Split("::\\")
-    $cwdDisplay = $cwdProtocolParts[-1]
-    $parts = $cwdDisplay.Split([IO.Path]::DirectorySeparatorChar)
-    if ($parts.Count -gt 4) {
-      $cwdDisplay = $parts[0..1] + @("…") + $parts[-2..-1] -join '\'
-    }
-    if ($cwdProtocolParts.Count -gt 1) {
-      $cwdDisplay = "\\" + $cwdDisplay
-    }
-
-    if ($global:PromptChar -eq $null) {
-      $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
-      $principal = [Security.Principal.WindowsPrincipal] $identity
-      $adminRole = [Security.Principal.WindowsBuiltInRole]::Administrator
-      if ($principal.IsInRole($adminRole)) {
-        $global:PromptChar = "# "
-      } else {
-        $global:PromptChar = "❯ "
-      }
-    }
-
-    @("$([char]27)[34;1m", $cwdDisplay, $promptColor, "$([char]27)[0m", $global:PromptChar, "$([char]27)]9;9;`"$cwd`"$([char]27)\") -join ""
-  }
+  @("`n$([char]27)[34;1m", $cwdDisplay, $promptColor, "$([char]27)[0m", $global:PromptChar, "$([char]27)]9;9;`"$cwd`"$([char]27)\") -join ""
 }
 
 # Ensure init zoxide after prompt
@@ -159,6 +145,16 @@ Set-PSReadLineOption -Colors @{
   String                 = $PSStyle.Foreground.Green
   Type                   = $PSStyle.Foreground.Black
   Variable               = $PSStyle.Foreground.FromRGB(0xDD7878)
+}
+
+Set-PSReadLineKeyHandler -Key Enter -ScriptBlock {
+  $line = $null
+  $cursor = $null
+  [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
+  if ($line.Length -eq 0) {
+    [Microsoft.PowerShell.PSConsoleReadLine]::Insert("g st")
+  }
+  [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
 }
 
 $PSStyle.FileInfo.Directory    = "`e[36m"
