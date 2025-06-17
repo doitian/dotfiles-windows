@@ -79,56 +79,9 @@ if ($PSVersionTable.PSVersion.Major -lt 7) {
   return
 }
 
-function Find-NearestEnvrc {
-  param (
-    [Parameter(Mandatory=$true)]
-    [string]$StartDir
-  )
-
-  $currentDir = (Resolve-Path $StartDir).ToString()
-  if ($currentDir -contains "::") {
-      return ""
-  }
-  while ($currentDir -ne "" -and $currentDir -ne "$HOME") {
-      $envrcPath = Join-Path $currentDir ".envrc.ps1"
-      if (Test-Path $envrcPath) {
-          return $envrcPath
-      }
-      $currentDir = Split-Path -Parent $currentDir
-  }
-
-  return ""
+if (Get-Command -ErrorAction Ignore mise) {
+  Invoke-Expression (& { (mise activate pwsh | Out-String) })
 }
-
-$thisEnvrc = Find-NearestEnvrc .
-if ($thisEnvrc -ne "") {
-  . $thisEnvrc
-}
-
-$hook = [EventHandler[LocationChangedEventArgs]] {
-  param([object] $source, [LocationChangedEventArgs] $eventArgs)
-  end {
-    $oldEnvrc = Find-NearestEnvrc $eventArgs.OldPath
-    $newEnvrc = Find-NearestEnvrc $eventArgs.NewPath
-    if ($oldEnvrc -ne $newEnvrc) {
-      if (Get-Command down -ErrorAction Ignore) {
-        Write-Host ".= leave $oldEnvrc"
-        down
-        Remove-Item Function:down
-      }
-      if ($newEnvrc -ne "") {
-        Write-Host ".= enter $newEnvrc"
-        . $newEnvrc
-      }
-    }
-  }
-};
-$currentAction = $ExecutionContext.SessionState.InvokeCommand.LocationChangedAction;
-if ($currentAction) {
-  $ExecutionContext.SessionState.InvokeCommand.LocationChangedAction = [Delegate]::Combine($currentAction, $hook);
-} else {
-  $ExecutionContext.SessionState.InvokeCommand.LocationChangedAction = $hook;
-};
 
 Set-PSReadLineOption -Colors @{
   Command                = $PSStyle.Foreground.Blue
