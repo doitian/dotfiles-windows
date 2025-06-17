@@ -79,10 +79,6 @@ if ($PSVersionTable.PSVersion.Major -lt 7) {
   return
 }
 
-if (Get-Command -ErrorAction Ignore mise) {
-  Invoke-Expression (& { (mise activate pwsh | Out-String) })
-}
-
 Set-PSReadLineOption -Colors @{
   Command                = $PSStyle.Foreground.Blue
   Comment                = $PSStyle.Foreground.BrightWhite
