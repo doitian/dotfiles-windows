@@ -19,6 +19,7 @@ function mx { mise x -- @Args }
 function mr { mise r @Args }
 function mact {
   Invoke-Expression (& { (mise activate pwsh | Out-String) })
+  Set-Item -LiteralPath "Function:Global:mise" -Value $Function:mise
 }
 
 $cb = "$HOME\codebase"
