@@ -72,7 +72,7 @@ if (Test-Path -LiteralPath "$DocumentsDir\PowerShell") {
   ln "$DocumentsDir\PowerShell" "$DocumentsDir\WindowsPowerShell"
 }
 
-ln "$(Split-Path -Parent $PROFILE)\mise" "$HOME\.config\mise"
+ln "$PublicRepoDir\mise" "$HOME\.config\mise"
 ln "$PublicRepoDir\default\.githooks" "$HOME\.githooks"
 
 cp -Force "$PublicRepoDir\default\.gnupg\gpg.conf" "$(scoop prefix gpg)\home\"
