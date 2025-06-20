@@ -63,7 +63,7 @@ mkdir -Force ~/.local/state/vim/backup, ~/.local/state/vim/swap, ~/.local/state/
 
 Function ln ($value, $path) {
   if (Test-Path -LiteralPath $path) {
-    rm -Re -Fo $path
+    rm -Re -Force $path
   }
   New-Item -ItemType Junction -Force -Path $path -Value $value
 }
@@ -71,6 +71,9 @@ Function ln ($value, $path) {
 if (Test-Path -LiteralPath "$DocumentsDir\PowerShell") {
   ln "$DocumentsDir\PowerShell" "$DocumentsDir\WindowsPowerShell"
 }
+
+ln "$(Split-Path -Parent $PROFILE)\mise" "$HOME\.config\mise"
+ln "$PublicRepoDir\default\.githooks" "$HOME\.githooks"
 
 cp -Force "$PublicRepoDir\default\.gnupg\gpg.conf" "$(scoop prefix gpg)\home\"
 
