@@ -22,6 +22,7 @@
             "id": "User.splitPane.10B260D2"
         }
     ],
+    "copyFormatting": "none",
     "copyOnSelect": true,
     "defaultProfile": "{92409fbf-7ae8-4517-a7ab-845615e25da1}",
     "keybindings": 
@@ -60,6 +61,7 @@
         "list": 
         [
             {
+                "closeOnExit": "graceful",
                 "commandline": "%SCOOP%\\apps\\pwsh\\current\\pwsh.exe -nologo",
                 "guid": "{92409fbf-7ae8-4517-a7ab-845615e25da1}",
                 "hidden": false,
@@ -68,30 +70,47 @@
                 "startingDirectory": "%USERPROFILE%"
             },
             {
-                "guid": "{85718e99-3025-5f11-af6b-4bb0c7f8f006}",
-                "hidden": false,
-                "name": "Developer PowerShell for VS 2022",
-                "source": "Windows.Terminal.VisualStudio"
-            },
-            {
+                "commandline": "%SystemRoot%\\System32\\cmd.exe",
                 "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
                 "hidden": false,
                 "name": "Command Prompt"
             },
             {
-                "commandline": "%SCOOP%\\apps\\pwsh\\current\\pwsh.exe -nologo",
-                "elevate": true,
-                "guid": "{a245a143-a5d0-451b-abc9-47a6cd148254}",
-                "hidden": false,
-                "icon": "ms-appx:///ProfileIcons/pwsh.png",
-                "name": "PowerShell (Admin)",
-                "startingDirectory": "%USERPROFILE%"
-            },
-            {
                 "guid": "{7b88aef9-98b1-51df-9c39-6b24a0deaf45}",
-                "hidden": false,
+                "hidden": true,
                 "name": "tmux",
                 "source": "Windows.Terminal.Wsl"
+            },
+            {
+                "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+                "hidden": true,
+                "name": "Ubuntu",
+                "source": "Windows.Terminal.Wsl"
+            },
+            {
+                "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+                "hidden": true,
+                "name": "Azure Cloud Shell",
+                "source": "Windows.Terminal.Azure"
+            },
+            {
+                "guid": "{c8284682-7c9c-5335-aea0-c483935c2b52}",
+                "hidden": true,
+                "name": "Developer Command Prompt for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{85718e99-3025-5f11-af6b-4bb0c7f8f006}",
+                "hidden": true,
+                "name": "Developer PowerShell for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "closeOnExit": "graceful",
+                "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
+                "hidden": false,
+                "name": "Ubuntu",
+                "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc"
             }
         ]
     },
@@ -145,6 +164,5 @@
         }
     ],
     "theme": "light",
-    "themes": [],
-    "useAcrylicInTabRow": true
+    "themes": []
 }
