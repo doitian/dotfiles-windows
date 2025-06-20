@@ -32,7 +32,7 @@ if ($obsidianAppSetting -ne $null) {
 }
 
 # LF newline
-$merged = $merged | Join-String -Separator `n
+$merged = ($merged | Join-String -Separator `n) + "`n"
 foreach ($file in $files) {
   if (Test-Path (Split-Path -Parent $file)) {
     $outFiles += Resolve-Path $file
