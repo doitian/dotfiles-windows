@@ -107,6 +107,10 @@
             },
             {
                 "closeOnExit": "graceful",
+                "font": 
+                {
+                    "size": 12
+                },
                 "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
                 "hidden": false,
                 "name": "Ubuntu",
