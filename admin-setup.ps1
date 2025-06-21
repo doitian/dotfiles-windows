@@ -32,7 +32,8 @@ ls -Force "$PSProfileDir/local" | % { New-Item -ItemType SymbolicLink -Force -Va
 
 $DictionaryFile = "$HOME/Dropbox/Apps/Harper/dictionary.txt"
 if (Test-Path $DictionaryFile) {
-  $RoamingDictionaryFile = "$HOME/AppData/Roaming/harper-ls/dictionary.txt"
-  mkdir -Force "$HOME"
-  New-Item -ItemType SymbolicLink -Force -Value $DictionaryFile -Path $RoamingDictionaryFile
+  ForEach ($d in "$HOME/AppData/Roaming/harper-ls", "$HOME/.config/harper-ls") {
+    mkdir -Force $d
+    New-Item -ItemType SymbolicLink -Force -Value $DictionaryFile -Path "$d/dictionary.txt"
+  }
 }
