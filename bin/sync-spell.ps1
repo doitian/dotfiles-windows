@@ -1,18 +1,17 @@
 $files = @(
-  "$HOME\.vim-spell-en.utf-8.add"
-  "$HOME\Dropbox\Backups\General\spell.txt"
+  "$HOME\Dropbox\Apps\Harper\dictionary.txt"
 )
 $winFile = "$HOME\AppData\Roaming\Microsoft\Spelling\neutral\default.dic"
 
 $existingFiles = ($files + $winFile) | ? { Test-Path $_ }
 $merged =  Get-Content $existingFiles | % { $_.Trim() } | ? { $_ -ne "" }
 
-$obsidianAppSettingPath = "$HOME\Dropbox\Brain\.obsidian\app.json"
-$obsidianAppSetting = $null
+$obsidianHarperSettingPath = "$HOME\Dropbox\Brain\.obsidian\plugins\harper\data.json"
+$obsidianHarperSetting = $null
 
-if (Test-Path $obsidianAppSettingPath) {
-  $obsidianAppSetting = Get-Content $obsidianAppSettingPath | ConvertFrom-Json
-  $merged += $obsidianAppSetting.spellcheckDictionary
+if (Test-Path $obsidianHarperSettingPath) {
+  $obsidianHarperSetting = Get-Content $obsidianHarperSettingPath | ConvertFrom-Json
+  $merged += $obsidianHarperSetting.userDictionary
 }
 
 $merged = $merged | Sort-Object -Unique -CaseSensitive
@@ -24,14 +23,13 @@ if (Test-Path (Split-Path -Parent $winFile)) {
   Set-Content -Path $winFile -Value $merged
 }
 
-if ($obsidianAppSetting -ne $null) {
-  $obsidianAppSetting.spellcheckDictionary = $merged
-  $obsidianAppSettingJson = ($obsidianAppSetting | ConvertTo-Json -Depth 2) -Replace "`r`n", "`n"
-  $outFiles += Resolve-Path $obsidianAppSettingPath
-  Set-Content -NoNewline -Path $obsidianAppSettingPath -Value $obsidianAppSettingJson
+if ($obsidianHarperSetting -ne $null) {
+  $obsidianHarperSetting.userDictionary = $merged
+  $obsidianHarperSettingJson = ($obsidianHarperSetting | ConvertTo-Json -Depth 2) -Replace "`r`n", "`n"
+  $outFiles += Resolve-Path $obsidianHarperSettingPath
+  Set-Content -NoNewline -Path $obsidianHarperSettingPath -Value $obsidianHarperSettingJson
 }
 
-# LF newline
 $merged = ($merged | Join-String -Separator `n) + "`n"
 foreach ($file in $files) {
   if (Test-Path (Split-Path -Parent $file)) {
