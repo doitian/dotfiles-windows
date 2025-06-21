@@ -1,4 +1,5 @@
 $files = @(
+  "$HOME\.vim-spell-en.utf-8.add"
   "$HOME\Dropbox\Apps\Harper\dictionary.txt"
 )
 $winFile = "$HOME\AppData\Roaming\Microsoft\Spelling\neutral\default.dic"
