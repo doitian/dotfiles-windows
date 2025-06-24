@@ -22,6 +22,7 @@ function mact {
   Set-Item -LiteralPath "Function:Global:mise" -Value $Function:mise
 }
 
+$hist = (Get-PSReadlineOption).HistorySavePath
 $cb = "$HOME\codebase"
 $dcs = "$HOME\Documents"
 $dsk = [Environment]::GetFolderPath("Desktop")
