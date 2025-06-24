@@ -53,7 +53,6 @@ git config --global core.autocrlf input
 git config --global --unset core.pager
 git config --global gpg.program (Get-Command -Name 'gpg.exe').Source
 git config --global alias.dotfiles '!powershell.exe -NoProfile -Command git-dotfiles'
-git config --global alias.codebase '!powershell.exe -NoProfile -Command git-codebase'
 git config --global alias.cryptape '!powershell.exe -NoProfile -Command git-cryptape'
 git config --global alias.nervos '!powershell.exe -NoProfile -Command git-nervos'
 # https://github.com/msysgit/msysgit/wiki/Diagnosing-why-Git-is-so-slow

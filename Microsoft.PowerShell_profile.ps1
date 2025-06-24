@@ -74,11 +74,6 @@ function prompt {
   @("`n$([char]27)[34;1m", $cwdDisplay, $promptColor, "$([char]27)[0m", $global:PromptChar, "$([char]27)]9;9;`"$cwd`"$([char]27)\") -join ""
 }
 
-# Ensure init zoxide after prompt
-if (Get-Command -ErrorAction Ignore zoxide) {
-  Invoke-Expression (& { (zoxide init powershell --cmd j | Out-String) })
-}
-
 Set-PSReadLineOption -EditMode emacs
 Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
 Set-PSReadlineKeyHandler -Chord 'Ctrl+w' -Function BackwardKillWord
