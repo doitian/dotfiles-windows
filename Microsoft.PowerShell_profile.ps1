@@ -21,6 +21,17 @@ function mact {
   Invoke-Expression (& { (mise activate pwsh | Out-String) })
   Set-Item -LiteralPath "Function:Global:mise" -Value $Function:mise
 }
+function j {
+  $selected = (cat "$HOME/.j.path" | fzf -0 -1 -q "$Args")
+  if ($selected -ne $null) {
+    cd "$selected"
+  } else {
+    Write-Error "no matched directory found"
+  }
+}
+function jadd {
+  (pwd).Path.Replace("\", "/") | Add-Content "$HOME/.j.path"
+}
 
 $hist = (Get-PSReadlineOption).HistorySavePath
 $cb = "$HOME\codebase"
