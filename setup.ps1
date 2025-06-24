@@ -55,11 +55,6 @@ git config --global gpg.program (Get-Command -Name 'gpg.exe').Source
 git config --global alias.dotfiles '!powershell.exe -NoProfile -Command git-dotfiles'
 git config --global alias.cryptape '!powershell.exe -NoProfile -Command git-cryptape'
 git config --global alias.nervos '!powershell.exe -NoProfile -Command git-nervos'
-# https://github.com/msysgit/msysgit/wiki/Diagnosing-why-Git-is-so-slow
-# Setting env HOME may help
-git config --global core.fscache true
-git config --global core.preloadindex true
-git config --global gc.auto 256
 
 mkdir -Force ~/.local/state/vim/backup, ~/.local/state/vim/swap, ~/.local/state/vim/undo, ~/.vim, ~/.config
 
