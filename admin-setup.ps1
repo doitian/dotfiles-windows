@@ -15,14 +15,11 @@ mkdir -Force "$HOME/.config"
 mkdir -Force ~/.ssh
 
 New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/default/.vimrc" -Path "~/_vimrc"
-New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/default/.vimrc" -Path "~/.vimrc"
-New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/default/.ideavimrc" -Path "~/.ideavimrc"
-ForEach ($f in ".ignore", ".editorconfig", ".ctags") {
+ForEach ($f in ".vimrc", ".ignore", ".editorconfig", ".ctags") {
   New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/default/$f" -Path "~/$f"
 }
 New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/nvim" -Path "$HOME/AppData/Local/nvim"
 New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/nvim" -Path "$HOME/.config/nvim"
-
 
 New-Item -ItemType SymbolicLink -Force -Value "$(pwd)\settings.json" -Path "$HOME\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 rm -Re -Force "$HOME/AppData/Roaming/lazygit"
