@@ -12,6 +12,7 @@ $PrivateRepoDir = "$ReposDir\private"
 $DocumentsDir = Split-Path -Parent (Split-Path -Parent $PROFILE)
 
 git config --global core.autocrlf input
+git config --global alias.ft "!f() { git ls-files --other --exclude-standard | fzf -m --print0 --preview 'bat.exe {}' | xargs -0 git add `"$@`"; }; f"
 
 ForEach ($repo in $PublicRepoDir, $PrivateRepoDir) {
   if (Test-Path -LiteralPath $repo) {
