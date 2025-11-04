@@ -22,8 +22,8 @@ New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/nvim" -Path "$HOME
 New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/nvim" -Path "$HOME/.config/nvim"
 
 New-Item -ItemType SymbolicLink -Force -Value "$(pwd)\settings.json" -Path "$HOME\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-rm -Re -Force "$HOME/AppData/Roaming/lazygit"
-New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/default/.config/lazygit" -Path "$HOME/AppData/Roaming/lazygit"
+rm -Re -Force "$HOME/AppData/Local/lazygit"
+New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/default/.config/lazygit" -Path "$HOME/AppData/Local/lazygit"
 
 ls -Force "$PSProfileDir/local" | % { New-Item -ItemType SymbolicLink -Force -Value ($_.FullName) -Path "~/$($_.Name)" }
 
