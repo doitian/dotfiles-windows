@@ -56,6 +56,7 @@ git config --global gpg.program (Get-Command -Name 'gpg.exe').Source
 git config --global alias.dotfiles '!powershell.exe -NoProfile -Command git-dotfiles'
 git config --global alias.cryptape '!powershell.exe -NoProfile -Command git-cryptape'
 git config --global alias.nervos '!powershell.exe -NoProfile -Command git-nervos'
+git config --global "alias.prune-heads" '!powershell.exe -NoProfile -Command git-prune-heads'
 
 mkdir -Force ~/.local/state/vim/backup, ~/.local/state/vim/swap, ~/.local/state/vim/undo, ~/.vim, ~/.config
 
