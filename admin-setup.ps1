@@ -24,8 +24,10 @@ New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/nvim" -Path "$HOME
 New-Item -ItemType SymbolicLink -Force -Value "$(pwd)\settings.json" -Path "$HOME\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 rm -Re -Force "$HOME/AppData/Local/lazygit"
 New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/default/.config/lazygit" -Path "$HOME/AppData/Local/lazygit"
-rm -Re -Force "$HOME/AppData/Roaming/aichat"
-New-Item -ItemType SymbolicLink -Force -Value "$PrivateRepoDir/aichat" -Path "$HOME/AppData/Roaming/aichat"
+mkdir -Force "$HOME/AppData/Roaming/aichat"
+rm -Re -Force "$HOME/AppData/Roaming/aichat/roles"
+New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/ai/aichat/roles" -Path "$HOME/AppData/Roaming/aichat/roles"
+New-Item -ItemType SymbolicLink -Force -Value "$PrivateRepoDir/default/.config/aichat/config.yaml" -Path "$HOME/AppData/Roaming/aichat/config.yaml"
 
 ls -Force "$PSProfileDir/local" | % { New-Item -ItemType SymbolicLink -Force -Value ($_.FullName) -Path "~/$($_.Name)" }
 
