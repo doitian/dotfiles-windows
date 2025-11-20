@@ -62,11 +62,24 @@ if ($args.Count -gt 0) {
       $command = $args[0]
       $remainingArgs = if ($args.Count -gt 1) { $args[1..($args.Count-1)] } else { @() }
 
-      if ($MyInvocation.ExpectingInput) {
-        # Forward stdin to the command
-        $input | & $command $remainingArgs
+      $commandInfo = Get-Command $command
+      if ($commandInfo -and $commandInfo.CommandType -eq "Alias") {
+        $commandInfo = Get-Command $commandInfo.ResolvedCommandName
+      }
+      if ($commandInfo -and $commandInfo.CommandType -eq "Cmdlet") {
+        if ($MyInvocation.ExpectingInput) {
+          # Forward stdin to the command
+          $input | & $command @remainingArgs
+        } else {
+          & $command @remainingArgs
+        }
       } else {
-        & $command $remainingArgs
+        if ($MyInvocation.ExpectingInput) {
+          # Forward stdin to the command
+          $input | & $command $remainingArgs
+        } else {
+          & $command $remainingArgs
+        }
       }
     }
     
