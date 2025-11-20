@@ -50,22 +50,23 @@ if ($args.Count -gt 0) {
     $stdinContent = $input
     if ($args[0] -eq 'ssh') {
       # Special SSH handling
-      $RemainingArgs = $args[1..($args.Count-1)]
-      if ($stdinContent) {
-        $stdinContent | & ssh -o ProxyCommand="ncat --proxy-type socks5 --proxy $($proxyUrl -replace '.*://') %h %p" @RemainingArgs
+      $remainingArgs = @("-o", "ProxyCommand=ncat --proxy-type socks5 --proxy $($proxyUrl -replace '.*://') %h %p")
+      $remainingArgs += $args[1..($args.Count-1)]
+      if ($MyInvocation.ExpectingInput) {
+        $input | & ssh $remainingArgs
       } else {
-        & ssh -o ProxyCommand="ncat --proxy-type socks5 --proxy $($proxyUrl -replace '.*://') %h %p" @RemainingArgs
+        & ssh $remainingArgs
       }
     } else {
       # Regular command execution with stdin forwarding
       $command = $args[0]
-      $RemainingArgs = if ($args.Count -gt 1) { $args[1..($args.Count-1)] } else { @() }
+      $remainingArgs = if ($args.Count -gt 1) { $args[1..($args.Count-1)] } else { @() }
 
-      if ($stdinContent) {
+      if ($MyInvocation.ExpectingInput) {
         # Forward stdin to the command
-        $stdinContent | & $command @RemainingArgs
+        $input | & $command $remainingArgs
       } else {
-        & $command @RemainingArgs
+        & $command $remainingArgs
       }
     }
     
