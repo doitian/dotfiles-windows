@@ -85,9 +85,24 @@ function prompt {
   @("`n$([char]27)[34;1m", $cwdDisplay, $promptColor, "$([char]27)[0m", $global:PromptChar, "$([char]27)]9;9;`"$cwd`"$([char]27)\") -join ""
 }
 
-Set-PSReadLineOption -EditMode emacs
-Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
-Set-PSReadlineKeyHandler -Chord 'Ctrl+w' -Function BackwardKillWord
+function OnViModeChange {
+  if ($args[0] -eq 'Insert') {
+    Set-PSReadLineOption -EditMode Emacs
+    Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
+    Set-PSReadlineKeyHandler -Chord "Alt+w" -Function KillRegion
+    Set-PSReadlineKeyHandler -Chord "Ctrl+w" -Function BackwardKillWord
+    Set-PSReadlineKeyHandler -Chord "Ctrl+x,Ctrl+f" -Function CharacterSearch
+    Set-PSReadlineKeyHandler -Chord "Ctrl+x,Ctrl+b" -Function ViGotoBrace
+    Set-PSReadlineKeyHandler -Chord "Ctrl+x,Ctrl+v" -ScriptBlock {
+      Set-PSReadLineOption -EditMode Vi
+      [Microsoft.PowerShell.PSConsoleReadLine]::ViCommandMode()
+    }
+    Remove-PSReadLineKeyHandler -Chord "Ctrl+]"
+    Remove-PSReadLineKeyHandler -Chord "Ctrl+Alt+]"
+  }
+}
+Set-PSReadLineOption -EditMode Emacs -ViModeIndicator Script -ViModeChangeHandler $Function:OnViModeChange
+OnViModeChange Insert
 
 if ($PSVersionTable.PSVersion.Major -lt 7) {
   return
