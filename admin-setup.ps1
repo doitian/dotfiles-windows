@@ -28,6 +28,9 @@ mkdir -Force "$HOME/AppData/Roaming/aichat"
 rm -Re -Force "$HOME/AppData/Roaming/aichat/roles"
 New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/ai/aichat/roles" -Path "$HOME/AppData/Roaming/aichat/roles"
 New-Item -ItemType SymbolicLink -Force -Value "$PrivateRepoDir/default/.config/aichat/config.yaml" -Path "$HOME/AppData/Roaming/aichat/config.yaml"
+mkdir -Force "$HOME/.cursor"
+rm -Re -Force "$HOME/.cursor/commands"
+New-Item -ItemType SymbolicLink -Force -Value "$PublicRepoDir/ai/cursor/commands" -Path "$HOME/.cursor/commands"
 
 ls -Force "$PSProfileDir/local" | % { New-Item -ItemType SymbolicLink -Force -Value ($_.FullName) -Path "~/$($_.Name)" }
 
