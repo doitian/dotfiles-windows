@@ -53,6 +53,10 @@ if ($env:WT_SESSION) {
 $env:TERM_BACKGROUND = 'light'
 $env:LANG = 'en_US.UTF-8'
 
+if ($env:CURSOR_AGENT) {
+  $env:GIT_PAGER = ''
+}
+
 if (-not [Environment]::Is64BitProcess) {
   return
 }
