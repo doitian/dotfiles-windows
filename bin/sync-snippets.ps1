@@ -4,14 +4,17 @@ if (-not $scoopDir) {
 }
 
 $vsSnippetsDir = "$scoopDir\persist\vscode\data\user-data\User\snippets"
+$cursorSnippetsDir = "$scoopDir\persist\cursor\data\user-data\User\snippets"
 $reposDir = Get-Item "$HOME\.dotfiles\repos"
 
 cp -fo "$reposDir\public\nvim\snippets\global.code-snippets" "$reposDir\public\nvim\snippets\all.json"
-if (Test-Path $vsSnippetsDir) {
-  $linkType = (Get-Item -Path $vsSnippetsDir -Force).LinkType
-  if ($linkType -ne "Junction") {
-    Remove-Item -Path $vsSnippetsDir -Force -Recurse
-    New-Item -ItemType Junction -Path $vsSnippetsDir -Value "$reposDir\public\nvim\snippets"
+foreach ($dir in @($vsSnippetsDir, $cursorSnippetsDir)) {
+  if (Test-Path $dir) {
+    $linkType = (Get-Item -Path $dir -Force).LinkType
+    if ($linkType -ne "Junction") {
+      Remove-Item -Path $dir -Force -Recurse
+      New-Item -ItemType Junction -Path $dir -Value "$reposDir\public\nvim\snippets"
+    }
   }
 }
 
