@@ -58,13 +58,13 @@ git config --global alias.cryptape '!powershell.exe -NoProfile -Command git-cryp
 git config --global alias.nervos '!powershell.exe -NoProfile -Command git-nervos'
 git config --global "alias.prune-heads" '!powershell.exe -NoProfile -Command git-prune-heads'
 
-mkdir -Force ~/.local/state/vim/backup, ~/.local/state/vim/swap, ~/.local/state/vim/undo, ~/.vim, ~/.config
+mkdir -Force ~/.local/state/vim/backup, ~/.local/state/vim/swap, ~/.local/state/vim/undo, ~/.vim, ~/.config, ~/.ssh
 
 Function ln ($value, $path) {
   if (Test-Path -LiteralPath $path) {
     rm -Re -Force $path
   }
-  New-Item -ItemType Junction -Force -Path $path -Value $value
+  New-Item -ItemType SymbolicLink -Force -Path $path -Value $value
 }
 
 if (Test-Path -LiteralPath "$DocumentsDir\PowerShell") {
@@ -78,3 +78,29 @@ cp -Force "$PublicRepoDir\default\.gnupg\gpg.conf" "$(scoop prefix gpg)\home\"
 
 mkdir -Force "$HOME\AppData\Roaming\yazi\config"
 ls -Force "$PublicRepoDir\Windows\AppData\Roaming\yazi\config" | % { cp -Force -Path ($_.FullName) -Destination "$HOME\AppData\Roaming\yazi\config\$($_.Name)" }
+
+ln "$PublicRepoDir/default/.vimrc" "~/_vimrc"
+ForEach ($f in ".vimrc", ".ignore", ".editorconfig", ".ctags") {
+  ln "$PublicRepoDir/default/$f" "~/$f"
+}
+ln "$PublicRepoDir/nvim" "$HOME/AppData/Local/nvim"
+ln "$PublicRepoDir/nvim" "$HOME/.config/nvim"
+
+ln "$(pwd)\settings.json" "$HOME\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+ln "$PublicRepoDir/default/.config/lazygit" "$HOME/AppData/Local/lazygit"
+mkdir -Force "$HOME/AppData/Roaming/aichat"
+ln "$PublicRepoDir/ai/aichat/roles" "$HOME/AppData/Roaming/aichat/roles"
+ln "$PrivateRepoDir/default/.config/aichat/config.yaml" "$HOME/AppData/Roaming/aichat/config.yaml"
+mkdir -Force "$HOME/.cursor"
+ln "$PublicRepoDir/ai/cursor/commands" "$HOME/.cursor/commands"
+ln "$PublicRepoDir/ai/gemini/settings.json" "$HOME/.gemini/settings.json"
+ln "$PublicRepoDir/ai/gemini/AGENTS.Windows.md" "$HOME/.gemini/AGENTS.md"
+
+ls -Force "$PSProfileDir/local" | % { ln $_.FullName "~/$($_.Name)" }
+
+$DictionaryFile = "$HOME/Dropbox/Apps/Harper/dictionary.txt"
+if (Test-Path $DictionaryFile) {
+  $DictionaryDestination = "$HOME/AppData/Roaming/harper-ls"
+  mkdir -Force $DictionaryDestination
+  ln $DictionaryFile "$DictionaryDestination/dictionary.txt"
+}

@@ -57,14 +57,6 @@ Restart the terminal app and continue. The script requires [PowerShell 7](https:
 ./setup
 ```
 
-┌ 5. Run as admin
-
-```powershell
-./admin-setup
-```
-
-Restart
-
 ## Proxy
 
 Start proxy first. Then configure proxy in system settings and:
