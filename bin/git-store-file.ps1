@@ -100,15 +100,15 @@ function Invoke-StatusSubcommand {
     param(
         [string]$Branch,
         [string]$Remote,
-        [string[]]$Args
+        [string[]]$RemainingArgs
     )
 
     $showDiff = $false
     $statusArgs = @()
 
     # Parse status-specific options
-    for ($i = 0; $i -lt $Args.Length; $i++) {
-        switch ($Args[$i]) {
+    for ($i = 0; $i -lt $RemainingArgs.Length; $i++) {
+        switch ($RemainingArgs[$i]) {
             { $_ -eq "-d" -or $_ -eq "--diff" } {
                 $showDiff = $true
             }
@@ -124,7 +124,7 @@ function Invoke-StatusSubcommand {
                 exit 0
             }
             default {
-                Write-Error "Error: Unknown option for status: $($Args[$i])"
+                Write-Error "Error: Unknown option for status: $($RemainingArgs[$i])"
                 Write-Host "Use '$scriptName status --help' for usage information" -ForegroundColor Red
                 exit 1
             }
@@ -200,7 +200,7 @@ function Invoke-RestoreSubcommand {
     param(
         [string]$Branch,
         [string]$Remote,
-        [string[]]$Files
+        [string[]]$RemainingArgs
     )
 
     # Check if branch exists
@@ -221,8 +221,8 @@ function Invoke-RestoreSubcommand {
         }
 
         # Restore files from the temporary index to working directory
-        if ($Files.Count -gt 0) {
-            git restore --worktree $Files
+        if ($RemainingArgs.Count -gt 0) {
+            git restore --worktree $RemainingArgs
         } else {
             # Restore all files if none specified
             $allFiles = git ls-tree -r --name-only "$Remote/$Branch" 2>$null
@@ -244,8 +244,7 @@ function Invoke-RestoreSubcommand {
 function Invoke-LsSubcommand {
     param(
         [string]$Branch,
-        [string]$Remote,
-        [string[]]$Args
+        [string]$Remote
     )
 
     # Check if branch exists
@@ -270,10 +269,10 @@ function Invoke-StoreSubcommand {
     param(
         [string]$Branch,
         [string]$Remote,
-        [string[]]$Files
+        [string[]]$RemainingArgs
     )
 
-    if ($Files.Count -eq 0) {
+    if ($RemainingArgs.Count -eq 0) {
         Write-Error "At least one file is required."
         Write-Host "Use -Help for usage information" -ForegroundColor Red
         exit 1
@@ -291,7 +290,7 @@ function Invoke-StoreSubcommand {
         }
 
         # Add all files (forced, in case they are ignored)
-        git add -f $Files
+        git add -f $RemainingArgs
 
         # Create a commit object
         $tree = git write-tree
@@ -299,7 +298,7 @@ function Invoke-StoreSubcommand {
         $commitHash = $null
 
         # Create commit message listing all files
-        $commitMsg = "Backup git add -f $($Files -join ' ')"
+        $commitMsg = "Backup git add -f $($RemainingArgs -join ' ')"
 
         if ($parent) {
             $commitHash = $commitMsg | git commit-tree $tree -p $parent
@@ -329,7 +328,7 @@ function Invoke-StoreSubcommand {
         # Update the remote branch to point to the new commit
         git push $Remote "$commitHash`:refs/heads/$Branch"
 
-        Write-Host "✅ Saved git add -f $($Files -join ' ') to remote branch '$Remote/$Branch'"
+        Write-Host "✅ Saved git add -f $($RemainingArgs -join ' ') to remote branch '$Remote/$Branch'"
     }
     finally {
         # Cleanup
@@ -362,16 +361,16 @@ if (-not $subcommand) {
 # Execute subcommand
 switch ($subcommand) {
     "store" {
-        Invoke-StoreSubcommand -Branch $Branch -Remote $Remote -Files $positionalArgs
+        Invoke-StoreSubcommand -Branch $Branch -Remote $Remote -RemainingArgs $positionalArgs
     }
     "status" {
-        Invoke-StatusSubcommand -Branch $Branch -Remote $Remote -Args $positionalArgs
+        Invoke-StatusSubcommand -Branch $Branch -Remote $Remote -RemainingArgs $positionalArgs
     }
     "restore" {
-        Invoke-RestoreSubcommand -Branch $Branch -Remote $Remote -Files $positionalArgs
+        Invoke-RestoreSubcommand -Branch $Branch -Remote $Remote -RemainingArgs $positionalArgs
     }
     "ls" {
-        Invoke-LsSubcommand -Branch $Branch -Remote $Remote -Args $positionalArgs
+        Invoke-LsSubcommand -Branch $Branch -Remote $Remote
     }
     default {
         Write-Error "Error: Unknown subcommand: $subcommand"
