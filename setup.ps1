@@ -96,11 +96,6 @@ ln "$PublicRepoDir/ai/cursor/commands" "$HOME/.cursor/commands"
 ln "$PublicRepoDir/ai/gemini/settings.json" "$HOME/.gemini/settings.json"
 ln "$PublicRepoDir/ai/gemini/AGENTS.Windows.md" "$HOME/.gemini/AGENTS.md"
 
-$CheatsheetsDir = "$HOME/Dropbox/Brain/para/lets/c/Cheatsheets"
-if (Test-Path "$CheatsheetsDir") {
-  ln "$CheatsheetsDir" "$HOME\AppData\Roaming\navi\cheats"
-}
-
 ls -Force "$PSProfileDir/local" | % { ln $_.FullName "~/$($_.Name)" }
 
 $DictionaryFile = "$HOME/Dropbox/Apps/Harper/dictionary.txt"
