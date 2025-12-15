@@ -38,15 +38,17 @@ $cb = "$HOME\codebase"
 $dcs = "$HOME\Documents"
 $dsk = [Environment]::GetFolderPath("Desktop")
 $dl = "$HOME\Downloads"
+$dotpub = "$HOME\.dotfiles\repos\public"
+$dotbin = "$HOME\.dotfiles\repos\public\default\bin"
 
 function .. { cd .. }
 function ... { cd ../.. }
 function .... { cd ../../.. }
 function dotfiles { cd $PSProfileDir }
+
 if ($env:WSLENV) {
   function tmux { wsl -d tmux tmux @Args }
 }
-
 if ($env:WT_SESSION) {
   $env:LAZY = 1
 }
