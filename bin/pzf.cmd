@@ -1,2 +1,2 @@
 @echo off
-dash "%USERPROFILE%/.dotfiles/repos/public/default/bin/pzf" %*
+python3 "%USERPROFILE%/.dotfiles/repos/public/default/bin/pzf" %*

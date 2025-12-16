@@ -1,2 +1,2 @@
 #!/usr/bin/env pwsh
-dash "$HOME/.dotfiles/repos/public/default/bin/pzf" @args
+python3 "$HOME/.dotfiles/repos/public/default/bin/pzf" @args
