@@ -88,13 +88,13 @@ ln "$PublicRepoDir/nvim" "$HOME/.config/nvim"
 
 ln "$(pwd)\settings.json" "$HOME\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 ln "$PublicRepoDir/default/.config/lazygit" "$HOME/AppData/Local/lazygit"
-mkdir -Force "$HOME/AppData/Roaming/aichat"
-ln "$PublicRepoDir/ai/aichat/roles" "$HOME/AppData/Roaming/aichat/roles"
-ln "$PrivateRepoDir/default/.config/aichat/config.yaml" "$HOME/AppData/Roaming/aichat/config.yaml"
 mkdir -Force "$HOME/.cursor"
 ln "$PublicRepoDir/ai/cursor/commands" "$HOME/.cursor/commands"
 ln "$PublicRepoDir/ai/gemini/settings.json" "$HOME/.gemini/settings.json"
 ln "$PublicRepoDir/ai/gemini/AGENTS.Windows.md" "$HOME/.gemini/AGENTS.md"
+mkdir -Force "$HOME/.config/opencode"
+ln "$PublicRepoDir/ai/cursor/commands" "$HOME/.config/opencode/command"
+ln "$PublicRepoDir/ai/opencode/opencode.jsonc" "$HOME/.config/opencode/opencode.jsonc"
 
 ls -Force "$PSProfileDir/local" | % { ln $_.FullName "~/$($_.Name)" }
 
