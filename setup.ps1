@@ -93,7 +93,7 @@ ln "$PublicRepoDir/ai/cursor/commands" "$HOME/.cursor/commands"
 ln "$PublicRepoDir/ai/gemini/settings.json" "$HOME/.gemini/settings.json"
 ln "$PublicRepoDir/ai/gemini/AGENTS.Windows.md" "$HOME/.gemini/AGENTS.md"
 mkdir -Force "$HOME/.config/opencode"
-ln "$PublicRepoDir/ai/cursor/commands" "$HOME/.config/opencode/command"
+ln "$PublicRepoDir/ai/opencode/command" "$HOME/.config/opencode/command"
 ln "$PublicRepoDir/ai/opencode/opencode.jsonc" "$HOME/.config/opencode/opencode.jsonc"
 
 ls -Force "$PSProfileDir/local" | % { ln $_.FullName "~/$($_.Name)" }
