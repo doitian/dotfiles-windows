@@ -12,7 +12,6 @@ $PrivateRepoDir = "$ReposDir\private"
 $DocumentsDir = Split-Path -Parent (Split-Path -Parent $PROFILE)
 
 git config --global core.autocrlf input
-git config --global alias.ft "!f() { git ls-files --other --exclude-standard | fzf -m --print0 --preview 'bat.exe {}' | xargs -0 git add `"$@`"; }; f"
 
 ForEach ($repo in $PublicRepoDir, $PrivateRepoDir) {
   if (Test-Path -LiteralPath $repo) {
@@ -57,6 +56,7 @@ git config --global alias.dotfiles '!powershell.exe -NoProfile -Command git-dotf
 git config --global alias.cryptape '!powershell.exe -NoProfile -Command git-cryptape'
 git config --global alias.nervos '!powershell.exe -NoProfile -Command git-nervos'
 git config --global "alias.prune-heads" '!powershell.exe -NoProfile -Command git-prune-heads'
+git config --global "alias.branch-tree" "!dash.exe `"$PublicRepoDir/default/bin/git-branch-tree`""
 
 mkdir -Force ~/.local/state/vim/backup, ~/.local/state/vim/swap, ~/.local/state/vim/undo, ~/.vim, ~/.config, ~/.ssh
 
