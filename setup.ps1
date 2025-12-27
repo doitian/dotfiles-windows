@@ -56,7 +56,8 @@ git config --global alias.dotfiles '!powershell.exe -NoProfile -Command git-dotf
 git config --global alias.cryptape '!powershell.exe -NoProfile -Command git-cryptape'
 git config --global alias.nervos '!powershell.exe -NoProfile -Command git-nervos'
 git config --global "alias.prune-heads" '!powershell.exe -NoProfile -Command git-prune-heads'
-git config --global "alias.branch-tree" "!dash.exe `"$PublicRepoDir/default/bin/git-branch-tree`""
+git config --global "alias.branch-tree" "!python3 `"$PublicRepoDir/default/bin/git-branch-tree`""
+git config --global "alias.bt" "!python3 `"$PublicRepoDir/default/bin/git-branch-tree`""
 
 mkdir -Force ~/.local/state/vim/backup, ~/.local/state/vim/swap, ~/.local/state/vim/undo, ~/.vim, ~/.config, ~/.ssh
 
