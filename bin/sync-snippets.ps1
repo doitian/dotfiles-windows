@@ -5,10 +5,11 @@ if (-not $scoopDir) {
 
 $vsSnippetsDir = "$scoopDir\persist\vscode\data\user-data\User\snippets"
 $cursorSnippetsDir = "$scoopDir\persist\cursor\data\user-data\User\snippets"
+$cursorSnippetsDir2 = "$HOME\AppData\Roaming\Cursor\User\snippets"
 $reposDir = Get-Item "$HOME\.dotfiles\repos"
 
 cp -fo "$reposDir\public\nvim\snippets\global.code-snippets" "$reposDir\public\nvim\snippets\all.json"
-foreach ($dir in @($vsSnippetsDir, $cursorSnippetsDir)) {
+foreach ($dir in @($vsSnippetsDir, $cursorSnippetsDir, $cursorSnippetsDir2)) {
   if (Test-Path $dir) {
     $linkType = (Get-Item -Path $dir -Force).LinkType
     if ($linkType -ne "Junction") {
