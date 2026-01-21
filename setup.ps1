@@ -56,9 +56,11 @@ git config --global gpg.program (Get-Command -Name 'gpg.exe').Source
 git config --global alias.dotfiles '!powershell.exe -NoProfile -Command git-dotfiles'
 git config --global alias.cryptape '!powershell.exe -NoProfile -Command git-cryptape'
 git config --global alias.nervos '!powershell.exe -NoProfile -Command git-nervos'
-git config --global alias.store-file '!powershell.exe -NoProfile -Command git-store-file'
-git config --global "alias.branch-tree" "!python3 `"$PublicRepoDir/default/bin/git-branch-tree`""
-git config --global alias.bt "!python3 `"$PublicRepoDir/default/bin/git-branch-tree`""
+
+$PublicRepoDirPosix = $PublicRepoDir -replace "\\", "/"
+git config --global alias.store-file "!f() { dash -c `"$PublicRepoDirPosix/default/bin/git-store-file`" `"$@`"; }; f"
+git config --global "alias.branch-tree" "!python3 `"$PublicRepoDirPosix/default/bin/git-branch-tree`""
+git config --global alias.bt "!python3 `"$PublicRepoDirPosix/default/bin/git-branch-tree`""
 
 mkdir -Force ~/.local/state/vim/backup, ~/.local/state/vim/swap, ~/.local/state/vim/undo, ~/.vim, ~/.config, ~/.ssh
 
