@@ -109,6 +109,12 @@ ln "$PublicRepoDir/ai/gemini/AGENTS.Windows.md" "$HOME/.config/opencode/AGENTS.m
 
 ls -Force "$PSProfileDir/local" | % { ln $_.FullName "~/$($_.Name)" }
 
+if (Get-Command mise -ErrorAction SilentlyContinue -CommandType Application -OutVariable miseCmd) {
+  if (Get-Command uv -ErrorAction SilentlyContinue -CommandType Application) {
+    mise settings set python.uv_venv_auto true
+  }
+}
+
 $DictionaryFile = "$HOME/Dropbox/Apps/Harper/dictionary.txt"
 if (Test-Path $DictionaryFile) {
   $DictionaryDestination = "$HOME/AppData/Roaming/harper-ls"
