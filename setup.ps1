@@ -99,13 +99,13 @@ ln "$PublicRepoDir/default/.config/process-compose/settings.yaml" "$HOME/AppData
 mkdir -Force "$HOME/AppData/Roaming/aichat"
 ln "$PublicRepoDir/ai/aichat/roles" "$HOME/AppData/Roaming/aichat/roles"
 ln "$PrivateRepoDir/default/.config/aichat/config.yaml" "$HOME/AppData/Roaming/aichat/config.yaml"
-mkdir -Force "$HOME/.cursor"
-ln "$PublicRepoDir/ai/cursor/commands" "$HOME/.cursor/commands"
 mkdir -Force "$HOME/.genimi"
 ln "$PublicRepoDir/ai/gemini/settings.json" "$HOME/.gemini/settings.json"
 ln "$PublicRepoDir/ai/gemini/AGENTS.Windows.md" "$HOME/.gemini/AGENTS.md"
 mkdir -Force "$HOME/.config/opencode"
 ln "$PublicRepoDir/ai/gemini/AGENTS.Windows.md" "$HOME/.config/opencode/AGENTS.md"
+mkdir -Force "$HOME/.claude"
+ln "$PublicRepoDir/ai/skills" "$HOME/.claude/skills"
 
 ls -Force "$PSProfileDir/local" | % { ln $_.FullName "~/$($_.Name)" }
 
