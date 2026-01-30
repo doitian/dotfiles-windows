@@ -46,9 +46,6 @@ function ... { cd ../.. }
 function .... { cd ../../.. }
 function dotfiles { cd $PSProfileDir }
 
-if ($env:WSLENV) {
-  function tmux { wsl -d tmux tmux @Args }
-}
 if ($env:WT_SESSION) {
   $env:LAZY = 1
 }
