@@ -58,7 +58,7 @@ git config --global alias.cryptape '!powershell.exe -NoProfile -Command git-cryp
 git config --global alias.nervos '!powershell.exe -NoProfile -Command git-nervos'
 
 $PublicRepoDirPosix = $PublicRepoDir -replace "\\", "/"
-git config --global alias.store-file "!f() { dash -c `"$PublicRepoDirPosix/default/bin/git-store-file`" `"$@`"; }; f"
+git config --global alias.store-file "!f() { dash `"$PublicRepoDirPosix/default/bin/git-store-file`" `"$@`"; }; f"
 git config --global "alias.branch-tree" "!python3 `"$PublicRepoDirPosix/default/bin/git-branch-tree`""
 git config --global alias.bt "!python3 `"$PublicRepoDirPosix/default/bin/git-branch-tree`""
 
