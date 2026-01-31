@@ -32,6 +32,15 @@ function j {
 function jadd {
   (pwd).Path.Replace("\", "/") | Add-Content "$HOME/.j.path"
 }
+function ycd {
+	$tmp = (New-TemporaryFile).FullName
+	yazi.exe $args --cwd-file="$tmp"
+	$cwd = Get-Content -Path $tmp -Encoding UTF8
+	if ($cwd -ne $PWD.Path -and (Test-Path -LiteralPath $cwd -PathType Container)) {
+		Set-Location -LiteralPath (Resolve-Path -LiteralPath $cwd).Path
+	}
+	Remove-Item -Path $tmp
+}
 
 $hist = (Get-PSReadlineOption).HistorySavePath
 $cb = "$HOME\codebase"
