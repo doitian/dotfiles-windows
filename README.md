@@ -36,7 +36,7 @@ Install essential apps
 
 ```powershell
 scoop bucket add extras
-scoop install mingit gpg less wsl-ssh-pageant
+scoop install git gpg less wsl-ssh-pageant
 ```
 
 Fix the gpg bug by creating a link
