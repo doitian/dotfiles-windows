@@ -76,6 +76,7 @@ if (Test-Path -LiteralPath "$DocumentsDir\PowerShell") {
 }
 
 ln "$PublicRepoDir\mise" "$HOME\.config\mise"
+Add-Content -Value $null "$HOME\.config\mise\config.toml"
 ln "$PublicRepoDir\default\.githooks" "$HOME\.githooks"
 
 cp -Force "$PublicRepoDir\default\.gnupg\gpg.conf" "$(scoop prefix gpg)\home\"
