@@ -18,6 +18,7 @@ Set-Alias -Name vim -Value nvim
 function dirs { (pwd -stack).ToArray().Path | fzf | cd }
 function mx { mise x "--" @Args }
 function mr { mise r @Args }
+function zxx { zx x.mjs }
 function mact {
   Invoke-Expression (& { (mise activate pwsh | Out-String) })
   Set-Item -LiteralPath "Function:Global:mise" -Value $Function:mise
