@@ -15,6 +15,7 @@ Set-Alias -Name ll -Value Get-ChildItem
 Set-Alias -Name vi -Value nvim
 Set-Alias -Name vim -Value nvim
 
+function dirs { (pwd -stack).ToArray().Path | fzf | cd }
 function mx { mise x "--" @Args }
 function mr { mise r @Args }
 function mact {
