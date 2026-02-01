@@ -25,7 +25,7 @@ function mact {
 function j {
   $selected = (cat "$HOME/.j.path" | fzf -0 -1 -q "$Args")
   if ($selected -ne $null) {
-    cd "$selected"
+    pushd "$selected"
   } else {
     Write-Error "no matched directory found"
   }
