@@ -153,36 +153,27 @@ $PSStyle.FileInfo.SymbolicLink = "`e[35m"
 $PSStyle.FileInfo.Executable   = "`e[31m"
 
 # auto_cd
-# https://github.com/nickcox/cd-extras/blob/master/cd-extras/private/CommandNotFound.ps1
+# https://github.com/nickcox/cd-extras/blob/master/cd-extras/private/AutoCd.ps1
 $ExecutionContext.SessionState.InvokeCommand.CommandNotFoundAction = {
   param($CommandName, $CommandLookupEventArgs)
 
-  if ($CommandName -like 'get-*') { return }
-
   # don't run unless invoked interactively
   if ($CommandLookupEventArgs.CommandOrigin -ne 'Runspace') { return }
-
-  $invocation = $MyInvocation.Line
   # don't run as part of pipeline
-  if ($invocation -match "$([regex]::Escape($CommandName))\s*\|") { return }
+  if ($MyInvocation.Line -match "$([regex]::Escape($CommandName))\s*\|") { return }
 
-  $scriptBlock = $null
-
-  # If the command is already a valid path
-  if ((Test-Path $CommandName)) {
-    $scriptBlock = { cd $CommandName }
-  }
-  # Try variable
-  elseif (
-      ($path = Get-Variable $CommandName -ValueOnly -ErrorAction Ignore) -and
-      (Test-Path $path)
+  $path = if (Test-Path $CommandName) {
+    $CommandName
+  } elseif (
+      ($candidate = Get-Variable $CommandName -ValueOnly -ErrorAction Ignore) -and
+      (Test-Path $candidate)
       ) {
-    $scriptBlock = { cd $path }
+    $candidate
   }
 
-  if ($scriptBlock -and ($scriptBlock = $scriptBlock.GetNewClosure())) {
+  if ($path) {
     $CommandLookupEventArgs.CommandScriptBlock = {
-      if ($args.Length -eq 0) { &$scriptBlock }
+      if ($args.Length -eq 0) { cd $path }
     }.GetNewClosure()
     $CommandLookupEventArgs.StopSearch = $true
   }
