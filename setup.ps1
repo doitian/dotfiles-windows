@@ -106,6 +106,7 @@ ln "$PublicRepoDir/ai/gemini/AGENTS.Windows.md" "$HOME/.gemini/AGENTS.md"
 mkdir -Force "$HOME/.config/opencode"
 ln "$PublicRepoDir/ai/gemini/AGENTS.Windows.md" "$HOME/.config/opencode/AGENTS.md"
 mkdir -Force "$HOME/.claude"
+ln "$PublicRepoDir/ai/gemini/AGENTS.Windows.md" "$HOME/.claude/AGENTS.md"
 ln "$PublicRepoDir/ai/skills" "$HOME/.claude/skills"
 
 ls -Force "$PSProfileDir/local" | % { ln $_.FullName "~/$($_.Name)" }
