@@ -28,7 +28,7 @@ foreach ($repo in $repos) {
         git clone --bare --depth 1 $repoUrl "$repo.git"
     } else {
         # Pull the latest changes to the default branch, keep history shallow
-        git -C "$repo.git" fetch --depth 1
-        git -C "$repo.git" update-ref HEAD FETCH_HEAD
+        git -C "$repo.git" -c safe.directory="*" fetch --depth 1
+        git -C "$repo.git" -c safe.directory="*" update-ref HEAD FETCH_HEAD
     }
 }
