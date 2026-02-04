@@ -79,7 +79,8 @@ ln "$PublicRepoDir\mise" "$HOME\.config\mise"
 Add-Content -Value $null "$HOME\.config\mise\config.toml"
 ln "$PublicRepoDir\default\.githooks" "$HOME\.githooks"
 
-cp -Force "$PublicRepoDir\default\.gnupg\gpg.conf" "$(scoop prefix gpg)\home\"
+mkdir -Force "$env:APPDATA\gnupg"
+cp -Force "$PublicRepoDir\default\.gnupg\gpg.conf" "$env:APPDATA\gnupg"
 
 mkdir -Force "$HOME\AppData\Roaming\yazi\config"
 ls -Force "$PublicRepoDir\Windows\AppData\Roaming\yazi\config" | % { cp -Force -Path ($_.FullName) -Destination "$HOME\AppData\Roaming\yazi\config\$($_.Name)" }

@@ -36,13 +36,7 @@ Install essential apps
 
 ```powershell
 scoop bucket add extras
-scoop install git gpg less wsl-ssh-pageant
-```
-
-Fix the gpg bug by creating a link
-
-```powershell
-New-Item -ItemType Junction -Path D:\scoop\persist\gpg\gnupg -Value D:\scoop\persist\gpg\home\
+scoop install git gpg4win less wsl-ssh-pageant
 ```
 
 ┌ 4. Run as user
