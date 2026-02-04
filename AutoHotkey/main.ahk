@@ -1,3 +1,4 @@
+#SingleInstance Force
 CapsLock::Ctrl
 ~CapsLock Up::Send "{Ctrl up}" (A_PriorKey = "CapsLock" ? "{Esc}" : "")
 >^CapsLock::SetCapsLockState !GetKeyState("CapsLock", "T")
