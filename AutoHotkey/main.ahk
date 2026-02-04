@@ -7,11 +7,13 @@ CapsLock::Ctrl
 <+Space::Send (A_PriorKey = "LShift" ? "+{Space}" : "{Blind}{Shift up}{Space}{Shift down}{LWin}")
 >+Space::Send (A_PriorKey = "RShift" ? "+{Space}" : "{Blind}{Shift up}{Space}{Shift down}{LWin}")
 
+; Right Alt + jkli: arrows
 >!j::Left
 >!l::Right
 >!i::Up
 >!k::Down
 
+; Right Win: typography
 >#[::Send "“"
 +>#[::Send "”"
 >#]::Send "‘"
