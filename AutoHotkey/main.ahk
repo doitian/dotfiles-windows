@@ -32,6 +32,7 @@ CapsLock::Ctrl
   if WinWait("gopass", , 3) {
     WinGetPos &x, &y, &w, &h
     WinMove (A_ScreenWidth - w) // 2, (A_ScreenHeight - h) // 2
+    WinActivate
   }
 }
 
