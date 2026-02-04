@@ -35,6 +35,8 @@ CapsLock::Ctrl
   }
 }
 
+#q::Send "!{F4}"
+
 #F12::Reload
 
 XButton2::Send "{XButton2}"
