@@ -28,6 +28,11 @@ if (-Not $UserPathList.Contains($UserBinDir)) {
   $UserPath = "$UserPath;$UserBinDir"
   [Environment]::SetEnvironmentVariable('Path', "$UserPath", 'User')
 }
+$PublicDistDir = "$PublicRepoDir\dist"
+if (-Not $UserPathList.Contains($PublicDistDir)) {
+  $UserPath = "$UserPath;$PublicDistDir"
+  [Environment]::SetEnvironmentVariable('Path', "$UserPath", 'User')
+}
 $MasonBinDir = "$HOME\AppData\Local\nvim-data\mason\bin"
 if (-Not $UserPathList.Contains($MasonBinDir)) {
   $UserPath = "$UserPath;$MasonBinDir"
@@ -54,8 +59,6 @@ git config --global core.hooksPath "$HOME/.githooks"
 git config --global --unset core.pager
 git config --global gpg.program (Get-Command -Name 'gpg.exe').Source
 git config --global alias.dotfiles '!powershell.exe -NoProfile -Command git-dotfiles'
-git config --global alias.cryptape '!powershell.exe -NoProfile -Command git-cryptape'
-git config --global alias.nervos '!powershell.exe -NoProfile -Command git-nervos'
 
 $PublicRepoDirPosix = $PublicRepoDir -replace "\\", "/"
 git config --global alias.store-file "!f() { python3 `"$PublicRepoDirPosix/default/bin/git-store-file`" `"$@`"; }; f"
@@ -98,21 +101,21 @@ ln "$PublicRepoDir/default/.config/lazygit" "$HOME/AppData/Local/lazygit"
 mkdir -Force "$HOME/AppData/Local/process-compose"
 ln "$PublicRepoDir/default/.config/process-compose/settings.yaml" "$HOME/AppData/Local/process-compose/settings.yaml"
 
-mkdir -Force "$HOME/AppData/Roaming/aichat"
-ln "$PublicRepoDir/ai/aichat/roles" "$HOME/AppData/Roaming/aichat/roles"
-ln "$PrivateRepoDir/default/.config/aichat/config.yaml" "$HOME/AppData/Roaming/aichat/config.yaml"
 mkdir -Force "$HOME/.genimi"
-ln "$PublicRepoDir/ai/gemini/settings.json" "$HOME/.gemini/settings.json"
-ln "$PublicRepoDir/ai/gemini/AGENTS.Windows.md" "$HOME/.gemini/AGENTS.md"
 mkdir -Force "$HOME/.config/opencode"
-ln "$PublicRepoDir/ai/gemini/AGENTS.Windows.md" "$HOME/.config/opencode/AGENTS.md"
 mkdir -Force "$HOME/.claude"
-ln "$PublicRepoDir/ai/gemini/AGENTS.Windows.md" "$HOME/.claude/AGENTS.md"
 ln "$PublicRepoDir/ai/skills" "$HOME/.claude/skills"
+ln "$PublicRepoDir/ai/gemini/settings.json" "$HOME/.gemini/settings.json"
+ln "$PublicRepoDir/ai/rules/windows.md" "$HOME/.gemini/AGENTS.md"
+ln "$PublicRepoDir/ai/rules/windows.md" "$HOME/.claude/AGENTS.md"
+$openCodeAgents = (Get-Content -Raw "$PublicRepoDir/ai/rules/windows.md") -replace "`r`n", "`n"
+$openCodeAgents += "`n" + ((Get-Content -Raw "$PublicRepoDir/ai/rules/opencode-compatibility.md") -replace "`r`n", "`n")
+[System.IO.File]::WriteAllText("$HOME/.config/opencode/AGENTS.md", $openCodeAgents, [System.Text.UTF8Encoding]::new($false))
 
 ls -Force "$PSProfileDir/local" | % { ln $_.FullName "~/$($_.Name)" }
 
 if (Get-Command mise -ErrorAction SilentlyContinue -CommandType Application -OutVariable miseCmd) {
+  mise -C "$PublicRepoDir" run build
   if (Get-Command uv -ErrorAction SilentlyContinue -CommandType Application) {
     mise settings set python.uv_venv_auto true
   }
