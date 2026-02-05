@@ -116,11 +116,6 @@ ls -Force "$PSProfileDir/local" | % { ln $_.FullName "~/$($_.Name)" }
 
 if (Get-Command mise -ErrorAction SilentlyContinue -CommandType Application -OutVariable miseCmd) {
   mise -C "$PublicRepoDir" run build
-  if (Get-Command uv -ErrorAction SilentlyContinue -CommandType Application) {
-    mise settings set python.uv_venv_auto true
-  }
-  mise settings set windows_default_inline_shell_args "sh.exe -c -o errexit"
-  mise settings set windows_default_file_shell_args "sh.exe"
 }
 
 $DictionaryFile = "$HOME/Dropbox/Apps/Harper/dictionary.txt"
