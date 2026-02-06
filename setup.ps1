@@ -104,10 +104,12 @@ ln "$PublicRepoDir/default/.config/process-compose/settings.yaml" "$HOME/AppData
 mkdir -Force "$HOME/.genimi"
 mkdir -Force "$HOME/.config/opencode"
 mkdir -Force "$HOME/.claude"
+mkdir -Force "$HOME/.copilot"
 ln "$PublicRepoDir/ai/skills" "$HOME/.claude/skills"
 ln "$PublicRepoDir/ai/gemini/settings.json" "$HOME/.gemini/settings.json"
 ln "$PublicRepoDir/ai/rules/windows.md" "$HOME/.gemini/AGENTS.md"
 ln "$PublicRepoDir/ai/rules/windows.md" "$HOME/.claude/AGENTS.md"
+ln "$PublicRepoDir/ai/rules/windows.md" "$HOME/.copilot/copilot-instructions.md"
 $openCodeAgents = (Get-Content -Raw "$PublicRepoDir/ai/rules/windows.md") -replace "`r`n", "`n"
 $openCodeAgents += "`n" + ((Get-Content -Raw "$PublicRepoDir/ai/rules/opencode-compatibility.md") -replace "`r`n", "`n")
 [System.IO.File]::WriteAllText("$HOME/.config/opencode/AGENTS.md", $openCodeAgents, [System.Text.UTF8Encoding]::new($false))
