@@ -15,12 +15,14 @@ Komorebic(cmd) {
 !j::Komorebic("focus down")
 !k::Komorebic("focus up")
 !l::Komorebic("focus right")
+!y::Komorebic("promote-focus")
 
 ; Move windows
 !^h::Komorebic("move left")
 !^j::Komorebic("move down")
 !^k::Komorebic("move up")
 !^l::Komorebic("move right")
+!^y::Komorebic("promote")
 
 ; Stack windows
 #]::Komorebic("stack right")
@@ -40,10 +42,34 @@ Komorebic(cmd) {
 ; Manipulate windows
 #z::Komorebic("toggle-float")
 #f::Komorebic("toggle-monocle")
+#\::Komorebic("retile")
 
-; Focus workspace by ID
+; Workspace
+#u::Komorebic("cycle-workspace next")
+#i::Komorebic("cycle-workspace previous")
+#^u::Komorebic("cycle-send-to-workspace next")
+#^i::Komorebic("cycle-send-to-workspace previous")
 #+/::{
-    result := InputBox("Enter workspace ID:", "Focus Workspace")
-    if (result.Result = "OK" && result.Value != "")
-        Komorebic("focus-workspace " (result.Value - 1))
+    result := InputBox("Enter workspace ID (0 to close):", "Focus Workspace")
+    if (result.Result = "OK" && result.Value != "") {
+        if (result.Value = 0)
+            Komorebic("close-workspace")
+        else
+            Komorebic("focus-workspace " (result.Value - 1))
+    }
+}
+
+; Layout
+#;::Komorebic("cycle-layout")
+#/::{
+    layouts := ["bsp", "columns", "rows", "vertical-stack", "horizontal-stack", "ultrawide-vertical-stack", "grid", "right-main-vertical-stack"]
+    prompt := "Select layout:`n"
+    for i, layout in layouts
+        prompt .= i ". " layout "`n"
+    result := InputBox(prompt, "Change Layout")
+    if (result.Result = "OK" && result.Value != "") {
+        idx := Integer(result.Value)
+        if (idx >= 1 && idx <= layouts.Length)
+            Komorebic("change-layout " layouts[idx])
+    }
 }
