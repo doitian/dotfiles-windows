@@ -28,10 +28,12 @@ Komorebic(cmd) {
 #]::Komorebic("stack right")
 #[::Komorebic("stack left")
 #,::Komorebic("stack down")
+#+,::Komorebic("stack up")
 #.::Komorebic("unstack")
+#+.::Komorebic("unstack-all")
 #m::Komorebic("cycle-stack next")
 #+m::Komorebic("cycle-stack previous")
-#^m::Komorebic("unstack-all")
+#^m::Komorebic("toggle-window-container-behaviour")
 
 ; Resize
 #=::Komorebic("resize-axis horizontal increase")
