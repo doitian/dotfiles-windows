@@ -27,12 +27,23 @@ CapsLock::Ctrl
 
 #+p::{
   q := Chr(34)
-  Run 'wt -w _fzfpopup nt -d "~" --title "gopass" pwsh -NoProfile -NoLogo -File ' q A_MyDocuments '\PowerShell\bin\fpass-popup.ps1' q
+  Run 'wt nt -d "~" --title "fpass" pwsh -NoProfile -NoLogo -File ' q A_MyDocuments '\PowerShell\bin\fpass-popup.ps1' q
   SetTitleMatchMode 2
-  if WinWait("gopass", , 3) {
-    WinGetPos &x, &y, &w, &h
-    WinMove (A_ScreenWidth - w) // 2, (A_ScreenHeight - h) // 2
-    WinActivate
+  if hwnd := WinWait("fpass", , 3) {
+    WinGetPos &x, &y, &w, &h, hwnd
+    WinMove (A_ScreenWidth - w) // 2, (A_ScreenHeight - h) // 2, , , hwnd
+    WinActivate hwnd
+  }
+}
+
+#y::{
+  q := Chr(34)
+  Run 'wt nt -d "~" --title "fwin" pwsh -NoProfile -NoLogo -File ' q A_MyDocuments '\PowerShell\bin\fwin-popup.ps1' q
+  SetTitleMatchMode 2
+  if hwnd := WinWait("fwin", , 3) {
+    WinGetPos &x, &y, &w, &h, hwnd
+    WinMove (A_ScreenWidth - w) // 2, (A_ScreenHeight - h) // 2, , , hwnd
+    WinActivate hwnd
   }
 }
 
