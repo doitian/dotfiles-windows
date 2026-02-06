@@ -62,8 +62,7 @@ Komorebic(cmd) {
 }
 
 ; Layout
-#;::Komorebic("cycle-layout")
-#/::{
+#;::{
     layouts := ["bsp", "columns", "rows", "vertical-stack", "horizontal-stack", "ultrawide-vertical-stack", "grid", "right-main-vertical-stack"]
     prompt := "Select layout:`n"
     for i, layout in layouts
@@ -74,4 +73,11 @@ Komorebic(cmd) {
         if (idx >= 1 && idx <= layouts.Length)
             Komorebic("change-layout " layouts[idx])
     }
+}
+#^;::{
+    shell := ComObject("WScript.Shell")
+    exec := shell.Exec('cmd /c komorebic state | jq -r ".monitors.elements.[].workspaces.elements | map(.layout.Default) | join(^"|^")"')
+    layout := Trim(exec.StdOut.ReadAll())
+    if (layout != "")
+        MsgBox(layout, "Current Layout")
 }

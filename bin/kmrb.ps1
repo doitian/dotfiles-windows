@@ -17,8 +17,7 @@ if ($bar) {
 }
 
 # Start komorebi WM in background
-komorebic start @komorebiArgs
-Start-Process 'komorebi.exe' -ArgumentList $komorebiArgs -WindowStyle hidden
+Start-Process 'komorebi.exe' -ArgumentList $komorebiArgs -WindowStyle Hidden
 
 # Start AHK hotkey script in background
 Start-Process -FilePath $ahkScript -WindowStyle Hidden
