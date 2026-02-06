@@ -27,7 +27,7 @@ CapsLock::Ctrl
 
 #+p::{
   q := Chr(34)
-  Run 'wt -w _fzfpopup nt -d "~" --title "gopass" pwsh -NoProfile -File ' q A_MyDocuments '\PowerShell\bin\fpass-popup.ps1' q
+  Run 'wt -w _fzfpopup nt -d "~" --title "gopass" pwsh -NoProfile -NoLogo -File ' q A_MyDocuments '\PowerShell\bin\fpass-popup.ps1' q
   SetTitleMatchMode 2
   if WinWait("gopass", , 3) {
     WinGetPos &x, &y, &w, &h
