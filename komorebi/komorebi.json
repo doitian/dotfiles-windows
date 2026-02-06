@@ -1,0 +1,42 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LGUG2Z/komorebi/v0.1.39/schema.json",
+  "app_specific_configuration_path": "$Env:USERPROFILE/Documents/PowerShell/komorebi/applications.json",
+  "bar_configurations": [
+    "$Env:USERPROFILE/Documents/PowerShell/komorebi/komorebi.bar.monitor0.json",
+    "$Env:USERPROFILE/Documents/PowerShell/komorebi/komorebi.bar.monitor1.json"
+  ],
+  "window_hiding_behaviour": "Cloak",
+  "cross_monitor_move_behaviour": "Insert",
+  "default_workspace_padding": 4,
+  "default_container_padding": 4,
+  "border": true,
+  "border_width": 6,
+  "border_offset": -1,
+  "resize_delta": 160,
+  "theme": {
+    "palette": "Catppuccin",
+    "name": "Mocha",
+    "unfocused_border": "Overlay2",
+    "single_border": "Sapphire",
+    "stack_border": "Green",
+    "bar_accent": "Lavender"
+  },
+  "monitors": [
+    {
+      "workspaces": [
+        {
+          "name": "I",
+          "layout": "VerticalStack"
+        }
+      ]
+    },
+    {
+      "workspaces": [
+        {
+          "name": "I",
+          "layout": "UltrawideVerticalStack"
+        }
+      ]
+    }
+  ]
+}
