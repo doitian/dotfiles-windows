@@ -1496,6 +1496,25 @@
           "matching_strategy": "Equals"
         }
       ]
+    ],
+    "floating": [
+      [
+        {
+          "kind": "Exe",
+          "id": "msedge.exe",
+          "matching_strategy": "Equals"
+        },
+        {
+          "kind": "Class",
+          "id": "Chrome_WidgetWin_1",
+          "matching_strategy": "Equals"
+        },
+        {
+          "kind": "Title",
+          "id": "Picture in picture",
+          "matching_strategy": "Equals"
+        }
+      ]
     ]
   },
   "Microsoft Excel": {
