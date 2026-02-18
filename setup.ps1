@@ -10,6 +10,7 @@ if ($ReposDir.Target -ne $null) {
 $PublicRepoDir = "$ReposDir\public"
 $PrivateRepoDir = "$ReposDir\private"
 $DocumentsDir = Split-Path -Parent (Split-Path -Parent $PROFILE)
+$PSProfileDir = $(Split-Path -Parent $PROFILE)
 
 git config --global core.autocrlf input
 
