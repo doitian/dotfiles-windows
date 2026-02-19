@@ -16,6 +16,7 @@ Set-Alias -Name vi -Value nvim
 Set-Alias -Name vim -Value nvim
 
 function dirs { (pwd -stack).ToArray().Path | fzf | cd }
+function fd { fd.exe --path-separator / @Args }
 function mx { mise x "--" @Args }
 function mr { mise r @Args }
 function zxx { zx x.mjs }
