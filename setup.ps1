@@ -89,6 +89,9 @@ cp -Force "$PublicRepoDir\default\.gnupg\gpg.conf" "$env:APPDATA\gnupg"
 mkdir -Force "$HOME\AppData\Roaming\yazi\config"
 ls -Force "$PublicRepoDir\Windows\AppData\Roaming\yazi\config" | % { cp -Force -Path ($_.FullName) -Destination "$HOME\AppData\Roaming\yazi\config\$($_.Name)" }
 
+mkdir -Force "$HOME\AppData\Roaming\biome\config"
+ln "$PublicRepoDir/default/.config/biome/biome.jsonc" "$HOME/AppData/Roaming/biome/config/biome.jsonc"
+
 ln "$PublicRepoDir/default/.vimrc" "~/_vimrc"
 ForEach ($f in ".vimrc", ".ignore", ".editorconfig", ".ctags") {
   ln "$PublicRepoDir/default/$f" "~/$f"
