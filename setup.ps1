@@ -91,41 +91,41 @@ mkdir -Force "$HOME\AppData\Roaming\yazi\config"
 ls -Force "$PublicRepoDir\Windows\AppData\Roaming\yazi\config" | % { cp -Force -Path ($_.FullName) -Destination "$HOME\AppData\Roaming\yazi\config\$($_.Name)" }
 
 mkdir -Force "$HOME\AppData\Roaming\biome\config"
-ln "$PublicRepoDir/default/.config/biome/biome.jsonc" "$HOME/AppData/Roaming/biome/config/biome.jsonc"
+ln "$PublicRepoDir\default\.config\biome\biome.jsonc" "$HOME\AppData\Roaming\biome\config\biome.jsonc"
 
-ln "$PublicRepoDir/default/.vimrc" "~/_vimrc"
+ln "$PublicRepoDir\default\.vimrc" "$HOME\_vimrc"
 ForEach ($f in ".vimrc", ".ignore", ".editorconfig", ".ctags") {
-  ln "$PublicRepoDir/default/$f" "~/$f"
+  ln "$PublicRepoDir\default\$f" "$HOME\$f"
 }
-ln "$PublicRepoDir/nvim" "$HOME/AppData/Local/nvim"
-ln "$PublicRepoDir/nvim" "$HOME/.config/nvim"
+ln "$PublicRepoDir\nvim" "$HOME\AppData\Local\nvim"
+ln "$PublicRepoDir\nvim" "$HOME\.config\nvim"
 
 ln "$(pwd)\settings.json" "$HOME\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-ln "$PublicRepoDir/default/.config/lazygit" "$HOME/AppData/Local/lazygit"
+ln "$PublicRepoDir\default\.config\lazygit" "$HOME\AppData\Local\lazygit"
 
-mkdir -Force "$HOME/AppData/Local/process-compose"
-ln "$PublicRepoDir/default/.config/process-compose/settings.yaml" "$HOME/AppData/Local/process-compose/settings.yaml"
+mkdir -Force "$HOME\AppData\Local\process-compose"
+ln "$PublicRepoDir\default\.config\process-compose\settings.yaml" "$HOME\AppData\Local\process-compose\settings.yaml"
 
-mkdir -Force "$HOME/.genimi"
-mkdir -Force "$HOME/.config/opencode"
-mkdir -Force "$HOME/.claude"
-mkdir -Force "$HOME/.copilot"
-ln "$PublicRepoDir/ai/skills" "$HOME/.claude/skills"
-ln "$PublicRepoDir/ai/gemini/settings.json" "$HOME/.gemini/settings.json"
-ln "$PublicRepoDir/ai/rules/windows.md" "$HOME/.gemini/AGENTS.md"
-ln "$PublicRepoDir/ai/rules/windows.md" "$HOME/.claude/AGENTS.md"
-ln "$PublicRepoDir/ai/rules/windows.md" "$HOME/.copilot/copilot-instructions.md"
-ln "$PublicRepoDir/ai/rules/windows.md" "$HOME/.config/opencode/AGENTS.md"
+mkdir -Force "$HOME\.genimi"
+mkdir -Force "$HOME\.config\opencode"
+mkdir -Force "$HOME\.claude"
+mkdir -Force "$HOME\.copilot"
+ln "$PublicRepoDir\ai\skills" "$HOME\.claude\skills"
+ln "$PublicRepoDir\ai\gemini\settings.json" "$HOME\.gemini\settings.json"
+ln "$PublicRepoDir\ai\rules\windows.md" "$HOME\.gemini\AGENTS.md"
+ln "$PublicRepoDir\ai\rules\windows.md" "$HOME\.claude\AGENTS.md"
+ln "$PublicRepoDir\ai\rules\windows.md" "$HOME\.copilot\copilot-instructions.md"
+ln "$PublicRepoDir\ai\rules\windows.md" "$HOME\.config\opencode\AGENTS.md"
 
-ls -Force "$PSProfileDir/local" | % { ln $_.FullName "~/$($_.Name)" }
+ls -Force "$PSProfileDir\local" | % { ln $_.FullName "$HOME\$($_.Name)" }
 
 if (Get-Command mise -ErrorAction SilentlyContinue -CommandType Application -OutVariable miseCmd) {
   mise -C "$PublicRepoDir" run build
 }
 
-$DictionaryFile = "$HOME/Dropbox/Apps/Harper/dictionary.txt"
+$DictionaryFile = "$HOME\Dropbox\Apps\Harper\dictionary.txt"
 if (Test-Path $DictionaryFile) {
-  $DictionaryDestination = "$HOME/AppData/Roaming/harper-ls"
+  $DictionaryDestination = "$HOME\AppData\Roaming\harper-ls"
   mkdir -Force $DictionaryDestination
-  ln $DictionaryFile "$DictionaryDestination/dictionary.txt"
+  ln $DictionaryFile "$DictionaryDestination\dictionary.txt"
 }
