@@ -72,7 +72,11 @@ Function ln ($value, $path) {
   if (Test-Path -LiteralPath $path) {
     rm -Re -Force $path
   }
-  New-Item -ItemType SymbolicLink -Force -Path $path -Value $value
+  if (Test-Path -Path $value -PathType Container) {
+    cmd /c "mklink /d `"$path`" `"$value`""
+  } else {
+    cmd /c "mklink `"$path`" `"$value`""
+  }
 }
 
 if (Test-Path -LiteralPath "$DocumentsDir\PowerShell") {
