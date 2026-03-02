@@ -1,128 +1,128 @@
 {
-  "$help": "https://aka.ms/terminal-documentation",
-  "$schema": "https://aka.ms/terminal-profiles-schema",
-  "actions": [
-    {
-      "command": {
-        "action": "splitPane",
-        "split": "right",
-        "splitMode": "duplicate"
-      },
-      "id": "User.splitPane.FEF0D40B"
+    "$help": "https://aka.ms/terminal-documentation",
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+    "actions": [
+        {
+            "command": {
+                "action": "splitPane",
+                "split": "right",
+                "splitMode": "duplicate"
+            },
+            "id": "User.splitPane.FEF0D40B"
+        },
+        {
+            "command": {
+                "action": "splitPane",
+                "split": "down",
+                "splitMode": "duplicate"
+            },
+            "id": "User.splitPane.10B260D2"
+        }
+    ],
+    "centerOnLaunch": true,
+    "copyFormatting": "none",
+    "copyOnSelect": true,
+    "defaultProfile": "{92409fbf-7ae8-4517-a7ab-845615e25da1}",
+    "keybindings": [
+        {
+            "id": null,
+            "keys": "ctrl+shift+6"
+        },
+        {
+            "id": "User.splitPane.FEF0D40B",
+            "keys": "alt+shift+plus"
+        },
+        {
+            "id": "User.splitPane.10B260D2",
+            "keys": "alt+shift+minus"
+        }
+    ],
+    "newTabMenu": [
+        {
+            "type": "remainingProfiles"
+        }
+    ],
+    "profiles": {
+        "defaults": {
+            "colorScheme": "Catppuccin Latte",
+            "cursorShape": "vintage",
+            "experimental.retroTerminalEffect": false,
+            "font": {
+                "face": "CartographCF Nerd Font"
+            }
+        },
+        "list": [
+            {
+                "closeOnExit": "graceful",
+                "commandline": "%SCOOP%\\apps\\pwsh\\current\\pwsh.exe -nologo",
+                "guid": "{92409fbf-7ae8-4517-a7ab-845615e25da1}",
+                "hidden": false,
+                "icon": "ms-appx:///ProfileIcons/pwsh.png",
+                "name": "PowerShell",
+                "startingDirectory": "%USERPROFILE%"
+            },
+            {
+                "commandline": "%SystemRoot%\\System32\\cmd.exe",
+                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+                "hidden": false,
+                "name": "Command Prompt"
+            },
+            {
+                "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
+                "hidden": true,
+                "name": "Ubuntu",
+                "source": "Windows.Terminal.Wsl"
+            }
+        ]
     },
-    {
-      "command": {
-        "action": "splitPane",
-        "split": "down",
-        "splitMode": "duplicate"
-      },
-      "id": "User.splitPane.10B260D2"
-    }
-  ],
-  "centerOnLaunch": true,
-  "copyFormatting": "none",
-  "copyOnSelect": true,
-  "defaultProfile": "{92409fbf-7ae8-4517-a7ab-845615e25da1}",
-  "keybindings": [
-    {
-      "id": null,
-      "keys": "ctrl+shift+6"
-    },
-    {
-      "id": "User.splitPane.FEF0D40B",
-      "keys": "alt+shift+plus"
-    },
-    {
-      "id": "User.splitPane.10B260D2",
-      "keys": "alt+shift+minus"
-    }
-  ],
-  "newTabMenu": [
-    {
-      "type": "remainingProfiles"
-    }
-  ],
-  "profiles": {
-    "defaults": {
-      "colorScheme": "Catppuccin Latte",
-      "cursorShape": "vintage",
-      "experimental.retroTerminalEffect": false,
-      "font": {
-        "face": "CartographCF Nerd Font"
-      }
-    },
-    "list": [
-      {
-        "closeOnExit": "graceful",
-        "commandline": "%SCOOP%\\apps\\pwsh\\current\\pwsh.exe -nologo",
-        "guid": "{92409fbf-7ae8-4517-a7ab-845615e25da1}",
-        "hidden": false,
-        "icon": "ms-appx:///ProfileIcons/pwsh.png",
-        "name": "PowerShell",
-        "startingDirectory": "%USERPROFILE%"
-      },
-      {
-        "commandline": "%SystemRoot%\\System32\\cmd.exe",
-        "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
-        "hidden": false,
-        "name": "Command Prompt"
-      },
-      {
-        "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
-        "hidden": true,
-        "name": "Ubuntu",
-        "source": "Windows.Terminal.Wsl"
-      }
-    ]
-  },
-  "schemes": [
-    {
-      "background": "#EFF1F5",
-      "black": "#5C5F77",
-      "blue": "#1E66F5",
-      "brightBlack": "#ACB0BE",
-      "brightBlue": "#1E66F5",
-      "brightCyan": "#179299",
-      "brightGreen": "#40A02B",
-      "brightPurple": "#EA76CB",
-      "brightRed": "#D20F39",
-      "brightWhite": "#BCC0CC",
-      "brightYellow": "#DF8E1D",
-      "cursorColor": "#DC8A78",
-      "cyan": "#179299",
-      "foreground": "#4C4F69",
-      "green": "#40A02B",
-      "name": "Catppuccin Latte",
-      "purple": "#EA76CB",
-      "red": "#D20F39",
-      "selectionBackground": "#ACB0BE",
-      "white": "#ACB0BE",
-      "yellow": "#DF8E1D"
-    },
-    {
-      "background": "#1E1E2E",
-      "black": "#45475A",
-      "blue": "#89B4FA",
-      "brightBlack": "#585B70",
-      "brightBlue": "#89B4FA",
-      "brightCyan": "#94E2D5",
-      "brightGreen": "#A6E3A1",
-      "brightPurple": "#F5C2E7",
-      "brightRed": "#F38BA8",
-      "brightWhite": "#A6ADC8",
-      "brightYellow": "#F9E2AF",
-      "cursorColor": "#F5E0DC",
-      "cyan": "#94E2D5",
-      "foreground": "#CDD6F4",
-      "green": "#A6E3A1",
-      "name": "Catppuccin Mocha",
-      "purple": "#F5C2E7",
-      "red": "#F38BA8",
-      "selectionBackground": "#585B70",
-      "white": "#BAC2DE",
-      "yellow": "#F9E2AF"
-    }
-  ],
-  "theme": "light",
-  "themes": []
+    "schemes": [
+        {
+            "background": "#EFF1F5",
+            "black": "#5C5F77",
+            "blue": "#1E66F5",
+            "brightBlack": "#ACB0BE",
+            "brightBlue": "#1E66F5",
+            "brightCyan": "#179299",
+            "brightGreen": "#40A02B",
+            "brightPurple": "#EA76CB",
+            "brightRed": "#D20F39",
+            "brightWhite": "#BCC0CC",
+            "brightYellow": "#DF8E1D",
+            "cursorColor": "#DC8A78",
+            "cyan": "#179299",
+            "foreground": "#4C4F69",
+            "green": "#40A02B",
+            "name": "Catppuccin Latte",
+            "purple": "#EA76CB",
+            "red": "#D20F39",
+            "selectionBackground": "#ACB0BE",
+            "white": "#ACB0BE",
+            "yellow": "#DF8E1D"
+        },
+        {
+            "background": "#1E1E2E",
+            "black": "#45475A",
+            "blue": "#89B4FA",
+            "brightBlack": "#585B70",
+            "brightBlue": "#89B4FA",
+            "brightCyan": "#94E2D5",
+            "brightGreen": "#A6E3A1",
+            "brightPurple": "#F5C2E7",
+            "brightRed": "#F38BA8",
+            "brightWhite": "#A6ADC8",
+            "brightYellow": "#F9E2AF",
+            "cursorColor": "#F5E0DC",
+            "cyan": "#94E2D5",
+            "foreground": "#CDD6F4",
+            "green": "#A6E3A1",
+            "name": "Catppuccin Mocha",
+            "purple": "#F5C2E7",
+            "red": "#F38BA8",
+            "selectionBackground": "#585B70",
+            "white": "#BAC2DE",
+            "yellow": "#F9E2AF"
+        }
+    ],
+    "theme": "light",
+    "themes": []
 }

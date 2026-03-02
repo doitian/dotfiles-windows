@@ -1,3 +1,6 @@
 [*.ps1]
 indent_size = 2
 tab_width = 2
+
+[settings.json]
+indent_size = 4
