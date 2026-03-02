@@ -88,7 +88,10 @@ mkdir -Force "$env:APPDATA\gnupg"
 cp -Force "$PublicRepoDir\default\.gnupg\gpg.conf" "$env:APPDATA\gnupg"
 
 mkdir -Force "$HOME\AppData\Roaming\yazi\config"
-ls -Force "$PublicRepoDir\Windows\AppData\Roaming\yazi\config" | % { cp -Force -Path ($_.FullName) -Destination "$HOME\AppData\Roaming\yazi\config\$($_.Name)" }
+if (-Not (Test-Path "$HOME\AppData\Roaming\yazi\config\plugins\mime-ext.yazi") -And (Get-Command ya -ErrorAction SilentlyContinue)) {
+  ya pkg add yazi-rs/plugins:mime-ext
+}
+ls -Force "$PSProfileDir\local\AppData\Roaming\yazi\config" | % { cp -Force -Path ($_.FullName) -Destination "$HOME\AppData\Roaming\yazi\config\$($_.Name)" }
 
 mkdir -Force "$HOME\AppData\Roaming\biome\config"
 ln "$PublicRepoDir\default\.config\biome\biome.jsonc" "$HOME\AppData\Roaming\biome\config\biome.jsonc"
@@ -117,7 +120,7 @@ ln "$PublicRepoDir\ai\rules\windows.md" "$HOME\.claude\AGENTS.md"
 ln "$PublicRepoDir\ai\rules\windows.md" "$HOME\.copilot\copilot-instructions.md"
 ln "$PublicRepoDir\ai\rules\windows.md" "$HOME\.config\opencode\AGENTS.md"
 
-ls -Force "$PSProfileDir\local" | % { ln $_.FullName "$HOME\$($_.Name)" }
+ls -Force -File "$PSProfileDir\local" | % { ln $_.FullName "$HOME\$($_.Name)" }
 
 if (Get-Command mise -ErrorAction SilentlyContinue -CommandType Application -OutVariable miseCmd) {
   mise -C "$PublicRepoDir" run build

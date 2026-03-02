@@ -1,0 +1,11 @@
+[[plugin.prepend_fetchers]]
+id = "mime"
+url = "local://*"
+run = "mime-ext.local"
+prio = "high"
+
+[[plugin.prepend_fetchers]]
+id = "mime"
+url = "remote://*"
+run = "mime-ext.remote"
+prio = "high"
