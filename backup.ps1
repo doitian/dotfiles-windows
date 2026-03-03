@@ -12,7 +12,6 @@ $Dest = "\\10.31.0.5\Public\Backups"
 
 $Sources = @(
     @{ Path = "$HOME\Zotero";                    Name = "Zotero" }
-    @{ Path = "$HOME\Documents\Inventory";       Name = "Inventory" }
     @{ Path = "$HOME\AppData\Roaming\krita";     Name = "krita" }
 )
 
