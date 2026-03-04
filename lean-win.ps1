@@ -61,3 +61,6 @@ function Uninstall-OneDrive {
 }
 
 Uninstall-OneDrive
+
+Get-AppxPackage Microsoft.YourPhone -AllUsers | Remove-AppxPackage
+Get-AppxPackage Microsoft.WidgetsPlatformRuntime -AllUsers | Remove-AppxPackage
