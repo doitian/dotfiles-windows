@@ -6,6 +6,8 @@
   Must be run as administrator.
 #>
 
+#Requires -RunAsAdministrator
+
 function Uninstall-OneDrive {
   Stop-Process -Name OneDrive -Force -ErrorAction SilentlyContinue -Verbose
 
