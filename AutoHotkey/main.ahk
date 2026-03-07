@@ -47,7 +47,8 @@ CapsLock::Ctrl
   }
 }
 
-#q::Send "!{F4}"
+#q::!F4
+#^q::#^F4
 
 #F11::RunWait('pwsh -NoProfile -File "' A_ScriptDir '\..\bin\kmrb.ps1"', , "Hide")
 #F12::Reload
