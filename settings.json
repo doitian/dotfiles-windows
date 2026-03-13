@@ -1,12 +1,24 @@
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions": [],
+    "actions": [
+        {
+            "command": {
+                "action": "sendInput",
+                "input": "\u001b\r"
+            },
+            "id": "User.sendInput.8F63D3A9"
+        }
+    ],
     "centerOnLaunch": true,
     "copyFormatting": "none",
     "copyOnSelect": true,
     "defaultProfile": "{92409fbf-7ae8-4517-a7ab-845615e25da1}",
     "keybindings": [
+        {
+            "id": "User.sendInput.8F63D3A9",
+            "keys": "shift+enter"
+        },
         {
             "id": null,
             "keys": "ctrl+shift+6"
