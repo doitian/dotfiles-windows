@@ -8,6 +8,17 @@
                 "input": "\u001b\r"
             },
             "id": "User.sendInput.8F63D3A9"
+        },
+        {
+            "command": {
+                "action": "copy",
+                "singleLine": false
+            },
+            "id": "User.copy.224984B4"
+        },
+        {
+            "command": "paste",
+            "id": "User.paste"
         }
     ],
     "centerOnLaunch": true,
@@ -28,8 +39,16 @@
             "keys": "alt+shift+plus"
         },
         {
+            "id": "User.copy.224984B4",
+            "keys": "ctrl+c"
+        },
+        {
             "id": "Terminal.DuplicatePaneDown",
             "keys": "alt+shift+minus"
+        },
+        {
+            "id": "User.paste",
+            "keys": "ctrl+v"
         }
     ],
     "language": "en-US",
