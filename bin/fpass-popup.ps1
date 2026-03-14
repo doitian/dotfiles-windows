@@ -1,5 +1,7 @@
 # Ensure gopass and fzf are found when run with -NoProfile (prepend User PATH)
-$env:Path = [Environment]::GetEnvironmentVariable("Path", "User") + ";" + $env:Path
+# Gpg4win must come before Git's bundled GPG which has no secret keys
+$env:Path = "$env:USERPROFILE\scoop\apps\gpg4win\current\GnuPG\bin;" +
+  [Environment]::GetEnvironmentVariable("Path", "User") + ";" + $env:Path
 
 $selected = gopass list -f | fzf --height=100% --layout=reverse
 if ($selected) { gopass show -c $selected }
