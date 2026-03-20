@@ -1,6 +1,7 @@
 #SingleInstance Force
 CapsLock::Ctrl
 ~CapsLock Up::Send "{Ctrl up}" (A_PriorKey = "CapsLock" ? "{Esc}" : "")
+~LCtrl Up::Send (A_PriorKey = "LControl" ? "#!d" : "")
 >!CapsLock::SetCapsLockState !GetKeyState("CapsLock", "T")
 
 ; Append a dummy win to prevent toggle Chinese/English for IM
