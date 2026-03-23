@@ -210,9 +210,8 @@ $content = file_exists($file) ? file_get_contents($file) : '';
                     minHeight: '400px'
                 });
 
-                // Hide loading message and show editor
+                // Hide loading message
                 loading.style.display = 'none';
-                textarea.style.display = 'block';
 
                 console.log('Markdown editor loaded successfully');
             } catch (error) {
