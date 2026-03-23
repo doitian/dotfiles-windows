@@ -117,7 +117,6 @@ $content = file_exists($file) ? file_get_contents($file) : '';
     <script>
         // Configuration
         const EDITOR_CDN = {
-            fontawesome: '//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css',
             css: '//cdn.jsdelivr.net/npm/easymde@2.18.0/dist/easymde.min.css',
             js: '//cdn.jsdelivr.net/npm/easymde@2.18.0/dist/easymde.min.js'
         };
@@ -179,10 +178,9 @@ $content = file_exists($file) ? file_get_contents($file) : '';
                     setTimeout(() => reject(new Error('Loading timeout')), LOAD_TIMEOUT)
                 );
 
-                // Load FontAwesome, CSS and JS
+                // Load CSS and JS
                 await Promise.race([
                     Promise.all([
-                        loadCSS(EDITOR_CDN.fontawesome),
                         loadCSS(EDITOR_CDN.css),
                         loadJS(EDITOR_CDN.js)
                     ]),
