@@ -117,9 +117,9 @@ $content = file_exists($file) ? file_get_contents($file) : '';
     <script>
         // Configuration
         const EDITOR_CDN = {
-            fontawesome: 'https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css',
-            css: 'https://cdn.jsdelivr.net/npm/easymde@2.18.0/dist/easymde.min.css',
-            js: 'https://cdn.jsdelivr.net/npm/easymde@2.18.0/dist/easymde.min.js'
+            fontawesome: '//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css',
+            css: '//cdn.jsdelivr.net/npm/easymde@2.18.0/dist/easymde.min.css',
+            js: '//cdn.jsdelivr.net/npm/easymde@2.18.0/dist/easymde.min.js'
         };
 
         const LOAD_TIMEOUT = 5000; // 5 seconds timeout
