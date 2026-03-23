@@ -2,8 +2,7 @@
 /**
  * Clipboard Markdown Editor
  *
- * Edit clipboard.md file with a lazy-loaded markdown editor.
- * Falls back to plain textarea if lazy loading fails.
+ * Edit clipboard.md file with a simple textarea editor.
  */
 
 $file = __DIR__ . '/clipboard.md';
@@ -82,15 +81,6 @@ $content = file_exists($file) ? file_get_contents($file) : '';
         button:hover {
             background-color: #0056b3;
         }
-        .loading {
-            text-align: center;
-            padding: 10px;
-            color: #666;
-        }
-        /* EasyMDE will override these styles when loaded */
-        .CodeMirror {
-            min-height: 400px;
-        }
     </style>
 </head>
 <body>
@@ -103,8 +93,7 @@ $content = file_exists($file) ? file_get_contents($file) : '';
 
         <form method="POST" id="editorForm">
             <div class="editor-container">
-                <div id="loading" class="loading">Loading markdown editor...</div>
-                <textarea name="content" id="editor" style="display: none;"><?php echo htmlspecialchars($content); ?></textarea>
+                <textarea name="content" id="editor"><?php echo htmlspecialchars($content); ?></textarea>
             </div>
 
             <div class="button-group">
@@ -115,119 +104,10 @@ $content = file_exists($file) ? file_get_contents($file) : '';
     </div>
 
     <script>
-        // Configuration
-        const EDITOR_CDN = {
-            css: '//cdn.jsdelivr.net/npm/easymde@2.18.0/dist/easymde.min.css',
-            js: '//cdn.jsdelivr.net/npm/easymde@2.18.0/dist/easymde.min.js'
-        };
-
-        const LOAD_TIMEOUT = 5000; // 5 seconds timeout
-        let editorInstance = null;
-        let loadingFailed = false;
-
-        // Fallback to plain textarea
-        function fallbackToTextarea() {
-            if (loadingFailed) return;
-            loadingFailed = true;
-
-            console.warn('Falling back to plain textarea');
-            const loading = document.getElementById('loading');
-            const textarea = document.getElementById('editor');
-
-            loading.textContent = 'Using plain text editor (markdown editor failed to load)';
-            loading.style.color = '#856404';
-            loading.style.backgroundColor = '#fff3cd';
-            loading.style.padding = '10px';
-            loading.style.borderRadius = '4px';
-            loading.style.marginBottom = '10px';
-
-            textarea.style.display = 'block';
-        }
-
-        // Load CSS dynamically
-        function loadCSS(url) {
-            return new Promise((resolve, reject) => {
-                const link = document.createElement('link');
-                link.rel = 'stylesheet';
-                link.href = url;
-                link.onload = resolve;
-                link.onerror = reject;
-                document.head.appendChild(link);
-            });
-        }
-
-        // Load JavaScript dynamically
-        function loadJS(url) {
-            return new Promise((resolve, reject) => {
-                const script = document.createElement('script');
-                script.src = url;
-                script.onload = resolve;
-                script.onerror = reject;
-                document.body.appendChild(script);
-            });
-        }
-
-        // Initialize markdown editor
-        async function initializeEditor() {
-            const textarea = document.getElementById('editor');
-            const loading = document.getElementById('loading');
-
-            try {
-                // Set timeout for loading
-                const timeoutPromise = new Promise((_, reject) =>
-                    setTimeout(() => reject(new Error('Loading timeout')), LOAD_TIMEOUT)
-                );
-
-                // Load CSS and JS
-                await Promise.race([
-                    Promise.all([
-                        loadCSS(EDITOR_CDN.css),
-                        loadJS(EDITOR_CDN.js)
-                    ]),
-                    timeoutPromise
-                ]);
-
-                // Check if EasyMDE is available
-                if (typeof EasyMDE === 'undefined') {
-                    throw new Error('EasyMDE not loaded');
-                }
-
-                // Initialize EasyMDE
-                editorInstance = new EasyMDE({
-                    element: textarea,
-                    autofocus: true,
-                    spellChecker: false,
-                    toolbar: [
-                        'bold', 'italic', 'heading', '|',
-                        'quote', 'unordered-list', 'ordered-list', '|',
-                        'link', 'image', '|',
-                        'preview', 'side-by-side', 'fullscreen', '|',
-                        'guide'
-                    ],
-                    status: ['lines', 'words', 'cursor'],
-                    minHeight: '400px'
-                });
-
-                // Hide loading message
-                loading.style.display = 'none';
-
-                console.log('Markdown editor loaded successfully');
-            } catch (error) {
-                console.error('Failed to load markdown editor:', error);
-                fallbackToTextarea();
-            }
-        }
-
-        // Handle form submission
-        document.getElementById('editorForm').addEventListener('submit', function(e) {
-            if (editorInstance && !loadingFailed) {
-                // EasyMDE automatically syncs with textarea, but let's be explicit
-                editorInstance.codemirror.save();
-            }
+        // Simple autofocus on the textarea
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('editor').focus();
         });
-
-        // Initialize editor when page loads
-        window.addEventListener('DOMContentLoaded', initializeEditor);
     </script>
 </body>
 </html>
