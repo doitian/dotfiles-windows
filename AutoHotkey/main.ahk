@@ -1,27 +1,23 @@
 #SingleInstance Force
 CapsLock::Ctrl
 ~CapsLock Up::Send "{Ctrl up}" (A_PriorKey = "CapsLock" ? "{Esc}" : "")
->!CapsLock::SetCapsLockState !GetKeyState("CapsLock", "T")
+>+CapsLock::SetCapsLockState !GetKeyState("CapsLock", "T")
 
 ; Append a dummy win to prevent toggle Chinese/English for IM
 <+Space::Send (A_PriorKey = "LShift" ? "+{Space}" : "{Blind}{Shift up}{Space}{Shift down}{LWin}")
 >+Space::Send (A_PriorKey = "RShift" ? "+{Space}" : "{Blind}{Shift up}{Space}{Shift down}{LWin}")
 
-; Right Alt + jkli: arrows
->!j::Left
->!l::Right
->!i::Up
->!k::Down
-
-; Right Win: typography
->#[::Send "“"
-+>#[::Send "”"
->#]::Send "‘"
-+>#]::Send "’"
->#'::Send "′"
-+>#'::Send "″"
->#-::Send "–"
-+>#-::Send "—"
+; Typography
+^!#[::Send "“"  ; LEFT DOUBLE QUOTATION MARK 201C
++^!#[::Send "”" ; RIGHT SINGLE QUOTATION MARK 201D
+^!#]::Send "‘"  ; LEFT SINGLE QUOTATION MARK 2018
++^!#]::Send "’" ; RIGHT SINGLE QUOTATION MARK 2019
+^!#'::Send "′"  ; PRIME 2032
++^!#'::Send "″" ; DOUBLE PRIME 2033
+^!#-::Send "–"  ; EN DASH 2013
++^!#-::Send "—" ; EM DASH 2014
+^!#\::Send "–"  ; EN DASH 2013
++^!#\::Send "—" ; EM DASH 2014
 
 #^t::WinSetAlwaysOnTop -1, "A"
 
