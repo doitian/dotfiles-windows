@@ -17,6 +17,7 @@ Set-Alias -Name vim -Value nvim
 
 function dirs { (pwd -stack).ToArray().Path | fzf | cd }
 function fd { fd.exe --path-separator / @Args }
+function oc { opencode @Args }
 function mx { mise x "--" @Args }
 function mr { mise r @Args }
 function mact {
