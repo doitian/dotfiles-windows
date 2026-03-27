@@ -51,6 +51,8 @@ CapsLock::Ctrl
 
 !Volume_Up::Run 'monctl --brightness=+1 -m 1',, "Hide"
 !Volume_Down::Run 'monctl --brightness=-1 -m 1',, "Hide"
+#!^+F6::Run 'monctl 15 -m 1',, "Hide"
+#!^+F5::Run 'monctl 5 -m 1',, "Hide"
 
 XButton2::Send "{XButton2}"
 XButton2 & WheelUp::Send "{WheelLeft}"
