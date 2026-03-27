@@ -11,6 +11,13 @@
         },
         {
             "command": {
+                "action": "sendInput",
+                "input": "\u0017"
+            },
+            "id": "User.sendInput.DF8E1D78"
+        },
+        {
+            "command": {
                 "action": "copy",
                 "singleLine": false
             },
@@ -29,6 +36,10 @@
         {
             "id": "User.sendInput.8F63D3A9",
             "keys": "shift+enter"
+        },
+        {
+            "id": "User.sendInput.DF8E1D78",
+            "keys": "ctrl+backspace"
         },
         {
             "id": null,
