@@ -49,6 +49,9 @@ CapsLock::Ctrl
 #F11::RunWait('pwsh -NoProfile -File "' A_ScriptDir '\..\bin\kmrb.ps1"', , "Hide")
 #F12::Reload
 
+!Volume_Up::Run 'monctl --brightness=+1 -m 1',, "Hide"
+!Volume_Down::Run 'monctl --brightness=-1 -m 1',, "Hide"
+
 XButton2::Send "{XButton2}"
 XButton2 & WheelUp::Send "{WheelLeft}"
 XButton2 & WheelDown::Send "{WheelRight}"
