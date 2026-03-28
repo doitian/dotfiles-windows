@@ -49,19 +49,19 @@ CapsLock::Ctrl
 #F11::RunWait('pwsh -NoProfile -File "' A_ScriptDir '\..\bin\kmrb.ps1"', , "Hide")
 #F12::Reload
 
-!Volume_Up::Run 'monctl -b 1+ -m 1',, "Hide"
-!Volume_Down::Run 'monctl -b 1- -m 1',, "Hide"
-Launch_Mail::Run 'monctl 5 -m 1',, "Hide"
+!Volume_Up::Run 'monctl -b 1+ -m G95NC',, "Hide"
+!Volume_Down::Run 'monctl -b 1- -m G95NC',, "Hide"
+Launch_Mail::Run 'monctl 5 -m G95NC',, "Hide"
 #!o::{
-  Run 'monctl 5 -m 1',, "Hide"
+  Run 'monctl 5 -m G95NC',, "Hide"
   Run 'displayswitch /internal',, "Hide"
 }
 #!p::{
-  Run 'monctl 15 -m 1',, "Hide"
+  Run 'monctl 15 -m G95NC',, "Hide"
   Run 'displayswitch /external',, "Hide"
 }
 +#!p::{
-  Run 'monctl 15 -m 1',, "Hide"
+  Run 'monctl 15 -m G95NC',, "Hide"
   Run 'displayswitch /extend',, "Hide"
 }
 
