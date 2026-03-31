@@ -47,7 +47,7 @@ CapsLock::Ctrl
 #q::!F4
 #^q::#^F4
 
-#F11::RunWait('pwsh -NoProfile -File "' A_ScriptDir '\..\bin\kmrb.ps1"', , "Hide")
+#F11::ScriptManager.Show()
 #F12::Reload
 
 !Volume_Up::Run 'monctl -b 1+ -m G95NC',, "Hide"
@@ -84,4 +84,76 @@ PasteFromClipman := false
 ;; Snippets
 :*:ddate::{
   Send FormatTime(, "yyyy-MM-dd")
+}
+
+class ScriptManager {
+  static g := 0, lv := 0, btnStart := 0, btnStop := 0, btnReload := 0
+
+  static Show() {
+    if this.g
+      this.g.Destroy()
+    this.g := Gui("+AlwaysOnTop", "AHK Script Manager")
+    this.g.OnEvent("Close", (*) => this.g.Destroy())
+    this.g.OnEvent("Escape", (*) => this.g.Destroy())
+    this.lv := this.g.Add("ListView", "w400 r10 -Multi +Grid", ["Script", "Status"])
+    this.btnStart := this.g.Add("Button", "Section w80 Disabled", "&Start")
+    this.btnStop := this.g.Add("Button", "x+10 w80 Disabled", "S&top")
+    this.btnReload := this.g.Add("Button", "x+10 w80 Disabled", "&Reload")
+    this.g.Add("Button", "x+10 w80", "Re&fresh").OnEvent("Click", (*) => this.Refresh())
+    this.lv.OnEvent("ItemSelect", (*) => this.UpdateButtons())
+    this.btnStart.OnEvent("Click", (*) => this.DoAction("start"))
+    this.btnStop.OnEvent("Click", (*) => this.DoAction("stop"))
+    this.btnReload.OnEvent("Click", (*) => this.DoAction("reload"))
+    this.Refresh()
+    this.g.Show()
+  }
+
+  static Refresh() {
+    this.lv.Delete()
+    saved := A_DetectHiddenWindows
+    DetectHiddenWindows true
+    loop Files A_ScriptDir "\*.ahk"
+      this.lv.Add(, A_LoopFileName,
+        WinExist(A_LoopFileFullPath " ahk_class AutoHotkey") ? "Running" : "Stopped")
+    DetectHiddenWindows saved
+    this.lv.ModifyCol(1, 260)
+    this.lv.ModifyCol(2, 100)
+    this.UpdateButtons()
+  }
+
+  static UpdateButtons() {
+    row := this.lv.GetNext()
+    if !row {
+      this.btnStart.Enabled := false
+      this.btnStop.Enabled := false
+      this.btnReload.Enabled := false
+      return
+    }
+    running := this.lv.GetText(row, 2) = "Running"
+    this.btnStart.Enabled := !running
+    this.btnStop.Enabled := running
+    this.btnReload.Enabled := running
+  }
+
+  static DoAction(action) {
+    row := this.lv.GetNext()
+    if !row
+      return
+    path := A_ScriptDir "\" this.lv.GetText(row, 1)
+    if action = "start" {
+      saved := A_DetectHiddenWindows
+      DetectHiddenWindows true
+      if !WinExist(path " ahk_class AutoHotkey")
+        Run path
+      DetectHiddenWindows saved
+    } else {
+      saved := A_DetectHiddenWindows
+      DetectHiddenWindows true
+      if WinExist(path " ahk_class AutoHotkey")
+        PostMessage 0x0111, action = "reload" ? 65303 : 65307
+      DetectHiddenWindows saved
+    }
+    Sleep 500
+    this.Refresh()
+  }
 }
