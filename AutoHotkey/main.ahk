@@ -19,6 +19,8 @@ CapsLock::Ctrl
 +^!#-::Send "—" ; EM DASH 2014
 ^!#\::Send "–"  ; EN DASH 2013
 +^!#\::Send "—" ; EM DASH 2014
+^!#/::Send "⋯"  ; MIDLINE HORIZONTAL ELLIPSIS
++^!#/::Send "…" ; HORIZONTAL ELLIPSIS
 
 #^t::WinSetAlwaysOnTop -1, "A"
 
@@ -80,6 +82,20 @@ PasteFromClipman := false
   global PasteFromClipman := false
 }
 #HotIf
+
+; File Explorer
+#HotIf WinActive("ahk_class CabinetWClass")
+^!l::ExploreTo("shell:Downloads")
+^+d::ExploreTo("shell:Desktop")
+^+h::ExploreTo("shell:Profile")
+#HotIf
+
+ExploreTo(target) {
+    ; Alt+D focuses address bar, then we type the shell path
+    Send "!d"                 ; focus address bar
+    Sleep 50                  ; tiny pause so Explorer catches up
+    Send target "{Enter}"     ; navigate current window
+}
 
 ;; Snippets
 :*:ddate::{
