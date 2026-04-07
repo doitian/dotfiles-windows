@@ -10,12 +10,13 @@ TraySetIcon "joy.cpl", 1
 ; D-Pad       = Arrow keys
 ; LT = Shift, LB = Ctrl, RB = Alt
 ; RT + A = Enter, RT + B = Backspace, RT + X = PageDown, RT + Y = PageUp
+; RT + LS = Back, RT + RS = Forward
 ; A = Space, B = Esc, X = [, Y = ]
 ; View (hold) = precise mouse, Menu = toggle left click hold
 
 ; ===== Tuning =====
 MouseSpeed       := 60
-PreciseSpeed     := 10
+PreciseSpeed     := 20
 ScrollSpeed      := 0.3
 StickCurve       := 3      ; response curve exponent (2=quadratic, 3=cubic, 4=aggressive)
 StickDeadZone    := 7850   ; Microsoft recommended: 7849 left, 8689 right
@@ -36,6 +37,8 @@ prevButtons  := 0
 prevLT       := 0
 lClickLocked := 0
 preciseMode  := 0
+viewHeldT    := 0
+ViewTapMax   := 20   ; max ticks to count as tap (20 * 10ms = 200ms)
 scrollAccY   := 0.0
 scrollAccX   := 0.0
 
@@ -115,10 +118,18 @@ Poll() {
     btnBT := BtnRepeat(buttons & BTN_B, btnBT, rt ? "{Backspace}" : "{Escape}")
     btnXT := BtnRepeat(buttons & BTN_X, btnXT, rt ? "{PgDn}" : "[")
     btnYT := BtnRepeat(buttons & BTN_Y, btnYT, rt ? "{PgUp}" : "]")
-    if pressed & BTN_VIEW
+    if pressed & BTN_VIEW {
         preciseMode := 1
-    if released & BTN_VIEW
+        viewHeldT := 1
+    } else if buttons & BTN_VIEW {
+        viewHeldT++
+    }
+    if released & BTN_VIEW {
         preciseMode := 0
+        if viewHeldT <= ViewTapMax
+            Click
+        viewHeldT := 0
+    }
     if pressed & BTN_MENU {
         lClickLocked := !lClickLocked
         Click lClickLocked ? "Down" : "Up"
@@ -135,25 +146,33 @@ Poll() {
     if released & BTN_RB
         Send "{LAlt Up}"
 
-    ; stick clicks -> mouse buttons (cancel lock on tap)
+    ; stick clicks -> mouse buttons, RT modifies to Back/Forward
     if pressed & BTN_LS {
-        if lClickLocked {
-            lClickLocked := 0
-            Click "Up"
+        if rt {
+            Send "{Browser_Back}"
+        } else {
+            if lClickLocked {
+                lClickLocked := 0
+                Click "Up"
+            }
+            Click "Down"
         }
-        Click "Down"
     }
-    if released & BTN_LS
+    if released & BTN_LS && !rt
         Click "Up"
 
     if pressed & BTN_RS {
-        if lClickLocked {
-            lClickLocked := 0
-            Click "Up"
+        if rt {
+            Send "{Browser_Forward}"
+        } else {
+            if lClickLocked {
+                lClickLocked := 0
+                Click "Up"
+            }
+            Click "Down Right"
         }
-        Click "Down Right"
     }
-    if released & BTN_RS
+    if released & BTN_RS && !rt
         Click "Up Right"
 
     ; d-pad -> arrow keys (with key repeat)
