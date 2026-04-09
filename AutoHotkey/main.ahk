@@ -4,6 +4,12 @@ CapsLock::Ctrl
 >+CapsLock::SetCapsLockState !GetKeyState("CapsLock", "T")
 ~RControl Up::Send "{Ctrl up}" (A_PriorKey = "RControl" ? "{Esc}" : "")
 
+*<+<#f23:: {
+    Send("{Blind}{LShift Up}{LWin Up}{RWin Down}")
+    KeyWait("F23")
+    Send("{RWin up}")
+}
+
 ; Append a dummy win to prevent toggle Chinese/English for IM
 <+Space::Send (A_PriorKey = "LShift" ? "+{Space}" : "{Blind}{Shift up}{Space}{Shift down}{LWin}")
 >+Space::Send (A_PriorKey = "RShift" ? "+{Space}" : "{Blind}{Shift up}{Space}{Shift down}{LWin}")
