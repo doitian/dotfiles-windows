@@ -103,6 +103,15 @@ ExploreTo(target) {
     Send target "{Enter}"     ; navigate current window
 }
 
+; OneNote
+#HotIf WinActive("ahk_exe ONENOTE.EXE")
++WheelDown::Send("{WheelRight}")
++WheelUp::Send("{WheelLeft}")
+
+WheelUp::Send("{WheelUp}")
+WheelDown::Send("{WheelDown}")
+#HotIf
+
 ;; Snippets
 :*:ddate::{
   Send FormatTime(, "yyyy-MM-dd")
