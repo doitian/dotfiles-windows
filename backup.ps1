@@ -11,7 +11,7 @@ $ErrorActionPreference = "Stop"
 $Dest = "\\10.31.0.5\Public\Backups"
 
 $Sources = @(
-    @{ Path = "$HOME\Zotero"; Name = "Zotero" }
+    @{ Path = "$HOME\Zotero"; Name = "Zotero"; Exclude = @("*.bak", "*.tmp") }
     @{ Path = "$HOME\AppData\Roaming\Ulanzi\UlanziDeck\ProfilesV2"; Name = "UlanziDeck-ProfilesV2" }
 )
 
@@ -24,7 +24,13 @@ foreach ($src in $Sources) {
     $destPath = Join-Path $Dest $src.Name
     Write-Host "Syncing $($src.Path) -> $destPath" -ForegroundColor Cyan
 
-    rclone sync $src.Path $destPath --progress
+    $rcloneArgs = @("sync", $src.Path, $destPath, "--progress")
+    if ($src.Exclude) {
+        foreach ($ex in $src.Exclude) {
+            $rcloneArgs += "--exclude", $ex
+        }
+    }
+    rclone @rcloneArgs
     if ($LASTEXITCODE -ne 0) {
         Write-Error "rclone sync failed for $($src.Path) (exit code $LASTEXITCODE)"
     }
