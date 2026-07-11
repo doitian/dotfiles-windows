@@ -60,7 +60,7 @@ function ... { cd ../.. }
 function .... { cd ../../.. }
 function dotfiles { cd $PSProfileDir }
 
-if ($env:WT_SESSION) {
+if ($env:WT_SESSION -and -not $env:LAZY) {
   $env:LAZY = 1
 }
 $env:TERM_BACKGROUND = 'light'
