@@ -20,6 +20,7 @@ function fd { fd.exe --path-separator / @Args }
 function oc { opencode @Args }
 function qianwen { opencode -m opencode-go/qwen3.7-max @Args }
 function deepseek { opencode -m opencode-go/deepseek-v4-pro @Args }
+function kimi { opencode -m opencode-go/kimi-k3 @Args }
 function mx { mise x "--" @Args }
 function mr { mise r @Args }
 function mact {
