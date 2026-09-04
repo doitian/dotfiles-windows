@@ -66,6 +66,7 @@ if ($env:WT_SESSION -and -not $env:LAZY) {
 }
 $env:TERM_BACKGROUND = 'light'
 $env:LANG = 'en_US.UTF-8'
+$env:OPENCODE_DISABLE_CLAUDE_CODE_SKILLS = '1'
 
 if ($env:CURSOR_AGENT) {
   $env:GIT_PAGER = ''

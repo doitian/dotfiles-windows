@@ -111,8 +111,10 @@ ln "$PublicRepoDir\default\.config\process-compose\settings.yaml" "$HOME\AppData
 
 mkdir -Force "$HOME\.genimi"
 mkdir -Force "$HOME\.config\opencode"
+mkdir -Force "$HOME\.agents"
 mkdir -Force "$HOME\.claude"
 mkdir -Force "$HOME\.copilot"
+ln "$PublicRepoDir\ai\skills" "$HOME\.agents\skills"
 ln "$PublicRepoDir\ai\skills" "$HOME\.claude\skills"
 ln "$PublicRepoDir\ai\gemini\settings.json" "$HOME\.gemini\settings.json"
 ln "$PublicRepoDir\ai\rules\windows.md" "$HOME\.gemini\AGENTS.md"
