@@ -109,7 +109,7 @@ ln "$PublicRepoDir\default\.config\lazygit" "$HOME\AppData\Local\lazygit"
 mkdir -Force "$HOME\AppData\Local\process-compose"
 ln "$PublicRepoDir\default\.config\process-compose\settings.yaml" "$HOME\AppData\Local\process-compose\settings.yaml"
 
-mkdir -Force "$HOME\.genimi"
+mkdir -Force "$HOME\.gemini"
 mkdir -Force "$HOME\.config\opencode"
 mkdir -Force "$HOME\.agents"
 mkdir -Force "$HOME\.claude"
