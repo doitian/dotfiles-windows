@@ -116,7 +116,9 @@ mkdir -Force "$HOME\.claude"
 mkdir -Force "$HOME\.copilot"
 mkdir -Force "$HOME\.grok"
 mkdir -Force "$HOME\.codex"
+mkdir -Force "$HOME\.pi\agent"
 ln "$PublicRepoDir\ai\skills" "$HOME\.agents\skills"
+ln "$PublicRepoDir\ai\skill-lock.json" "$HOME\.agents\.skill-lock.json"
 ln "$PublicRepoDir\ai\skills" "$HOME\.claude\skills"
 ln "$PublicRepoDir\ai\gemini\settings.json" "$HOME\.gemini\settings.json"
 ln "$PublicRepoDir\ai\rules\windows.md" "$HOME\.gemini\AGENTS.md"
@@ -125,6 +127,7 @@ ln "$PublicRepoDir\ai\rules\windows.md" "$HOME\.copilot\copilot-instructions.md"
 ln "$PublicRepoDir\ai\rules\windows.md" "$HOME\.grok\AGENTS.md"
 ln "$PublicRepoDir\ai\rules\windows.md" "$HOME\.codex\AGENTS.md"
 ln "$PublicRepoDir\ai\rules\windows.md" "$HOME\.config\opencode\AGENTS.md"
+ln "$PublicRepoDir\ai\rules\windows.md" "$HOME\.pi\agent\AGENTS.md"
 
 ls -Force -File "$PSProfileDir\local" | % { ln $_.FullName "$HOME\$($_.Name)" }
 
