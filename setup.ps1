@@ -31,7 +31,7 @@ if (-Not $UserPathList.Contains($PublicDistDir)) {
   $UserPath = "$UserPath;$PublicDistDir"
   [Environment]::SetEnvironmentVariable('Path', "$UserPath", 'User')
 }
-$MasonBinDir = "$HOME\AppData\Local\nvim-data\mason\bin"
+$MasonBinDir = "$env:LOCALAPPDATA\nvim-data\mason\bin"
 if (-Not $UserPathList.Contains($MasonBinDir)) {
   $UserPath = "$UserPath;$MasonBinDir"
   [Environment]::SetEnvironmentVariable('Path', "$UserPath", 'User')
@@ -87,27 +87,30 @@ ln "$PublicRepoDir\default\.githooks" "$HOME\.githooks"
 mkdir -Force "$env:APPDATA\gnupg"
 cp -Force "$PublicRepoDir\default\.gnupg\gpg.conf" "$env:APPDATA\gnupg"
 
-mkdir -Force "$HOME\AppData\Roaming\yazi\config"
-if (-Not (Test-Path "$HOME\AppData\Roaming\yazi\config\plugins\mime-ext.yazi") -And (Get-Command ya -ErrorAction SilentlyContinue)) {
+mkdir -Force "$env:APPDATA\yazi\config"
+if (-Not (Test-Path "$env:APPDATA\yazi\config\plugins\mime-ext.yazi") -And (Get-Command ya -ErrorAction SilentlyContinue)) {
   ya pkg add yazi-rs/plugins:mime-ext
 }
-ls -Force "$PSProfileDir\local\AppData\Roaming\yazi\config" | % { cp -Force -Path ($_.FullName) -Destination "$HOME\AppData\Roaming\yazi\config\$($_.Name)" }
+ls -Force "$PSProfileDir\local\AppData\Roaming\yazi\config" | % { cp -Force -Path ($_.FullName) -Destination "$env:APPDATA\yazi\config\$($_.Name)" }
 
-mkdir -Force "$HOME\AppData\Roaming\biome\config"
-ln "$PublicRepoDir\default\.config\biome\biome.jsonc" "$HOME\AppData\Roaming\biome\config\biome.jsonc"
+mkdir -Force "$env:APPDATA\biome\config"
+ln "$PublicRepoDir\default\.config\biome\biome.jsonc" "$env:APPDATA\biome\config\biome.jsonc"
+
+mkdir -Force "$env:APPDATA\herdr"
+ln "$PublicRepoDir\default\.config\herdr\config.toml" "$env:APPDATA\herdr\config.toml"
 
 ln "$PublicRepoDir\default\.vimrc" "$HOME\_vimrc"
 ForEach ($f in ".vimrc", ".ignore", ".editorconfig", ".ctags") {
   ln "$PublicRepoDir\default\$f" "$HOME\$f"
 }
-ln "$PublicRepoDir\nvim" "$HOME\AppData\Local\nvim"
+ln "$PublicRepoDir\nvim" "$env:LOCALAPPDATA\nvim"
 ln "$PublicRepoDir\nvim" "$HOME\.config\nvim"
 
-ln "$(pwd)\settings.json" "$HOME\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-ln "$PublicRepoDir\default\.config\lazygit" "$HOME\AppData\Local\lazygit"
+ln "$(pwd)\settings.json" "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+ln "$PublicRepoDir\default\.config\lazygit" "$env:LOCALAPPDATA\lazygit"
 
-mkdir -Force "$HOME\AppData\Local\process-compose"
-ln "$PublicRepoDir\default\.config\process-compose\settings.yaml" "$HOME\AppData\Local\process-compose\settings.yaml"
+mkdir -Force "$env:LOCALAPPDATA\process-compose"
+ln "$PublicRepoDir\default\.config\process-compose\settings.yaml" "$env:LOCALAPPDATA\process-compose\settings.yaml"
 
 mkdir -Force "$HOME\.gemini"
 mkdir -Force "$HOME\.config\opencode"
@@ -137,7 +140,7 @@ if (Get-Command mise -ErrorAction SilentlyContinue -CommandType Application -Out
 
 $DictionaryFile = "$HOME\Dropbox\Apps\Harper\dictionary.txt"
 if (Test-Path $DictionaryFile) {
-  $DictionaryDestination = "$HOME\AppData\Roaming\harper-ls"
+  $DictionaryDestination = "$env:APPDATA\harper-ls"
   mkdir -Force $DictionaryDestination
   ln $DictionaryFile "$DictionaryDestination\dictionary.txt"
 }
