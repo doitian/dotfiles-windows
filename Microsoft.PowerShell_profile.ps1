@@ -65,6 +65,11 @@ if ($env:WT_SESSION -and -not $env:LAZY) {
   $env:LAZY = 1
 }
 $env:TERM_BACKGROUND = 'light'
+
+if ($env:HERDR_ENV -eq '1' -and -not [Console]::IsOutputRedirected) {
+  # Seed ConPTY defaults so Codex can detect the Catppuccin Latte colors.
+  [Console]::Write("$([char]27)]10;rgb:4c/4f/69$([char]27)\$([char]27)]11;rgb:ef/f1/f5$([char]27)\")
+}
 $env:LANG = 'en_US.UTF-8'
 $env:OPENCODE_DISABLE_CLAUDE_CODE_SKILLS = '1'
 
