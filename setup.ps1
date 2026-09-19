@@ -97,7 +97,13 @@ mkdir -Force "$env:APPDATA\biome\config"
 ln "$PublicRepoDir\default\.config\biome\biome.jsonc" "$env:APPDATA\biome\config\biome.jsonc"
 
 mkdir -Force "$env:APPDATA\herdr"
-ln "$PublicRepoDir\default\.config\herdr\config.toml" "$env:APPDATA\herdr\config.toml"
+$HerdrConfigPath = "$env:APPDATA\herdr\config.toml"
+if (Get-Item -LiteralPath $HerdrConfigPath -Force -ErrorAction SilentlyContinue) {
+  Remove-Item -LiteralPath $HerdrConfigPath -Force -ErrorAction Stop
+}
+Copy-Item -LiteralPath "$PublicRepoDir\default\.config\herdr\config.toml" -Destination $HerdrConfigPath -Force -ErrorAction Stop
+$HerdrConfig = (Get-Content -LiteralPath $HerdrConfigPath) -join "`n"
+"$HerdrConfig`n`n[terminal]`ndefault_shell = `"pwsh.exe`"`n" | Set-Content -LiteralPath $HerdrConfigPath -Encoding utf8 -NoNewline
 
 ln "$PublicRepoDir\default\.vimrc" "$HOME\_vimrc"
 ForEach ($f in ".vimrc", ".ignore", ".editorconfig", ".ctags") {
