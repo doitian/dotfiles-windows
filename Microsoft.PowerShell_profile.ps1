@@ -189,3 +189,10 @@ $ExecutionContext.SessionState.InvokeCommand.CommandNotFoundAction = {
     $CommandLookupEventArgs.StopSearch = $true
   }
 }.GetNewClosure()
+
+if (
+  ((Test-Path -LiteralPath .mise-auto -PathType Leaf) -or $env:__MISE_DIFF) -and
+  (Get-Command mise -ErrorAction SilentlyContinue)
+) {
+  mact
+}
