@@ -142,6 +142,20 @@ ls -Force -File "$PSProfileDir\local" | % { ln $_.FullName "$HOME\$($_.Name)" }
 
 if (Get-Command mise -ErrorAction SilentlyContinue -CommandType Application -OutVariable miseCmd) {
   mise -C "$PublicRepoDir" run build
+  if ($LASTEXITCODE -ne 0) {
+    throw "Dotfiles build failed; Herdr plugins were not installed."
+  }
+  if (Get-Command herdr -ErrorAction SilentlyContinue -CommandType Application) {
+    $HerdrPluginsDir = Join-Path $PublicDistDir 'herdr-plugins'
+    Get-ChildItem -LiteralPath $HerdrPluginsDir -Directory -ErrorAction Stop | ForEach-Object {
+      if (Test-Path -LiteralPath (Join-Path $_.FullName 'herdr-plugin.toml')) {
+        herdr plugin link $_.FullName
+        if ($LASTEXITCODE -ne 0) {
+          throw "Failed to install Herdr plugin: $($_.Name)"
+        }
+      }
+    }
+  }
 }
 
 $DictionaryFile = "$HOME\Dropbox\Apps\Harper\dictionary.txt"
