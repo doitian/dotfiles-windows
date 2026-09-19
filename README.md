@@ -1,33 +1,5 @@
 # Windows Dotfiles
 
-## Scoop bucket
-
-This repo also provides a [Scoop](https://scoop.sh/) bucket with manifests in [`bucket/`](bucket/).
-
-To register a local checkout, commit the bucket files first, then run the following commands. Adjust the path if the repo is stored elsewhere.
-
-```powershell
-scoop bucket add doitian file:///C:/Users/me/Documents/PowerShell
-scoop install doitian/tty7
-```
-
-Scoop creates a separate clone from the local repo, so uncommitted changes are not included. No GitHub push is required. If `doitian` is already registered, remove the existing registration with `scoop bucket rm doitian` before adding it again.
-
-To register from GitHub instead:
-
-```powershell
-scoop bucket add doitian https://github.com/doitian/dotfiles-windows
-```
-
-[tty7](https://github.com/l0ng-ai/tty7) is available for 64-bit Windows, with the `tty7` and `tty7-app` commands and a Start menu shortcut. Its manifest is based on [dodorz/scoop](https://github.com/dodorz/scoop/blob/master/bucket/tty7.json).
-
-After committing manifest updates to the local repo, refresh the bucket and update the installed copy:
-
-```powershell
-scoop update
-scoop update tty7
-```
-
 ## Setup
 
 Save this repo as `Documents\PowerShell`.
