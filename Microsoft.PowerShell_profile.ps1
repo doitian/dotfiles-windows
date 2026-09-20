@@ -14,7 +14,11 @@ Set-Alias -Name l -Value Get-ChildItem
 Set-Alias -Name ll -Value Get-ChildItem
 Set-Alias -Name vi -Value nvim
 Set-Alias -Name vim -Value nvim
+Set-Alias -Name ta -Value tmux-fzf-session
+Set-Alias -Name tu -Value tmux-up
+Set-Alias -Name ab -Value agent-berth
 
+function tl { tmux ls @Args }
 function dirs { (pwd -stack).ToArray().Path | fzf | cd }
 function fd { fd.exe --path-separator / @Args }
 function oc { opencode @Args }
@@ -38,9 +42,6 @@ function j {
 function jadd {
   (pwd).Path.Replace("\", "/") | Add-Content "$HOME/.j.path"
 }
-function ta { tmux-fzf-session @Args }
-function tl { tmux ls @Args }
-function tu { tmux-up @Args }
 function ycd {
 	$tmp = (New-TemporaryFile).FullName
 	yazi.exe $args --cwd-file="$tmp"
