@@ -121,7 +121,7 @@
             "name": "Catppuccin Latte",
             "purple": "#EA76CB",
             "red": "#D20F39",
-            "selectionBackground": "#ACB0BE",
+            "selectionBackground": "#DC8A78",
             "white": "#ACB0BE",
             "yellow": "#DF8E1D"
         },
@@ -144,7 +144,7 @@
             "name": "Catppuccin Mocha",
             "purple": "#F5C2E7",
             "red": "#F38BA8",
-            "selectionBackground": "#585B70",
+            "selectionBackground": "#DC8A78",
             "white": "#BAC2DE",
             "yellow": "#F9E2AF"
         }
