@@ -38,6 +38,9 @@ function j {
 function jadd {
   (pwd).Path.Replace("\", "/") | Add-Content "$HOME/.j.path"
 }
+function ta { tmux-fzf-session @Args }
+function tl { tmux ls @Args }
+function tu { tmux-up @Args }
 function ycd {
 	$tmp = (New-TemporaryFile).FullName
 	yazi.exe $args --cwd-file="$tmp"
