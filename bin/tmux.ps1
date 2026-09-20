@@ -1,1 +1,0 @@
-wsl tmux $args
