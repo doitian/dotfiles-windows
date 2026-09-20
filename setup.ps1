@@ -76,6 +76,27 @@ Function ln ($value, $path) {
   }
 }
 
+Function tmux-conf ($Name) {
+  $HomePosix = "$HOME" -Replace "\\", "/"
+  $Content = Get-Content -LiteralPath "$PublicRepoDir\default\$Name" |
+    Where-Object { -Not $_.EndsWith(" # LINUX #") } |
+    ForEach-Object {
+      $Line = $_ -Replace '^# WIN # ', ''
+      if ($Line -match '^bind ') {
+        $Line = $Line -Replace ' -N "[^"]*"', ''
+      }
+      if ($Line.Contains('LG_CONFIG_FILE')) {
+        $Line = $Line.Replace('#{HOME}', $HomePosix)
+      }
+      $Line
+    }
+  $Path = "$HOME\$Name"
+  if (Test-Path -LiteralPath $Path) {
+    rm -Force $Path
+  }
+  Set-Content -LiteralPath $Path -NoNewline -Value ($Content -join "`n")
+}
+
 if (Test-Path -LiteralPath "$DocumentsDir\PowerShell") {
   ln "$DocumentsDir\PowerShell" "$DocumentsDir\WindowsPowerShell"
 }
@@ -108,6 +129,9 @@ $HerdrConfig = (Get-Content -LiteralPath $HerdrConfigPath) -join "`n"
 ln "$PublicRepoDir\default\.vimrc" "$HOME\_vimrc"
 ForEach ($f in ".vimrc", ".ignore", ".editorconfig", ".ctags") {
   ln "$PublicRepoDir\default\$f" "$HOME\$f"
+}
+ForEach ($f in ".tmux.conf", ".tmux.dark.conf", ".tmux.light.conf") {
+  tmux-conf $f
 }
 ln "$PublicRepoDir\nvim" "$env:LOCALAPPDATA\nvim"
 ln "$PublicRepoDir\nvim" "$HOME\.config\nvim"
