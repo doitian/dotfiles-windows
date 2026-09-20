@@ -36,6 +36,17 @@ if (-Not $UserPathList.Contains($MasonBinDir)) {
   $UserPath = "$UserPath;$MasonBinDir"
   [Environment]::SetEnvironmentVariable('Path', "$UserPath", 'User')
 }
+if (Get-Command mbx -ErrorAction SilentlyContinue -CommandType Application) {
+  $MbxBinDir = "$env:LOCALAPPDATA\mbx\bin"
+  mkdir -Force $MbxBinDir
+  if (-Not $UserPathList.Contains($MbxBinDir)) {
+    $UserPath = "$MbxBinDir;$UserPath"
+    [Environment]::SetEnvironmentVariable('Path', "$UserPath", 'User')
+  }
+  mbx setup --global
+  mkdir -Force "$env:APPDATA\mbx"
+  "display = `"plain`"`n" | Set-Content -LiteralPath "$env:APPDATA\mbx\config.toml" -NoNewline
+}
 [Environment]::SetEnvironmentVariable('EDITOR', 'nvim', 'User')
 [Environment]::SetEnvironmentVariable('FZF_DEFAULT_OPTS', '--prompt="❯ " --color light', 'User')
 [Environment]::SetEnvironmentVariable('FZF_DEFAULT_COMMAND', 'fd --type f --hidden --follow --exclude ".git" --path-separator /', 'User')
