@@ -76,6 +76,14 @@ Function ln ($value, $path) {
   }
 }
 
+Function tmux-conf ($Name, $Replacements) {
+  $Content = Get-Content -LiteralPath "$PublicRepoDir\default\$Name" -Raw
+  ForEach ($From in $Replacements.Keys) {
+    $Content = $Content.Replace($From, $Replacements[$From])
+  }
+  Set-Content -LiteralPath "$HOME\$Name" -Value $Content -NoNewline
+}
+
 if (Test-Path -LiteralPath "$DocumentsDir\PowerShell") {
   ln "$DocumentsDir\PowerShell" "$DocumentsDir\WindowsPowerShell"
 }
@@ -108,6 +116,16 @@ $HerdrConfig = (Get-Content -LiteralPath $HerdrConfigPath) -join "`n"
 ln "$PublicRepoDir\default\.vimrc" "$HOME\_vimrc"
 ForEach ($f in ".vimrc", ".ignore", ".editorconfig", ".ctags") {
   ln "$PublicRepoDir\default\$f" "$HOME\$f"
+}
+tmux-conf ".tmux.conf" @{
+  'set -g default-command "env TERM=xterm-256color zsh"' = 'set -g default-command "pwsh"'
+  'set -g default-terminal "tmux-256color"' = 'set -g default-terminal "xterm-256color"'
+}
+tmux-conf ".tmux.light.conf" @{
+  'set-environment -u LG_CONFIG_FILE' = 'set-environment LG_CONFIG_FILE ""'
+}
+tmux-conf ".tmux.dark.conf" @{
+  '#{HOME}/.config/lazygit' = '#{HOME}/AppData/Local/lazygit'
 }
 ln "$PublicRepoDir\nvim" "$env:LOCALAPPDATA\nvim"
 ln "$PublicRepoDir\nvim" "$HOME\.config\nvim"
