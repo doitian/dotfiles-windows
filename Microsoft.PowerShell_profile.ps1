@@ -25,6 +25,7 @@ function oc { opencode @Args }
 function qianwen { opencode -m opencode-go/qwen3.8-max @Args }
 function deepseek { opencode -m opencode-go/deepseek-v4.1-flash @Args }
 function kimi-payg { opencode -m moonshotai-cn/kimi-k3 @Args }
+function kimi-coding { pi --model kimi-coding/k3 @Args }
 function mx { mise x "--" @Args }
 function mr { mise r @Args }
 function mact {
