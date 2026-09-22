@@ -15,32 +15,15 @@ CapsLock::Ctrl
 >+Space::Send (A_PriorKey = "RShift" ? "+{Space}" : "{Blind}{Shift up}{Space}{Shift down}{LWin}")
 
 ;; The IME's voice-input hotkey (RAlt+Space) only reaches it while that IME is
-;; active, so in English state the chord dies. Switch first, then replay it: the
-;; original Alt-down predates the switch, so the IME never saw it.
-;; One key per SendInput with a gap in between -- batched into a single call the
-;; Alt-down has not been processed when Space arrives, and Space falls through to
-;; the Windows system menu. Both delays were tuned down from 400/120 and left
-;; at ~2x margin: they were measured against a warm hook, a cold one is slower.
-ImeWakeMs := 100
-ChordGapMs := 30
-
+;; active, so in English state the chord dies. Switch first, then replay it.r.
 #HotIf !ChineseIMEActive()
 $>!Space::{
-  global ImeWakeMs, ChordGapMs
   prev := ForegroundHKL()
   ActivateIME("00000804")
   deadline := A_TickCount + 1000
   while !ChineseIMEActive() && A_TickCount < deadline
     Sleep 20
-  Sleep ImeWakeMs
-  Send "{Blind}{RAlt up}"
-  Sleep ChordGapMs
-  Send "{Blind}{RAlt down}"
-  Sleep ChordGapMs
-  Send "{Blind}{Space}"
-  ; Alt was released during the wait, so nothing physical will release it later
-  if !GetKeyState("RAlt", "P")
-    Send "{Blind}{RAlt up}"
+  Send "{Blind}{RAlt down}{Space}"
   RestoreLayoutAfterVoice(prev)
 }
 #HotIf
