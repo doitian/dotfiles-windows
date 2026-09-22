@@ -14,6 +14,75 @@ CapsLock::Ctrl
 <+Space::Send (A_PriorKey = "LShift" ? "+{Space}" : "{Blind}{Shift up}{Space}{Shift down}{LWin}")
 >+Space::Send (A_PriorKey = "RShift" ? "+{Space}" : "{Blind}{Shift up}{Space}{Shift down}{LWin}")
 
+;; The IME's voice-input hotkey (RAlt+Space) only reaches it while that IME is
+;; active, so in English state the chord dies. Switch first, then replay it: the
+;; original Alt-down predates the switch, so the IME never saw it.
+;; One key per SendInput with a gap in between -- batched into a single call the
+;; Alt-down has not been processed when Space arrives, and Space falls through to
+;; the Windows system menu. Both delays were tuned down from 400/120 and left
+;; at ~2x margin: they were measured against a warm hook, a cold one is slower.
+ImeWakeMs := 100
+ChordGapMs := 30
+
+#HotIf !ChineseIMEActive()
+$>!Space::{
+  global ImeWakeMs, ChordGapMs
+  prev := ForegroundHKL()
+  ActivateIME("00000804")
+  deadline := A_TickCount + 1000
+  while !ChineseIMEActive() && A_TickCount < deadline
+    Sleep 20
+  Sleep ImeWakeMs
+  Send "{Blind}{RAlt up}"
+  Sleep ChordGapMs
+  Send "{Blind}{RAlt down}"
+  Sleep ChordGapMs
+  Send "{Blind}{Space}"
+  ; Alt was released during the wait, so nothing physical will release it later
+  if !GetKeyState("RAlt", "P")
+    Send "{Blind}{RAlt up}"
+  RestoreLayoutAfterVoice(prev)
+}
+#HotIf
+
+;; WeType hosts dictation in a window of its own, so wait for that to close
+;; rather than guessing a duration. The layout is left alone if the panel never
+;; showed (the chord missed) or is still up after a minute, and if the layout
+;; was changed by hand in the meantime -- switching out from under a live
+;; dictation is the worse failure.
+RestoreLayoutAfterVoice(hkl) {
+  static panel := "语音输入 ahk_class wetype.flutter.setting"
+  if !WinWait(panel, , 3)
+    return
+  if !WinWaitClose(panel, , 60)
+    return
+  if ChineseIMEActive()
+    ApplyHKL(hkl)
+}
+
+ChineseIMEActive() => (ForegroundHKL() & 0xFFFF) = 0x0804
+
+ForegroundHKL() {
+  hwnd := DllCall("GetForegroundWindow", "ptr")
+  tid := DllCall("GetWindowThreadProcessId", "ptr", hwnd, "ptr", 0, "uint")
+  return DllCall("GetKeyboardLayout", "uint", tid, "ptr")
+}
+
+ActivateIME(klid) {
+  if hkl := DllCall("LoadKeyboardLayout", "str", klid, "uint", 0x101, "ptr")
+    ApplyHKL(hkl)
+}
+
+ApplyHKL(hkl) {
+  hwnd := DllCall("GetForegroundWindow", "ptr")
+  tid := DllCall("GetWindowThreadProcessId", "ptr", hwnd, "ptr", 0, "uint")
+  me := DllCall("GetCurrentThreadId", "uint")
+  DllCall("AttachThreadInput", "uint", me, "uint", tid, "int", 1)
+  DllCall("ActivateKeyboardLayout", "ptr", hkl, "uint", 0)
+  DllCall("AttachThreadInput", "uint", me, "uint", tid, "int", 0)
+  PostMessage 0x0050, 0, hkl, , "ahk_id " hwnd
+}
+
 ; Typography
 ^!#[::Send "“"  ; LEFT DOUBLE QUOTATION MARK 201C
 +^!#[::Send "”" ; RIGHT SINGLE QUOTATION MARK 201D
