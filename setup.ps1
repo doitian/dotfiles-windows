@@ -175,6 +175,10 @@ if (Get-Command mise -ErrorAction SilentlyContinue -CommandType Application -Out
   if ($LASTEXITCODE -ne 0) {
     throw "Dotfiles build failed."
   }
+  & "$PublicDistDir\mise-tasks\g-agent-config.exe"
+  if ($LASTEXITCODE -ne 0) {
+    throw "Agent config patching failed."
+  }
 }
 
 $DictionaryFile = "$HOME\Dropbox\Apps\Harper\dictionary.txt"
