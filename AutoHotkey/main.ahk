@@ -14,33 +14,38 @@ CapsLock::Ctrl
 <+Space::Send (A_PriorKey = "LShift" ? "+{Space}" : "{Blind}{Shift up}{Space}{Shift down}{LWin}")
 >+Space::Send (A_PriorKey = "RShift" ? "+{Space}" : "{Blind}{Shift up}{Space}{Shift down}{LWin}")
 
-;; The IME's voice-input hotkey (RAlt+Space) only reaches it while that IME is
-;; active, so in English state the chord dies. Switch first, then replay it.r.
-#HotIf !ChineseIMEActive()
 $>!Space::{
-  prev := ForegroundHKL()
-  ActivateIME("00000804")
-  deadline := A_TickCount + 1000
-  while !ChineseIMEActive() && A_TickCount < deadline
-    Sleep 20
-  Send "{Blind}{RAlt down}{Space}"
-  RestoreLayoutAfterVoice(prev)
-}
-#HotIf
-
-;; WeType hosts dictation in a window of its own, so wait for that to close
-;; rather than guessing a duration. The layout is left alone if the panel never
-;; showed (the chord missed) or is still up after a minute, and if the layout
-;; was changed by hand in the meantime -- switching out from under a live
-;; dictation is the worse failure.
-RestoreLayoutAfterVoice(hkl) {
   static panel := "语音输入 ahk_class wetype.flutter.setting"
-  if !WinWait(panel, , 3)
+  static restoreHKL := 0
+
+  ending := WinExist(panel)
+  KeyWait "Space"
+  KeyWait "RAlt"
+
+  if ending {
+    Send "{RAlt down}{RWin down}{Space}{RWin up}{RAlt up}"
+    if WinWaitClose(panel, , 3) {
+      if restoreHKL
+        ApplyHKL(restoreHKL)
+      restoreHKL := 0
+    }
     return
-  if !WinWaitClose(panel, , 60)
-    return
-  if ChineseIMEActive()
-    ApplyHKL(hkl)
+  }
+
+  restoreHKL := 0
+  prev := ForegroundHKL()
+  if !ChineseIMEActive() {
+    ActivateIME("00000804")
+    deadline := A_TickCount + 1000
+    while !ChineseIMEActive() && A_TickCount < deadline
+      Sleep 20
+    if !ChineseIMEActive()
+      return
+    if (prev & 0x3FF) = 0x09
+      restoreHKL := prev
+  }
+  Sleep 100
+  Send "{RAlt down}{RWin down}{Space}{RWin up}{RAlt up}"
 }
 
 ChineseIMEActive() => (ForegroundHKL() & 0xFFFF) = 0x0804
