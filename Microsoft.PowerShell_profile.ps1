@@ -64,6 +64,22 @@ function gwtcd {
   if ($selected) { cd $selected }
 }
 
+function tmux-up {
+  if ($args -contains '--help' -or $args -contains '-h') {
+    & tmux-up.exe @args
+    return
+  }
+  $target = & tmux-up.exe --print-target @args
+  if ($LASTEXITCODE -ne 0) { return }
+  if ($args -contains '--print-target') {
+    $target
+  } elseif ($env:TMUX) {
+    tmux switchc -t $target
+  } else {
+    tmux attach -t $target
+  }
+}
+
 $hist = (Get-PSReadlineOption).HistorySavePath
 $cb = "$HOME\codebase"
 $dcs = "$HOME\Documents"
