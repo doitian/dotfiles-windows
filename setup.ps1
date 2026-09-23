@@ -96,6 +96,12 @@ Function tmux-conf ($Name) {
       if ($Line -match '^bind ') {
         $Line = $Line -Replace ' -N "[^"]*"', ''
       }
+      if ($Line -match '^bind \S+ new-window ') {
+        $Command = [regex]::Match($Line, '"([^"]+)"\s*$').Groups[1].Value
+        if ($Command -match '^[A-Za-z0-9._-]+(\s|$)' -and $Command -notmatch '^/usr/bin/') {
+          $Line = $Line -Replace '"([^"]+)"\s*$', ('"/usr/bin/' + $Command + '"')
+        }
+      }
       if ($Line.Contains('LG_CONFIG_FILE')) {
         $Line = $Line.Replace('#{HOME}', $HomePosix)
       }
