@@ -87,7 +87,7 @@ ApplyHKL(hkl) {
 
 #^t::WinSetAlwaysOnTop -1, "A"
 
-#+p::{
+#^+p::{
   q := Chr(34)
   Run 'wt nt -d "~" --title "fpass" pwsh -NoProfile -NoLogo -File ' q A_MyDocuments '\PowerShell\bin\fpass-popup.ps1' q
   SetTitleMatchMode 2
@@ -98,7 +98,7 @@ ApplyHKL(hkl) {
   }
 }
 
-#y::{
+#^p::{
   q := Chr(34)
   Run 'wt nt -d "~" --title "fwin" pwsh -NoProfile -NoLogo -File ' q A_MyDocuments '\PowerShell\bin\fwin-popup.ps1' q
   SetTitleMatchMode 2
