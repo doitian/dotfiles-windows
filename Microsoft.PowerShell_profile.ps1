@@ -22,10 +22,6 @@ function tl { tmux ls @Args }
 function dirs { (pwd -stack).ToArray().Path | fzf | cd }
 function fd { fd.exe --path-separator / @Args }
 function oc { opencode @Args }
-function qianwen { opencode mini -m opencode-go/qwen3.8-max @Args }
-function deepseek { opencode mini -m opencode-go/deepseek-v4.1-flash @Args }
-function kimi-payg { opencode mini -m moonshotai-cn/kimi-k3 @Args }
-function kimi-coding { pi --model kimi-coding/k3 @Args }
 function mx { mise x "--" @Args }
 function mr { mise r @Args }
 function mact {
