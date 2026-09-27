@@ -27,7 +27,7 @@ class AgentStatus {
       this.g.OnEvent("ContextMenu", (*) => ExitApp())
       this.g.Show("Hide")
       this.g.GetPos(, , &w, &h)
-      this.g.Show("x" A_ScreenWidth - w * 2 " y" A_ScreenHeight - h * 2 " NoActivate")
+      this.g.Show("x1 y" A_ScreenHeight - h * 2 " NoActivate")
     }
     this.Poll()
   }
