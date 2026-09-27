@@ -112,6 +112,8 @@ ApplyHKL(hkl) {
 #q::!F4
 #^q::#^F4
 
+#+a::Run A_ScriptDir "\agent-status.ahk"
+
 #F11::ScriptManager.Show()
 #F12::Reload
 
