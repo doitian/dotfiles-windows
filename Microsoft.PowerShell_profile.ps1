@@ -22,6 +22,8 @@ function tl { tmux ls @Args }
 function dirs { (pwd -stack).ToArray().Path | fzf | cd }
 function fd { fd.exe --path-separator / @Args }
 function oc { opencode @Args }
+function foc { fa -a opencode @Args }
+function fpi { fa -a pi @Args }
 function mx { mise x "--" @Args }
 function mr { mise r @Args }
 function mact {
