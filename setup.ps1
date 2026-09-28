@@ -160,7 +160,7 @@ mkdir -Force "$HOME\.grok"
 mkdir -Force "$HOME\.codex"
 mkdir -Force "$HOME\.pi\agent"
 
-ln "$PublicRepoDir\default\.config\opencode\tui.json" "$HOME\.config\opencode\tui.json"
+ln "$PublicRepoDir\default\.config\opencode\cli.json" "$HOME\.config\opencode\cli.json"
 ln "$PublicRepoDir\ai\gemini\settings.json" "$HOME\.gemini\settings.json"
 
 ln "$PublicRepoDir\ai\skills" "$HOME\.agents\skills"
