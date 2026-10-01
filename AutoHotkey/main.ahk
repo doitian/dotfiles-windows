@@ -1,4 +1,5 @@
 #SingleInstance Force
+#Include "fzf-launcher.ahk"
 CapsLock::Ctrl
 ~CapsLock Up::Send "{Ctrl up}" (A_PriorKey = "CapsLock" ? "{Esc}" : "")
 >+CapsLock::SetCapsLockState !GetKeyState("CapsLock", "T")
@@ -87,27 +88,8 @@ ApplyHKL(hkl) {
 
 #^t::WinSetAlwaysOnTop -1, "A"
 
-#^+p::{
-  q := Chr(34)
-  Run 'wt nt -d "~" --title "fpass" pwsh -NoProfile -NoLogo -File ' q A_MyDocuments '\PowerShell\bin\fpass-popup.ps1' q
-  SetTitleMatchMode 2
-  if hwnd := WinWait("fpass", , 3) {
-    WinGetPos &x, &y, &w, &h, hwnd
-    WinMove (A_ScreenWidth - w) // 2, (A_ScreenHeight - h) // 2, , , hwnd
-    WinActivate hwnd
-  }
-}
-
-#^p::{
-  q := Chr(34)
-  Run 'wt nt -d "~" --title "fwin" pwsh -NoProfile -NoLogo -File ' q A_MyDocuments '\PowerShell\bin\fwin-popup.ps1' q
-  SetTitleMatchMode 2
-  if hwnd := WinWait("fwin", , 3) {
-    WinGetPos &x, &y, &w, &h, hwnd
-    WinMove (A_ScreenWidth - w) // 2, (A_ScreenHeight - h) // 2, , , hwnd
-    WinActivate hwnd
-  }
-}
+#^+p::FzfLauncher.Passwords()
+#^p::FzfLauncher.Windows()
 
 #q::!F4
 #^q::#^F4
