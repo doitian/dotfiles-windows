@@ -67,7 +67,6 @@ $GitconfigTmpl -join "`n" | Set-Content -NoNewLine "~/.gitconfig"
 git config --global core.autocrlf input
 git config --global core.hooksPath "$HOME/.githooks"
 git config --global --unset core.pager
-git config --global gpg.program (Get-Command -Name 'gpg.exe').Source
 git config --global alias.dotfiles '!powershell.exe -NoProfile -Command git-dotfiles'
 
 $PublicRepoDirPosix = $PublicRepoDir -replace "\\", "/"
@@ -186,6 +185,9 @@ if (Get-Command mise -ErrorAction SilentlyContinue -CommandType Application -Out
   if ($LASTEXITCODE -ne 0) {
     throw "Agent config patching failed."
   }
+}
+if (-Not (Test-Path -LiteralPath "$PublicDistDir\git-gpg.exe")) {
+  git config --global gpg.program (Get-Command -Name 'gpg.exe').Source
 }
 
 $DictionaryFile = "$HOME\Dropbox\Apps\Harper\dictionary.txt"
