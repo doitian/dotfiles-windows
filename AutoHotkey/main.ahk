@@ -90,6 +90,7 @@ ApplyHKL(hkl) {
 
 #^+p::FzfLauncher.Passwords()
 #^p::FzfLauncher.Windows()
+#+p::FzfLauncher.Menu()
 
 #q::!F4
 #^q::#^F4

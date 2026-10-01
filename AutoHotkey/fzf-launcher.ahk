@@ -6,8 +6,12 @@ class FzfLauncher {
   static shown := []
   static onSelect := 0
   static boundFilter := 0
+  static stack := []
+  static cue := ""
+  static backTick := 0
 
   static Windows() {
+    this.stack := []
     items := []
     self := this.g ? this.g.Hwnd : 0
     for hwnd in WinGetList() {
@@ -27,6 +31,7 @@ class FzfLauncher {
   }
 
   static Passwords() {
+    this.stack := []
     ToolTip("Loading passwords")
     try text := this.Gopass("list -f")
     catch as e {
@@ -40,6 +45,111 @@ class FzfLauncher {
       if line != ""
         items.Push({text: line})
     this.Show(items, (item) => this.CopySecret(item.text), "Passwords")
+  }
+
+  static Menu() {
+    this.stack := []
+    this.Show([
+      {text: "Power", open: this.PowerMenu.Bind(this)},
+      {text: "Audio", open: this.AudioMenu.Bind(this)}
+    ], (item) => this.Pick(item), "Menu")
+  }
+
+  static PowerMenu() {
+    items := []
+    try {
+      text := this.Capture(this.QuoteArg(A_WinDir "\System32\powercfg.exe") " /list", 8000)
+      for line in StrSplit(text, "`n", "`r") {
+        if !RegExMatch(line, "i)GUID:\s*([0-9a-f-]+)\s+\(([^)]+)\)\s*(\*)?", &m)
+          continue
+        name := Trim(m[2])
+        guid := m[1]
+        items.Push({text: name (m[3] = "*" ? "  *" : ""), action: this.SetPower.Bind(this, guid, name)})
+      }
+    } catch as e {
+      items.Push({text: e.Message})
+    }
+    if !items.Length
+      items.Push({text: "No power plans"})
+    return {items: items, cue: "Power"}
+  }
+
+  static SetPower(guid, name) {
+    try {
+      this.Capture(this.QuoteArg(A_WinDir "\System32\powercfg.exe") " /setactive " guid, 8000)
+      ToolTip(name)
+    } catch as e {
+      ToolTip(e.Message)
+    }
+    SetTimer(ToolTip, -1200)
+  }
+
+  static AudioMenu() {
+    items := []
+    try {
+      cli := this.QuoteArg(this.SoundSwitchPath())
+      status := this.Capture(cli " status --json", 15000)
+      active := this.JsonField(status, "activeProfile")
+      recording := this.JsonField(status, "recordingDevice")
+      playback := this.JsonField(status, "playbackDevice")
+      list := this.Capture(cli " profile --list --json", 15000)
+      pos := 1
+      while RegExMatch(list, '"name"\s*:\s*"((?:\\.|[^"\\])*)"', &m, pos) {
+        name := this.Unescape(m[1])
+        items.Push({text: name (name = active ? "  *" : ""), action: this.SoundSwitch.Bind(this, "profile --name " this.QuoteArg(name), name)})
+        pos := m.Pos + m.Len
+      }
+      items.Push({text: "Switch Recording  ✅  " recording, action: this.SoundSwitch.Bind(this, "switch --type Recording", recording)})
+      items.Push({text: "Switch Playback  ✅  " playback, action: this.SoundSwitch.Bind(this, "switch --type Playback", playback)})
+    } catch as e {
+      items.Push({text: e.Message})
+    }
+    return {items: items, cue: "Audio"}
+  }
+
+  static SoundSwitch(args, label) {
+    try {
+      this.Capture(this.QuoteArg(this.SoundSwitchPath()) " " args, 15000)
+      if label != ""
+        ToolTip(label)
+    } catch as e {
+      ToolTip(e.Message)
+    }
+    SetTimer(ToolTip, -1200)
+  }
+
+  static SoundSwitchPath() {
+    p := EnvGet("USERPROFILE") "\scoop\apps\soundswitch\current\SoundSwitch.CLI.exe"
+    return FileExist(p) ? p : "SoundSwitch.CLI.exe"
+  }
+
+  static JsonField(text, key) {
+    if !RegExMatch(text, '"' key '"\s*:\s*"((?:\\.|[^"\\])*)"', &m)
+      return ""
+    return this.Unescape(m[1])
+  }
+
+  static Unescape(s) {
+    while RegExMatch(s, "\\u([0-9A-Fa-f]{4})", &m)
+      s := StrReplace(s, m[0], Chr(Integer("0x" m[1])), , , 1)
+    return StrReplace(StrReplace(StrReplace(s, "\/" , "/"), "\`"", '"'), "\\", "\")
+  }
+
+  static Pick(item) {
+    if item.HasProp("action")
+      item.action.Call()
+  }
+
+  static Back() {
+    if (A_TickCount - this.backTick < 50)
+      return
+    this.backTick := A_TickCount
+    if this.stack.Length {
+      prev := this.stack.Pop()
+      this.Show(prev.items, prev.select, prev.cue)
+      return
+    }
+    this.Close()
   }
 
   static CopySecret(name) {
@@ -58,10 +168,11 @@ class FzfLauncher {
       this.boundFilter := this.ApplyFilter.Bind(this)
     this.items := items
     this.onSelect := onSelect
+    this.cue := cue
     light := 1
     try light := RegRead("HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme")
     this.g := Gui("+AlwaysOnTop -Caption +ToolWindow +Border", "fzf")
-    this.g.OnEvent("Escape", (*) => this.Close())
+    this.g.OnEvent("Escape", (*) => this.Back())
     this.g.OnEvent("Close", (*) => this.Close())
     this.g.MarginX := 12
     this.g.MarginY := 12
@@ -84,9 +195,9 @@ class FzfLauncher {
     }
     this.ApplyFilter()
     this.g.Show("Hide")
-    this.Place()
     pref := 2
     DllCall("dwmapi\DwmSetWindowAttribute", "ptr", this.g.Hwnd, "int", 33, "int*", &pref, "int", 4)
+    this.Place()
     this.edit.Focus()
   }
 
@@ -151,9 +262,18 @@ class FzfLauncher {
     if !this.shown.Length
       return
     item := this.shown[this.lb.Value || 1]
+    if item.HasProp("open") {
+      select := this.onSelect
+      this.stack.Push({items: this.items, cue: this.cue, select: select})
+      next := item.open.Call()
+      this.Show(next.items, select, next.cue)
+      return
+    }
     cb := this.onSelect
+    this.stack := []
     this.Close()
-    cb(item)
+    if cb
+      cb(item)
   }
 
   static Activate(hwnd) {
@@ -307,7 +427,6 @@ class FzfLauncher {
   }
 
   static Place() {
-    this.g.GetPos(, , &w, &h)
     saved := A_CoordModeMouse
     CoordMode("Mouse", "Screen")
     MouseGetPos(&mx, &my)
@@ -320,17 +439,35 @@ class FzfLauncher {
         break
       }
     }
-    MonitorGetWorkArea(mon, &l, &t, &r, &b)
+    MonitorGet(mon, &l, &t, &r, &b)
+    this.g.GetPos(, , &w, &h)
     x := l + (r - l - w) // 2
     y := t + Round((b - t) * 0.18)
     this.g.Show("x" x " y" y)
+    if !this.VisibleRect(&vl, &vt, &vr, &vb)
+      return
+    this.g.GetPos(&wx)
+    nx := l + (r - l - (vr - vl)) // 2
+    WinMove(wx + nx - vl, , , , this.g)
+  }
+
+  static VisibleRect(&l, &t, &r, &b) {
+    rc := Buffer(16, 0)
+    if DllCall("dwmapi\DwmGetWindowAttribute", "ptr", this.g.Hwnd, "int", 9, "ptr", rc, "int", 16) != 0
+      && !DllCall("GetWindowRect", "ptr", this.g.Hwnd, "ptr", rc)
+      return false
+    l := NumGet(rc, 0, "int")
+    t := NumGet(rc, 4, "int")
+    r := NumGet(rc, 8, "int")
+    b := NumGet(rc, 12, "int")
+    return r > l && b > t
   }
 }
 
 #HotIf FzfLauncher.Active()
 Enter::FzfLauncher.Accept()
 NumpadEnter::FzfLauncher.Accept()
-Esc::FzfLauncher.Close()
+Esc::FzfLauncher.Back()
 Down::FzfLauncher.Move(1)
 Up::FzfLauncher.Move(-1)
 ^n::FzfLauncher.Move(1)
