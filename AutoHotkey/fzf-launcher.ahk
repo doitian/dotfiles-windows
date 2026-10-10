@@ -6,6 +6,11 @@ class FzfLauncher {
   static shown := []
   static onSelect := 0
   static boundFilter := 0
+  static boundDrawItem := 0
+  static light := true
+  static itemLineHeight := 1.5
+  static itemPaddingX := 10
+  static itemPaddingY := 4
   static stack := []
   static cue := ""
   static backTick := 0
@@ -166,19 +171,24 @@ class FzfLauncher {
     this.Close()
     if !this.boundFilter
       this.boundFilter := this.ApplyFilter.Bind(this)
+    if !this.boundDrawItem {
+      this.boundDrawItem := this.DrawItem.Bind(this)
+      OnMessage(0x2B, this.boundDrawItem) ; WM_DRAWITEM
+    }
     this.items := items
     this.onSelect := onSelect
     this.cue := cue
     light := 1
     try light := RegRead("HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme")
+    this.light := light
     this.g := Gui("+AlwaysOnTop -Caption +ToolWindow +Border", "fzf")
     this.g.OnEvent("Escape", (*) => this.Back())
     this.g.OnEvent("Close", (*) => this.Close())
     this.g.MarginX := 12
     this.g.MarginY := 12
-    this.g.SetFont("s11", "Segoe UI")
+    this.g.SetFont("s14", "Segoe UI")
     editOpt := "w600"
-    listOpt := "w600 r10 y+8"
+    listOpt := "w600 r10 y+8 +0x50" ; LBS_OWNERDRAWFIXED | LBS_HASSTRINGS
     if !light {
       this.g.BackColor := "1f1f1f"
       editOpt .= " Background1f1f1f cE8E8E8"
@@ -186,6 +196,7 @@ class FzfLauncher {
     }
     this.edit := this.g.Add("Edit", editOpt)
     this.lb := this.g.Add("ListBox", listOpt)
+    this.SizeItems()
     this.edit.OnEvent("Change", (*) => this.ScheduleFilter())
     this.lb.OnEvent("DoubleClick", (*) => this.Accept())
     SendMessage(0x1501, 1, StrPtr(cue), , "ahk_id " this.edit.Hwnd)
@@ -194,11 +205,72 @@ class FzfLauncher {
       DllCall("uxtheme\SetWindowTheme", "ptr", this.lb.Hwnd, "str", "DarkMode_Explorer", "ptr", 0)
     }
     this.ApplyFilter()
-    this.g.Show("Hide")
+    this.g.Show("Hide AutoSize")
     pref := 2
     DllCall("dwmapi\DwmSetWindowAttribute", "ptr", this.g.Hwnd, "int", 33, "int*", &pref, "int", 4)
     this.Place()
     this.edit.Focus()
+  }
+
+  static SizeItems() {
+    hwnd := this.lb.Hwnd
+    scale := A_ScreenDPI / 96
+    dc := DllCall("GetDC", "ptr", hwnd, "ptr")
+    font := SendMessage(0x31, 0, 0, , "ahk_id " hwnd) ; WM_GETFONT
+    oldFont := DllCall("SelectObject", "ptr", dc, "ptr", font, "ptr")
+    metrics := Buffer(60, 0)
+    try DllCall("GetTextMetricsW", "ptr", dc, "ptr", metrics)
+    finally {
+      DllCall("SelectObject", "ptr", dc, "ptr", oldFont)
+      DllCall("ReleaseDC", "ptr", hwnd, "ptr", dc)
+    }
+    rowHeight := Ceil(NumGet(metrics, 0, "int") * this.itemLineHeight) + 2 * Round(this.itemPaddingY * scale)
+    SendMessage(0x1A0, 0, rowHeight, , "ahk_id " hwnd) ; LB_SETITEMHEIGHT
+    this.lb.GetPos(, , , &height)
+    rc := Buffer(16, 0)
+    DllCall("GetClientRect", "ptr", hwnd, "ptr", rc)
+    border := Round(height * scale) - NumGet(rc, 12, "int")
+    this.lb.Move(, , , (rowHeight * 10 + border) / scale)
+  }
+
+  static DrawItem(wParam, lParam, *) {
+    hwndOffset := A_PtrSize = 8 ? 24 : 20
+    if !this.lb || NumGet(lParam, 0, "uint") != 2
+      || NumGet(lParam, hwndOffset, "ptr") != this.lb.Hwnd
+      return
+    dc := NumGet(lParam, hwndOffset + A_PtrSize, "ptr")
+    rectPtr := lParam + hwndOffset + 2 * A_PtrSize
+    itemId := NumGet(lParam, 8, "uint")
+    state := NumGet(lParam, 16, "uint")
+    selected := state & 1
+    bg := selected ? DllCall("GetSysColor", "int", 13, "uint")
+      : (this.light ? DllCall("GetSysColor", "int", 5, "uint") : 0x1F1F1F)
+    fg := selected ? DllCall("GetSysColor", "int", 14, "uint")
+      : (this.light ? DllCall("GetSysColor", "int", 8, "uint") : 0xE8E8E8)
+    brush := DllCall("CreateSolidBrush", "uint", bg, "ptr")
+    try DllCall("FillRect", "ptr", dc, "ptr", rectPtr, "ptr", brush)
+    finally DllCall("DeleteObject", "ptr", brush)
+    if itemId = 0xFFFFFFFF
+      return true
+    length := SendMessage(0x18A, itemId, 0, , "ahk_id " this.lb.Hwnd) ; LB_GETTEXTLEN
+    text := Buffer((length + 1) * 2, 0)
+    SendMessage(0x189, itemId, text.Ptr, , "ahk_id " this.lb.Hwnd) ; LB_GETTEXT
+    rc := Buffer(16)
+    DllCall("RtlMoveMemory", "ptr", rc, "ptr", rectPtr, "uptr", 16)
+    padding := Round(this.itemPaddingX * A_ScreenDPI / 96)
+    NumPut("int", NumGet(rc, 0, "int") + padding, rc, 0)
+    NumPut("int", NumGet(rc, 8, "int") - padding, rc, 8)
+    saved := DllCall("SaveDC", "ptr", dc, "int")
+    try {
+      font := SendMessage(0x31, 0, 0, , "ahk_id " this.lb.Hwnd)
+      DllCall("SelectObject", "ptr", dc, "ptr", font)
+      DllCall("SetTextColor", "ptr", dc, "uint", fg)
+      DllCall("SetBkMode", "ptr", dc, "int", 1)
+      DllCall("DrawTextW", "ptr", dc, "ptr", text, "int", length, "ptr", rc, "uint", 0x8824)
+      if (state & 0x10) && !(state & 0x200)
+        DllCall("DrawFocusRect", "ptr", dc, "ptr", rectPtr)
+    } finally DllCall("RestoreDC", "ptr", dc, "int", saved)
+    return true
   }
 
   static Close() {
