@@ -9,6 +9,7 @@
 $ErrorActionPreference = "Stop"
 
 $Dest = "\\10.31.0.5\Public\Backups"
+$Failed = @()
 
 $Sources = @(
     @{ Path = "$HOME\Zotero"; Name = "Zotero"; Exclude = @("*.bak", "*.tmp") }
@@ -32,8 +33,13 @@ foreach ($src in $Sources) {
     }
     rclone @rcloneArgs
     if ($LASTEXITCODE -ne 0) {
-        Write-Error "rclone sync failed for $($src.Path) (exit code $LASTEXITCODE)"
+        Write-Warning "rclone sync failed for $($src.Path) (exit code $LASTEXITCODE)"
+        $Failed += $src.Name
     }
 }
 
+if ($Failed) {
+    Write-Warning "Backup finished with failures: $($Failed -join ', ')"
+    exit 1
+}
 Write-Host "Backup complete." -ForegroundColor Green

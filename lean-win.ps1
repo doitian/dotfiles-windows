@@ -28,11 +28,11 @@ function Uninstall-OneDrive {
   }
 
   foreach ($user in $users) {
-    $profile = $user.FullName
+    $userDir = $user.FullName
     $pathsToDelete = @(
-      "$profile\OneDrive",
-      "$profile\AppData\Local\Microsoft\OneDrive",
-      "$profile\AppData\Roaming\Microsoft\OneDrive"
+      "$userDir\OneDrive",
+      "$userDir\AppData\Local\Microsoft\OneDrive",
+      "$userDir\AppData\Roaming\Microsoft\OneDrive"
     )
 
     foreach ($path in $pathsToDelete) {
@@ -50,7 +50,7 @@ function Uninstall-OneDrive {
   foreach ($key in $regKeys) {
     if (Test-Path $key) {
       Remove-ItemProperty -Path $key -Name "OneDrive" -ErrorAction SilentlyContinue
-        Remove-ItemProperty -Path $key -Name "OneDriveSetup" -ErrorAction SilentlyContinue
+      Remove-ItemProperty -Path $key -Name "OneDriveSetup" -ErrorAction SilentlyContinue
     }
   }
 
@@ -62,5 +62,9 @@ function Uninstall-OneDrive {
 
 Uninstall-OneDrive
 
-Get-AppxPackage Microsoft.YourPhone -AllUsers | Remove-AppxPackage
-Get-AppxPackage Microsoft.WidgetsPlatformRuntime -AllUsers | Remove-AppxPackage
+ForEach ($app in "Microsoft.YourPhone", "Microsoft.WidgetsPlatformRuntime") {
+  Get-AppxPackage $app -AllUsers | Remove-AppxPackage -AllUsers
+  Get-AppxProvisionedPackage -Online |
+    Where-Object { $_.DisplayName -eq $app } |
+    Remove-AppxProvisionedPackage -Online
+}
