@@ -1,1 +1,1 @@
-bun x.mjs
+bun x.mjs @args

@@ -1,4 +1,6 @@
 @ECHO OFF
+REM Without a command, leave the proxy set in the calling session
+if not "%~1"=="" SETLOCAL
 SET NO_PROXY=localhost, 127.0.0.1, ::1
 if defined GFW_PROXY (
   SET HTTP_PROXY=http://%GFW_PROXY%

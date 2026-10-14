@@ -1,16 +1,21 @@
 function testport($hostname, $port=7890, $timeout=100) {
-  $requestCallback = $state = $null
   $client = New-Object System.Net.Sockets.TcpClient
-  $beginConnect = $client.BeginConnect($hostname,$port,$requestCallback,$state)
-  Start-Sleep -milli $timeOut
-  if ($client.Connected) { $open = $true } else { $open = $false }
-  $client.Close()
+  try {
+    $open = $client.ConnectAsync($hostname, $port).Wait($timeout)
+  } catch {
+    $open = $false
+  } finally {
+    $client.Dispose()
+  }
   [pscustomobject]@{hostname=$hostname; port=$port; open=$open}
 }
 
-# Determine proxy URL
+# Determine proxy URL, GFW_PROXY is host:port as in gfw.cmd
 if (Test-Path env:GFW_PROXY) {
   $proxyUrl = $env:GFW_PROXY
+  if ($proxyUrl -notmatch '://') {
+    $proxyUrl = "http://$proxyUrl"
+  }
 } elseif ((testport 10.31.0.6).open) {
   $proxyUrl = 'http://10.31.0.6:7890'
 } else {
@@ -47,7 +52,6 @@ if ($args.Count -gt 0) {
   
   # One-shot command execution with cleanup guarantee
   try {
-    $stdinContent = $input
     if ($args[0] -eq 'ssh') {
       # Special SSH handling
       $remainingArgs = @("-o", "ProxyCommand=ncat --proxy-type socks5 --proxy $($proxyUrl -replace '.*://') %h %p")

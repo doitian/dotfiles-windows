@@ -19,7 +19,6 @@ param (
 $ErrorActionPreference = "Stop"
 
 $DefaultName = ""
-$ExtractDir = "."
 if ($RootFsTar.Name.StartsWith('alpine-')) {
   $DefaultName = 'Alpine'
 } elseif ($RootFsTar.Name.StartsWith('fedora-')) {
@@ -38,9 +37,7 @@ if ($Target.Length -eq 0) {
   $Target = "$(Get-Location)\$Name"
 }
 
-lxrunoffline.exe i -n $Name -f $RootFsTar -d "$Target" -v 2 -r "$ExtractDir"
-
-if (-Not (Test-Path -LiteralPath "$Target\ext4.vhdx")) {
-  wsl --set-version $Name 2
-  rm -Re -Fo "$Target\temp"
+wsl --import $Name "$Target" "$RootFsTar" --version 2
+if ($LASTEXITCODE -ne 0) {
+  throw "wsl --import failed."
 }

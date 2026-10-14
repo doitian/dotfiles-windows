@@ -1,6 +1,6 @@
-# Start komorebi (via komorebic) and the komorebi AHK hotkey script.
+# Start komorebi and the komorebi AHK hotkey script.
 # Usage: kmrb.ps1 [-bar]
-#   -bar  Start komorebi-bar as well (passes --bar to komorebic start).
+#   -bar  Start komorebi-bar as well (passes --bar to komorebi.exe).
 
 param(
     [switch] $bar
