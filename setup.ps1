@@ -123,7 +123,7 @@ Add-Content -Value $null "$HOME\.config\mise\config.toml"
 ln "$PublicRepoDir\default\.githooks" "$HOME\.githooks"
 
 mkdir -Force "$env:APPDATA\gnupg"
-cp -Force "$PublicRepoDir\default\.gnupg\gpg.conf" "$env:APPDATA\gnupg"
+cp -Force "$PublicRepoDir\default\.gnupg\dirmngr.conf" "$env:APPDATA\gnupg"
 
 mkdir -Force "$env:APPDATA\yazi\config"
 if (-Not (Test-Path "$env:APPDATA\yazi\config\plugins\mime-ext.yazi") -And (Get-Command ya -ErrorAction SilentlyContinue)) {
@@ -135,7 +135,8 @@ mkdir -Force "$env:APPDATA\biome\config"
 ln "$PublicRepoDir\default\.config\biome\biome.jsonc" "$env:APPDATA\biome\config\biome.jsonc"
 
 ln "$PublicRepoDir\default\.vimrc" "$HOME\_vimrc"
-ForEach ($f in ".vimrc", ".ignore", ".editorconfig", ".ctags") {
+ln "$PublicRepoDir\default\.ctags.d" "$HOME\.ctags.d"
+ForEach ($f in ".vimrc", ".ignore", ".editorconfig") {
   ln "$PublicRepoDir\default\$f" "$HOME\$f"
 }
 ForEach ($f in ".tmux.conf", ".tmux.dark.conf", ".tmux.light.conf") {
