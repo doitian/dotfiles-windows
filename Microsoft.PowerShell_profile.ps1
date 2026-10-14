@@ -31,8 +31,12 @@ function mact {
   Set-Item -LiteralPath "Function:Global:mise" -Value $Function:mise
 }
 function j {
+  if (-not (Test-Path -LiteralPath "$HOME/.j.path")) {
+    Write-Error "~/.j.path not found, add directories with jadd"
+    return
+  }
   $selected = (cat "$HOME/.j.path" | fzf -0 -1 -q "$Args")
-  if ($selected -ne $null) {
+  if ($null -ne $selected) {
     pushd "$selected"
   } else {
     Write-Error "no matched directory found"
@@ -136,7 +140,7 @@ function prompt {
     }
   }
 
-  @("`n$([char]27)[34;1m", $cwdDisplay, $promptColor, "$([char]27)[0m", $global:PromptChar, "$([char]27)]9;9;`"$cwd`"$([char]27)\") -join ""
+  @("`n$([char]27)[34;1m", $cwdDisplay, "$([char]27)[0m", $global:PromptChar, "$([char]27)]9;9;`"$cwd`"$([char]27)\") -join ""
 }
 
 function OnViModeChange {
