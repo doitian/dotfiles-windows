@@ -1,3 +1,4 @@
+#Requires AutoHotkey v2.0
 #SingleInstance Force
 
 AgentStatus.Show()
@@ -5,6 +6,7 @@ AgentStatus.Show()
 class AgentStatus {
   static g := 0, txt := 0
   static interval := 2000
+  static errorInterval := 10000
   static pollTimer := () => AgentStatus.Poll()
   static hook := OnMessage(0x201, (w, l, m, hwnd) =>
     (AgentStatus.g && GuiFromHwnd(hwnd) = AgentStatus.g) &&
@@ -38,15 +40,12 @@ class AgentStatus {
     status := "idle", n := 0
     try {
       tmp := A_Temp "\agent-status.json"
-      RunWait A_ComSpec ' /c agent-berth stats --json > "' tmp '"', , "Hide"
+      if RunWait(A_ComSpec ' /c agent-berth stats --json > "' tmp '"', , "Hide")
+        throw Error("agent-berth failed")
       json := FileRead(tmp)
-      doc := ComObject("htmlfile")
-      doc.write("<meta http-equiv='X-UA-Compatible' content='IE=edge'>")
-      js := "(function(d){var c=[0,0,0,0];for(var i=0;i<d.length;i++){c[0]+=d[i].waiting;c[1]+=d[i].running;c[2]+=d[i].idle;c[3]+=d[i].done;}return c.join(',');})(" json ")"
-      counts := StrSplit(doc.parentWindow.eval(js), ",")
-      for i, s in ["waiting", "running", "idle", "done"]
-        if Integer(counts[i]) {
-          status := s, n := counts[i]
+      for s in ["waiting", "running", "idle", "done"]
+        if count := this.SumField(json, s) {
+          status := s, n := count
           break
         }
     } catch {
@@ -57,7 +56,15 @@ class AgentStatus {
       this.txt.Opt("c" style.color)
       this.txt.Value := style.icon " " n
     }
-    if status != "error"
-      SetTimer this.pollTimer, -this.interval
+    SetTimer this.pollTimer, -(status = "error" ? this.errorInterval : this.interval)
+  }
+
+  static SumField(json, key) {
+    total := 0, pos := 1
+    while pos := RegExMatch(json, '"' key '"\s*:\s*(\d+)', &m, pos) {
+      total += m[1]
+      pos += m.Len
+    }
+    return total
   }
 }

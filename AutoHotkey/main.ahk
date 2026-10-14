@@ -1,3 +1,4 @@
+#Requires AutoHotkey v2.0
 #SingleInstance Force
 #Include "fzf-launcher.ahk"
 CapsLock::Ctrl
@@ -74,7 +75,7 @@ ApplyHKL(hkl) {
 
 ; Typography
 ^!#[::Send "“"  ; LEFT DOUBLE QUOTATION MARK 201C
-+^!#[::Send "”" ; RIGHT SINGLE QUOTATION MARK 201D
++^!#[::Send "”" ; RIGHT DOUBLE QUOTATION MARK 201D
 ^!#]::Send "‘"  ; LEFT SINGLE QUOTATION MARK 2018
 +^!#]::Send "’" ; RIGHT SINGLE QUOTATION MARK 2019
 ^!#'::Send "′"  ; PRIME 2032
@@ -161,6 +162,7 @@ WheelDown::Send("{WheelDown}")
 
 class ScriptManager {
   static g := 0, lv := 0, btnStart := 0, btnStop := 0, btnReload := 0
+  static libraries := ["fzf-launcher.ahk"]
 
   static Show() {
     if this.g
@@ -185,13 +187,23 @@ class ScriptManager {
     this.lv.Delete()
     saved := A_DetectHiddenWindows
     DetectHiddenWindows true
-    loop Files A_ScriptDir "\*.ahk"
+    loop Files A_ScriptDir "\*.ahk" {
+      if this.IsLibrary(A_LoopFileName)
+        continue
       this.lv.Add(, A_LoopFileName,
         WinExist(A_LoopFileFullPath " ahk_class AutoHotkey") ? "Running" : "Stopped")
+    }
     DetectHiddenWindows saved
     this.lv.ModifyCol(1, 260)
     this.lv.ModifyCol(2, 100)
     this.UpdateButtons()
+  }
+
+  static IsLibrary(name) {
+    for lib in this.libraries
+      if lib = name
+        return true
+    return false
   }
 
   static UpdateButtons() {

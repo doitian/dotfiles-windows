@@ -1,3 +1,4 @@
+#Requires AutoHotkey v2.0
 TraySetIcon "DDORes.dll", 32
 
 ; Using Keyboard Numpad as a Mouse (based on the v1 script by deguix)

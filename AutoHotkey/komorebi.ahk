@@ -53,7 +53,7 @@ Komorebic(cmd) {
 #^i::Komorebic("cycle-send-to-workspace previous")
 #+/::{
     result := InputBox("Enter workspace ID (0 to close):", "Focus Workspace")
-    if (result.Result = "OK" && result.Value != "") {
+    if (result.Result = "OK" && IsInteger(result.Value)) {
         if (result.Value = 0)
             Komorebic("close-workspace")
         else
@@ -68,7 +68,7 @@ Komorebic(cmd) {
     for i, layout in layouts
         prompt .= i ". " layout "`n"
     result := InputBox(prompt, "Change Layout")
-    if (result.Result = "OK" && result.Value != "") {
+    if (result.Result = "OK" && IsInteger(result.Value)) {
         idx := Integer(result.Value)
         if (idx >= 1 && idx <= layouts.Length)
             Komorebic("change-layout " layouts[idx])

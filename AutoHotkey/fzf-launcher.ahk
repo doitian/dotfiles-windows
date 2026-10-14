@@ -399,18 +399,21 @@ class FzfLauncher {
     try userPath := RegRead("HKCU\Environment", "Path")
     old := EnvGet("Path")
     EnvSet("Path", gpg ";" userPath ";" old)
-    try return this.Capture(this.QuoteArg(this.GopassPath()) " " args, 0xFFFFFFFF)
+    ; gopass may wait on pinentry, so keep hotkeys responsive while it runs
+    try return this.Capture(this.QuoteArg(this.GopassPath()) " " args, 0xFFFFFFFF, true)
     finally EnvSet("Path", old)
   }
 
-  static Capture(cmd, timeout) {
-    inPath := A_Temp "\ahk-cap.in"
-    outPath := A_Temp "\ahk-cap.out"
-    errPath := A_Temp "\ahk-cap.err"
+  static Capture(cmd, timeout, yield := false) {
+    ; Unique names so a capture started from a hotkey during a yielding one does not collide
+    base := A_Temp "\ahk-cap-" A_TickCount "-" Random(1000, 9999)
+    inPath := base ".in"
+    outPath := base ".out"
+    errPath := base ".err"
     f := FileOpen(inPath, "w", "UTF-8-RAW")
     f.Close()
     try {
-      code := this.RunIo(cmd, inPath, outPath, timeout, errPath)
+      code := this.RunIo(cmd, inPath, outPath, timeout, errPath, yield)
       text := FileExist(outPath) ? FileRead(outPath, "UTF-8-RAW") : ""
       err := FileExist(errPath) ? Trim(FileRead(errPath, "UTF-8-RAW"), "`r`n") : ""
       if (code != 0)
@@ -423,7 +426,7 @@ class FzfLauncher {
     }
   }
 
-  static RunIo(cmd, inPath, outPath, timeout, errPath := "") {
+  static RunIo(cmd, inPath, outPath, timeout, errPath := "", yield := false) {
     sa := Buffer(A_PtrSize * 3, 0)
     NumPut("uint", sa.Size, sa)
     NumPut("int", 1, sa, A_PtrSize * 2)
@@ -455,11 +458,24 @@ class FzfLauncher {
       throw OSError(err, "CreateProcess")
     hProc := NumGet(pi, 0, "ptr")
     hThread := NumGet(pi, A_PtrSize, "ptr")
-    DllCall("WaitForSingleObject", "ptr", hProc, "uint", timeout)
+    if yield {
+      start := A_TickCount
+      while (waited := DllCall("WaitForSingleObject", "ptr", hProc, "uint", 0, "uint")) = 0x102
+          && (timeout = 0xFFFFFFFF || A_TickCount - start < timeout)
+        Sleep 20
+    } else {
+      waited := DllCall("WaitForSingleObject", "ptr", hProc, "uint", timeout, "uint")
+    }
+    if (waited = 0x102) { ; WAIT_TIMEOUT
+      DllCall("TerminateProcess", "ptr", hProc, "uint", 1)
+      DllCall("WaitForSingleObject", "ptr", hProc, "uint", 1000)
+    }
     exitCode := 0
     DllCall("GetExitCodeProcess", "ptr", hProc, "uint*", &exitCode)
     DllCall("CloseHandle", "ptr", hProc)
     DllCall("CloseHandle", "ptr", hThread)
+    if (waited = 0x102)
+      throw TimeoutError("command timed out after " timeout " ms")
     return exitCode
   }
 

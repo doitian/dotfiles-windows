@@ -1,3 +1,4 @@
+#Requires AutoHotkey v2.0
 TraySetIcon "DDORes.dll", 32
 
 ; Holding Tab as a Mouse layer.
@@ -41,7 +42,7 @@ g_MouseCurrentSpeedToDirection := 0
 g_MouseCurrentSpeedToSide := 0
 
 g_MouseWheelCurrentAccelerationSpeed := 0
-g_MouseWheelCurrentSpeed := g_MouseSpeed
+g_MouseWheelCurrentSpeed := g_MouseWheelSpeed
 g_MouseWheelAccelerationSpeedReal := 0
 g_MouseWheelMaxSpeedReal := 0
 g_MouseWheelSpeedReal := 0
@@ -137,7 +138,7 @@ ButtonWheelAcceleration(ThisHotkey)
     global
     if g_Button != 0
     {
-        if g_Button != ThisHotkey
+        if g_Button != StrReplace(ThisHotkey, "Tab & ")
         {
             g_MouseWheelCurrentAccelerationSpeed := 0
             g_MouseWheelCurrentSpeed := g_MouseWheelSpeed
@@ -184,6 +185,7 @@ ButtonWheelAccelerationEnd()
         return
     }
 
+    SetTimer , 0
     g_MouseWheelCurrentAccelerationSpeed := 0
     g_MouseWheelCurrentSpeed := g_MouseWheelSpeed
     g_Button := 0

@@ -48,13 +48,27 @@ btnAT := 0, btnBT := 0, btnXT := 0, btnYT := 0
 RepeatDelay := 20   ; ticks before repeat starts (20 * 10ms = 200ms)
 RepeatRate  := 2    ; ticks between repeats      (2  * 10ms = 20ms)
 
-SetTimer(Poll, 10)
+connected    := 1
+PollInterval := 10
+IdleInterval := 1000  ; XInputGetState on an empty slot is slow, so back off while disconnected
+
+SetTimer(Poll, PollInterval)
 
 Poll() {
     global
 
-    if DllCall("xinput1_4\XInputGetState", "UInt", 0, "Ptr", xinState, "UInt") != 0
+    if DllCall("xinput1_4\XInputGetState", "UInt", 0, "Ptr", xinState, "UInt") != 0 {
+        if connected {
+            connected := 0
+            ReleaseAll()
+            SetTimer(Poll, IdleInterval)
+        }
         return
+    }
+    if !connected {
+        connected := 1
+        SetTimer(Poll, PollInterval)
+    }
 
     buttons  := NumGet(xinState, 4, "UShort")
     lTrigger := NumGet(xinState, 6, "UChar")
@@ -190,6 +204,28 @@ Poll() {
     else if !newLT && prevLT
         Send "{LShift Up}"
     prevLT := newLT
+}
+
+ReleaseAll() {
+    global
+    if prevButtons & BTN_LB
+        Send "{LControl Up}"
+    if prevButtons & BTN_RB
+        Send "{LAlt Up}"
+    if prevLT
+        Send "{LShift Up}"
+    if lClickLocked || (prevButtons & BTN_LS)
+        Click "Up"
+    if prevButtons & BTN_RS
+        Click "Up Right"
+    prevButtons := 0
+    prevLT := 0
+    lClickLocked := 0
+    preciseMode := 0
+    viewHeldT := 0
+    scrollAccX := scrollAccY := 0.0
+    dpadUpT := dpadDownT := dpadLeftT := dpadRightT := 0
+    btnAT := btnBT := btnXT := btnYT := 0
 }
 
 BtnRepeat(held, ticks, key) {
