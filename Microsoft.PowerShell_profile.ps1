@@ -19,6 +19,7 @@ Set-Alias -Name tu -Value tmux-up
 Set-Alias -Name ab -Value agent-berth
 
 function tl { tmux ls @Args }
+function tmux-reload { tmux source-file "$HOME/.tmux.conf" }
 function dirs { (pwd -stack).ToArray().Path | fzf | cd }
 function fd { fd.exe --path-separator / @Args }
 function oc { opencode @Args }
