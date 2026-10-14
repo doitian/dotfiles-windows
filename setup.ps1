@@ -1,3 +1,7 @@
+#Requires -Version 7
+
+$ErrorActionPreference = 'Stop'
+
 mkdir -Force "$HOME\.dotfiles\repos"
 $ReposDir = Get-Item "$HOME\.dotfiles\repos"
 
@@ -16,6 +20,9 @@ ForEach ($repo in $PublicRepoDir, $PrivateRepoDir) {
     git -C $repo pull
   } else {
     git clone --depth 1 "git@github.com:doitian/dotfiles-$(Split-Path -Leaf $repo).git" $repo
+  }
+  if ($LASTEXITCODE -ne 0) {
+    throw "Failed to update $repo."
   }
 }
 
@@ -145,7 +152,7 @@ ForEach ($f in ".tmux.conf", ".tmux.dark.conf", ".tmux.light.conf") {
 ln "$PublicRepoDir\nvim" "$env:LOCALAPPDATA\nvim"
 ln "$PublicRepoDir\nvim" "$HOME\.config\nvim"
 
-ln "$(pwd)\settings.json" "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+ln "$PSScriptRoot\settings.json" "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
 ln "$PublicRepoDir\default\.config\lazygit" "$env:LOCALAPPDATA\lazygit"
 
 mkdir -Force "$env:LOCALAPPDATA\process-compose"

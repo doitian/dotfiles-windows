@@ -36,7 +36,7 @@ Install essential apps
 
 ```powershell
 scoop bucket add extras
-scoop install git gpg4win less wsl-ssh-pageant
+scoop install git gpg4win less pwsh
 ```
 
 ┌ 4. Run as user
@@ -53,7 +53,7 @@ Restart the terminal app and continue. The script requires [PowerShell 7](https:
 
 ## Proxy
 
-Start proxy first. Then configure proxy in system settings and:
+Start proxy first. Then configure proxy in system settings and run the commands below. `setup` rewrites `~/.gitconfig`, so rerun the `git config` line after each setup.
 
 ```
 scoop config proxy 127.0.0.1:7890
