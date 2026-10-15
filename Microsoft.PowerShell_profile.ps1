@@ -100,49 +100,8 @@ if ($env:WT_SESSION -and -not $env:LAZY) {
   $env:LAZY = 1
 }
 $env:TERM_BACKGROUND = 'light'
-
-if ($env:PSMUX_SESSION -and -not [Console]::IsOutputRedirected) {
-  # Codex's Win32 fallback reads palette slots 7/0, which OSC 10/11 do not update.
-  [Console]::Write("$([char]27)]4;7;rgb:4c/4f/69$([char]27)\$([char]27)]4;0;rgb:ef/f1/f5$([char]27)\")
-}
-if ($env:PSMUX_SESSION) {
-  # psmux reads #{pane_current_path} from the shell's direct child's 64-bit PEB, which holds C:\Windows
-  # for the 32-bit scoop shims, so resolve each shim to the exe it launches
-  $scoopShims = "$(if ($env:SCOOP) { $env:SCOOP } else { "$HOME\scoop" })\shims\"
-  $shimTargets = @{}
-  $ExecutionContext.InvokeCommand.PostCommandLookupAction = {
-    param($CommandName, $CommandLookupEventArgs)
-    $command = $CommandLookupEventArgs.Command
-    if ($command.CommandType -ne 'Application' -or
-        -not $command.Path.StartsWith($scoopShims, [StringComparison]::OrdinalIgnoreCase)) { return }
-
-    $shim = [IO.Path]::ChangeExtension($command.Path, 'shim')
-    if (-not $shimTargets.ContainsKey($shim)) {
-      $target = $null
-      if (Test-Path -LiteralPath $shim) {
-        switch -Regex -File $shim {
-          # the shim prepends these, which a bare exe would lose
-          '^args\s*=' { $target = $null; break }
-          '^path\s*=\s*"(.+)"' { $target = $Matches[1] }
-        }
-      }
-      $shimTargets[$shim] = if ($target) { $ExecutionContext.InvokeCommand.GetCommand($target, 'Application') }
-    }
-    if ($shimTargets[$shim]) { $CommandLookupEventArgs.Command = $shimTargets[$shim] }
-  }.GetNewClosure()
-
-  # psmux's claude wrapper invokes the shim's CommandInfo directly, which skips command lookup
-  $claudeDir = "$HOME\scoop\apps\claude-code\current"
-  if ((Test-Path -LiteralPath $claudeDir) -and ($env:PATH -split ';') -notcontains $claudeDir) {
-    $env:PATH = "$claudeDir;$env:PATH"
-  }
-}
 $env:LANG = 'en_US.UTF-8'
 $env:OPENCODE_DISABLE_CLAUDE_CODE_SKILLS = '1'
-
-if ($env:CURSOR_AGENT) {
-  $env:GIT_PAGER = ''
-}
 
 if (-not [Environment]::Is64BitProcess) {
   return
@@ -184,7 +143,7 @@ function OnViModeChange {
     Set-PSReadlineKeyHandler -Chord "Ctrl+w" -Function BackwardKillWord
     Set-PSReadlineKeyHandler -Chord "Ctrl+x,Ctrl+f" -Function CharacterSearch
     Set-PSReadlineKeyHandler -Chord "Ctrl+x,Ctrl+b" -Function ViGotoBrace
-    Set-PSReadlineKeyHandler -Chord "Ctrl+x,Ctrl+v" -ScriptBlock {
+    Set-PSReadlineKeyHandler -Chord "Ctrl+x,v" -ScriptBlock {
       Set-PSReadLineOption -EditMode Vi
       [Microsoft.PowerShell.PSConsoleReadLine]::ViCommandMode()
     }
