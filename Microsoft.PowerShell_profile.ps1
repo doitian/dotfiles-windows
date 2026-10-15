@@ -159,20 +159,16 @@ if ($PSVersionTable.PSVersion.Major -lt 7) {
 }
 
 Set-PSReadLineOption -Colors @{
-  Command                = $PSStyle.Foreground.Blue
-  Comment                = $PSStyle.Foreground.BrightWhite
-  Default                = $PSStyle.Foreground.Black
-  InlinePrediction       = $PSStyle.Foreground.BrightWhite
-  Keyword                = $PSStyle.Foreground.FromRGB(0x8839EF)
-  ListPredictionSelected = $PSStyle.Background.BrightWhite
-  Member                 = $PSStyle.Foreground.Black
-  Number                 = $PSStyle.Foreground.FromRGB(0xFE6406)
-  Operator               = $PSStyle.Foreground.FromRGB(0x04A5E5)
-  Parameter              = $PSStyle.Foreground.Cyan
-  Selection              = $PSStyle.Background.BrightWhite
-  String                 = $PSStyle.Foreground.Green
-  Type                   = $PSStyle.Foreground.Black
-  Variable               = $PSStyle.Foreground.FromRGB(0xDD7878)
+  Command          = $PSStyle.Foreground.FromRGB(0x145FF5)
+  Comment          = $PSStyle.Foreground.FromRGB(0x9CA0B0)
+  Default          = $PSStyle.Foreground.FromRGB(0x4C4F69)
+  Error            = $PSStyle.Foreground.FromRGB(0xD20F39)
+  InlinePrediction = $PSStyle.Foreground.FromRGB(0x6C6F85)
+  Number           = $PSStyle.Foreground.FromRGB(0xBC4501)
+  Operator         = $PSStyle.Foreground.FromRGB(0xC71F9A)
+  Parameter        = $PSStyle.Foreground.FromRGB(0x13797E)
+  String           = $PSStyle.Foreground.FromRGB(0x327C21)
+  Variable         = $PSStyle.Foreground.FromRGB(0x976014)
 }
 
 Set-PSReadLineKeyHandler -Key Enter -ScriptBlock {
@@ -185,9 +181,12 @@ Set-PSReadLineKeyHandler -Key Enter -ScriptBlock {
   [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine()
 }
 
-$PSStyle.FileInfo.Directory    = "`e[36m"
-$PSStyle.FileInfo.SymbolicLink = "`e[35m"
-$PSStyle.FileInfo.Executable   = "`e[31m"
+$PSStyle.FileInfo.Directory    = $PSStyle.Foreground.FromRGB(0x145FF5)
+$PSStyle.FileInfo.SymbolicLink = $PSStyle.Foreground.FromRGB(0x8839EF)
+$PSStyle.FileInfo.Executable   = $PSStyle.Foreground.FromRGB(0xD20F39)
+
+$PSStyle.Formatting.Error       = $PSStyle.Foreground.FromRGB(0xD20F39)
+$PSStyle.Formatting.TableHeader = $PSStyle.Foreground.FromRGB(0x8839EF)
 
 # auto_cd
 # https://github.com/nickcox/cd-extras/blob/master/cd-extras/private/AutoCd.ps1
