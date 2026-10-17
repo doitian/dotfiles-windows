@@ -65,17 +65,21 @@ if (Get-Command mbx -ErrorAction SilentlyContinue -CommandType Application) {
 [Environment]::SetEnvironmentVariable('LS_COLORS', 'di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43', 'User')
 
 # the inbox conhost behind psmux panes crashes (0xC0000005) when pi hands its console to an external
-# editor, so point psmux at the newer OpenConsole that paseo's node-pty bundles
-$PaseoConpty = "$(if ($env:SCOOP) { $env:SCOOP } else { "$HOME\scoop" })\apps\paseo\current\resources\app.asar.unpacked\node_modules\node-pty\third_party\conpty"
-if (-not [Environment]::GetEnvironmentVariable('PSMUX_CONPTY_DIR', 'User') -and (Test-Path -LiteralPath $PaseoConpty) -and (Get-Command psmux -ErrorAction SilentlyContinue)) {
-  $ConptyArch = if ($env:PROCESSOR_ARCHITECTURE -eq 'ARM64') { 'win10-arm64' } else { 'win10-x64' }
-  $ConptyDir = Get-ChildItem -LiteralPath $PaseoConpty -Directory |
-    Sort-Object { $_.Name -as [version] } -Descending |
-    ForEach-Object { Join-Path $_.FullName $ConptyArch } |
-    Where-Object { Test-Path -LiteralPath (Join-Path $_ 'conpty.dll') } |
-    Select-Object -First 1
-  if ($ConptyDir) { [Environment]::SetEnvironmentVariable('PSMUX_CONPTY_DIR', $ConptyDir, 'User') }
+# editor, so point psmux at the newer OpenConsole from the Microsoft.Windows.Console.ConPTY NuGet package
+$ConptyDir = "$HOME\.local\share\conpty"
+if ((Get-Command psmux -ErrorAction SilentlyContinue) -and -not (Test-Path -LiteralPath (Join-Path $ConptyDir 'conpty.dll'))) {
+  $ConptyArch = if ($env:PROCESSOR_ARCHITECTURE -eq 'ARM64') { 'arm64' } else { 'x64' }
+  $ConptyVer = ((Invoke-RestMethod 'https://api.nuget.org/v3-flatcontainer/microsoft.windows.console.conpty/index.json').versions |
+    Where-Object { $_ -notmatch '-' } | Select-Object -Last 1)
+  $ConptyPkg = "$env:TEMP\conpty-$ConptyVer.nupkg"
+  Invoke-WebRequest "https://api.nuget.org/v3-flatcontainer/microsoft.windows.console.conpty/$ConptyVer/microsoft.windows.console.conpty.$ConptyVer.nupkg" -OutFile $ConptyPkg
+  $ConptyTmp = "$env:TEMP\conpty-$ConptyVer"
+  Remove-Item -Recurse -Force $ConptyTmp -ErrorAction SilentlyContinue
+  Expand-Archive $ConptyPkg $ConptyTmp -Force
+  New-Item -ItemType Directory -Force $ConptyDir | Out-Null
+  Copy-Item "$ConptyTmp\runtimes\win-$ConptyArch\native\conpty.dll", "$ConptyTmp\build\native\runtimes\$ConptyArch\OpenConsole.exe" $ConptyDir
 }
+if (Test-Path -LiteralPath (Join-Path $ConptyDir 'conpty.dll')) { [Environment]::SetEnvironmentVariable('PSMUX_CONPTY_DIR', $ConptyDir, 'User') }
 
 $GitconfigTmpl = $(Get-Content "$PublicRepoDir/gitconfig.tmpl")
 $GitconfigTmpl = $GitconfigTmpl -Replace "__NAME__", "ian"
