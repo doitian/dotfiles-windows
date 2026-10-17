@@ -252,12 +252,12 @@ function Invoke-Setup {
   $wasRunning = (Get-Service sshd -ErrorAction SilentlyContinue).Status -eq 'Running'
   Install-SshdIfMissing
   Set-Service -Name sshd -StartupType Manual
+  Set-LoginShell
   $startedForConfig = $false
   Wait-SshdConfig ([ref]$startedForConfig)
   Set-PubkeyOnly
   Enable-SshdFirewall
   Set-AuthorizedKeys
-  Set-LoginShell
   if ($wasRunning) {
     Restart-Service sshd
     Write-Log 'sshd restarted'
