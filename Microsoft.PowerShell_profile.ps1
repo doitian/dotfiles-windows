@@ -132,7 +132,10 @@ function prompt {
     }
   }
 
-  @("`n$([char]27)[34;1m", $cwdDisplay, "$([char]27)[0m", $global:PromptChar, "$([char]27)]9;9;`"$cwd`"$([char]27)\") -join ""
+  # OSC 9;9 records the pane directory for new tabs/panes, which only Windows
+  # Terminal understands; kitty reads the same sequence as a notification.
+  $cwdReport = if ($env:WT_SESSION) { "$([char]27)]9;9;`"$cwd`"$([char]27)\" } else { "" }
+  @("`n$([char]27)[34;1m", $cwdDisplay, "$([char]27)[0m", $global:PromptChar, $cwdReport) -join ""
 }
 
 function OnViModeChange {
