@@ -108,6 +108,11 @@ if (-not [Environment]::Is64BitProcess) {
 }
 
 $global:PromptChar = $null
+$global:PromptHost = if ($env:SSH_CONNECTION -or $env:SSH_CLIENT -or $env:SSH_TTY) {
+  "$([char]27)[32m@$($env:COMPUTERNAME.ToLower()):$([char]27)[0m"
+} else {
+  ""
+}
 
 function prompt {
   $cwd = $($executionContext.SessionState.Path.CurrentLocation)
@@ -135,7 +140,7 @@ function prompt {
   # OSC 9;9 records the pane directory for new tabs/panes, which only Windows
   # Terminal understands; kitty reads the same sequence as a notification.
   $cwdReport = if ($env:WT_SESSION) { "$([char]27)]9;9;`"$cwd`"$([char]27)\" } else { "" }
-  @("`n$([char]27)[34;1m", $cwdDisplay, "$([char]27)[0m", $global:PromptChar, $cwdReport) -join ""
+  @("`n$global:PromptHost$([char]27)[34;1m", $cwdDisplay, "$([char]27)[0m", $global:PromptChar, $cwdReport) -join ""
 }
 
 function OnViModeChange {
