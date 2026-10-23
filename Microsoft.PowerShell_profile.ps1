@@ -59,12 +59,11 @@ function ycd {
 function gwtcd {
   $current = git rev-parse --show-toplevel 2>$null
   if ($LASTEXITCODE -ne 0) { return }
-  $selected = git worktree list --porcelain |
-    Where-Object { $_.StartsWith('worktree ') } |
-    ForEach-Object { $_.Substring(9) } |
-    Where-Object { $_ -cne $current } |
-    fzf -0 -1 -q "$args"
-  if ($selected) { cd $selected }
+  $selected = git worktree list |
+    Where-Object { ($_ -split '\s+', 2)[0] -cne $current } |
+    fzf -0 -1 -q "$args" --delimiter ' ' --accept-nth=1
+  if ($LASTEXITCODE -ne 0) { return }
+  if ($selected) { Set-Location -LiteralPath $selected.Trim() }
 }
 
 function tmux-up {
